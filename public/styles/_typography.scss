@@ -1,0 +1,65 @@
+/*-----------------------------------------------------------------------------
+/
+/ TYPOGRAPHY
+/
+-------------------------------------------------------------------------------
+
+NOTE: All styles relating to typography such as font-family, color,
+line height, and typographic optimizations belong in this module.
+
+*/
+
+//-------------------------------------
+//  IMPORTS
+//-------------------------------------
+
+@import 'color-palette';
+
+
+//-------------------------------------
+//  VARIABLES
+//-------------------------------------
+
+$font-stack: 'Helvetica Neue', Helvetica, Arial, Roboto;
+$primary-color: color('grey', 80);
+$line-height-paragraph: 1.5;
+
+
+//-------------------------------------
+//  HEADERS
+//-------------------------------------
+
+h1 {
+  font-size: 3.998em;
+}
+
+h2 {
+  font-size: 2.827em;
+}
+
+h3 {
+  font-size: 1.999em;
+}
+
+h4 {
+  font-size: 1.414em;
+}
+
+h5 {
+  font: 1em bold;
+
+}
+
+h6 {
+  font-size: 0.707em;
+}
+
+
+//-------------------------------------
+//  TEXT
+//-------------------------------------
+
+body {
+  font: 1em/$line-height-paragraph $font-stack;
+  color: $primary-color;
+}
