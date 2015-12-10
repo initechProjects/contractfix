@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>lo-fi editor prototype</title>
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.blue-deep_purple.min.css" /> 
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+
+  <body>
+  <style>
+    body {
+      background-color: #E0E0E0;
+    }
+
+    .mdl-card--wide {
+      background-color: #fff;
+    }
+  </style>
+  <!-- Primary Navigation -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href=""><b>Past Changes</b></a>
+            <a class="mdl-navigation__link" href=""><b>Dashboard</b></a>
+        </nav>
+        <div class="mdl-layout-spacer"></div>
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <a class="mdl-navigation__link" href="">Nick</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Initech</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href=""><b>Past Changes</b></a>
+            <a class="mdl-navigation__link" href=""><b>Dashboard</b></a>
+            <a class="mdl-navigation__link" href=""><b>Nick</b></a>
+        </nav>
+      </div>
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <div class="mdl-layout-spacer"></div>
+          <h4>Draft Contract: 108 West St. Rental</h4>
+          <div class="mdl-layout-spacer"></div>
+        </div>
+        <div class="mdl-layout__header-row">
+          <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-navigation__link" href="">Save</a>
+                <a class="mdl-navigation__link" href="">Reject</a>
+                <a class="mdl-navigation__link" href="">Accept</a>
+                <a class="mdl-navigation__link" href="">Publish</a>
+            </nav>
+
+          <div class="mdl-layout-spacer"></div>
+        </div>
+      </header>
+
+      <!-- text editor area -->
+      <main class="mdl-layout__content">
+        <div class="page-content">
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--2-col"><!-- empty col --></div>
+              <div class="mdl-card--wide mdl-shadow--3dp mdl-cell mdl-cell--8-col">
+                <div class="mdl-card__supporting-text">
+                </div>
+                <div class="mdl-card__supporting-text">
+                This contract is an agreement between {Renter}, who will be renting a house from {Owner}, who owns the house being rented. This arrangement will begin on {date} and will end on {date}.<br><br>
+
+                The rent for this house will be {rent}. This amount must be paid on {date} every month. Late payments will incur a fee of {fee}. A deposit in the amount of {deposit} will be held for the duration of the lease and will be returned to the renter within one month after the keys are surrendered.<br><br>
+
+                The major rules regarding this house are as follows: {house rental rules, concerning pets, smoking, and other major violations}. By signing this agreement, the renter acknowledges that a complete list of these rules has been provided to him or her, and that the renter has read and understood these rules.<br><br>
+
+                The owner has a right to enter the house with an advanced notice of 24 hours for any reason. In an emergency, owner may violate this right and enter immediately. Emergencies include those instances in which the property is in immediate danger, such as from a fire or flood.<br><br>
+
+                The renter will make his or her best effort to keep the house in good condition. No major alterations will be made to the house without prior discussion with the owner. This includes painting, changes to the lawns, and installation of any permanent changes. All maintenance for the house will be taken care of by the owner, and the tenant must notify the owner immediately of maintenance required.<br><br>
+
+                Utilities will be the responsibility of the tenant. The renter will set up and shut down all utilities. This includes water, electric, and gas. Trash services is provided by {trash} and will be paid by the tenant.<br><br>
+
+                Signing this agreement implies full understanding of the above conditions and the rental agreement. This agreement cannot be altered without full informed consent in writing provided by both parties. In certain cases of violation, the tenant may be required to vacate without appeal.
+                </div><!-- suporting text -->
+              </div><!-- card -->
+            <div class="mdl-cell mdl-cell--2-col"><!-- empty col --></div>
+          </div><!-- grid -->
+        </div><!-- page content -->
+      </main>
+  </body>
+</html>
