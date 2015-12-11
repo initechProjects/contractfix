@@ -1,10 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-// var autoIncrement = require('mongoose-auto-increment');
-// var db = require('../config/db').db;
 var uuid = require('node-uuid');
-
-// autoIncrement.initialize(db);
 
 /**
  * @module  User
@@ -56,11 +52,6 @@ var User = new Schema({
 
 
 });
-
-// User.plugin(autoIncrement.plugin, {
-//     model: 'user',
-//     field: '_id'
-// });
 
 User.statics.saveUser = function(requestData, callback) {
   this.create(requestData, callback);

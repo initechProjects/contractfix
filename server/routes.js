@@ -1,6 +1,6 @@
 // Load modules
 
-var User   = require('./controller/user');
+var User   = require('./main/controller/user');
 var Static = require('./static');
 
 // API Server Endpoints

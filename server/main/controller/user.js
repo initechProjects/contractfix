@@ -1,7 +1,7 @@
 var Joi    = require('joi');
 var Boom   = require('boom');
 var Common = require('./common');
-var Config = require('../config/config');
+var Config = require('../../config/config');
 var Jwt    = require('jsonwebtoken');
 var User   = require('../model/user').User;
 
@@ -47,7 +47,7 @@ exports.login = {
   handler: function(request, reply) {
     User.findUser(request.payload.userName, function(err, user) {
       if (!err) {
-        if (user === null) return reply(Boom.forbidden("invalid username or password"));
+        if (user === null) return reply(Boom.forbidden('invalid username or password'));
         if (request.payload.password === Common.decrypt(user.password)) {
 
           if(!user.isVerified) return reply('Your email address is not verified. please verify your email address to proceed');
@@ -133,7 +133,7 @@ exports.verifyEmail = {
         console.log('decoded undefined', request.headers.authorization);
         return reply(Boom.forbidden('invalid verification link'));
       }
-      if(decoded.scope[0] != "registered") {
+      if(decoded.scope[0] != 'registered') {
         console.log('not registered', decoded.scope[0]);
         return reply(Boom.forbidden('invalid verification link'));
       }
