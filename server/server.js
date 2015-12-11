@@ -1,10 +1,9 @@
-
 var Hapi   = require('hapi');
 var Routes = require('./routes');
 var Db     = require('./config/db');
 var Moment = require('moment');
 var Config = require('./config/config');
-
+var JwtToken = require('hapi-auth-jwt');
 
 var app = {};
 app.config = Config;
@@ -16,7 +15,7 @@ var server = new Hapi.Server();
 server.connection({ port: app.config.server.port });
 
 // Validate function to be injected
-var validate = function(token, callback) {
+var validate = function(request, token, callback) {
   // Check token timestamp
   var diff = Moment().diff(Moment(token.iat * 1000));
   if (diff > ttl) {
@@ -26,7 +25,7 @@ var validate = function(token, callback) {
 };
 // Plugins
 server.register([{
-  register: require('hapi-auth-jwt')
+  register: JwtToken
 }],
 function(err) {
   server.auth.strategy('token', 'jwt', {
