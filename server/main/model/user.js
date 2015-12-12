@@ -34,6 +34,22 @@ var User = new Schema({
   },
 
   /**
+    password. It can only contain string, is required field.
+  */
+  privateKey: {
+    type: String,
+    required: false
+  },
+
+  /**
+    password. It can only contain string, is required field.
+  */
+  publicKey: {
+    type: String,
+    required: false
+  },
+
+  /**
   Scope. It can only contain string, is required field, and should have value from enum array.
   */
   scope: {
@@ -48,12 +64,29 @@ var User = new Schema({
   isVerified: {
     type: Boolean,
     default: false
-  }
+  },
+
+  created_at: Date,
+  updated_at: Date
 
 
 });
 
+User.pre('save', function(next) {
+  // get the current date
+  var currentDate = new Date();
+
+  // change the updated_at field to current date
+  this.updated_at = currentDate;
+
+  // if created_at doesn't exist, add to that field
+  if (this.isNew) this.created_at = currentDate;
+
+  next();
+});
+
 User.statics.saveUser = function(requestData, callback) {
+  console.log(requestData);
   this.create(requestData, callback);
 };
 
@@ -73,6 +106,7 @@ User.statics.findUserByIdAndUserName = function(id, userName, callback) {
     _id: id
   }, callback);
 };
+
 
 var user = mongoose.model('user', User);
 
