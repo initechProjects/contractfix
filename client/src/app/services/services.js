@@ -8,17 +8,41 @@ angular.module('app.services', [])
   // that JWT is then stored in localStorage 
   // after you login/signup open devtools, click resources,
   // then localStorage and you'll see your token from the server
+
+   var getData = function(){
+    var token = $window.localStorage.getItem('token');
+    var profile = $window.localStorage.getItem('profile');
+
+    return $http({
+      method: 'GET',
+      url: '/user' + profile,
+      headers: {token: token}
+
+    }).then(function(resp){
+      console.log(resp.data);
+      return resp.data;
+    })
+  };
+
+
   var login = function (user) {
     return $http({
       method: 'POST',
       url: '/login',
-      data: user
+      data: {
+        userName: user.username,
+        password: user.password
+      }
     })
     .then(function (resp) {
+      if(resp.status !== 200){
+        alert(resp.data);
+      };
       var storageItem = {
         token: resp.data.token,
         userId: resp.data.userId
       };
+      console.log(resp.data);
       return storageItem;
     });
   };
@@ -27,7 +51,10 @@ angular.module('app.services', [])
     return $http({
       method: 'POST',
       url: '/user',
-      data: user
+      data: {
+        userName: user.username,
+        password: user.password
+      }
     })
     .then(function (resp) {
       var storageItem = {
@@ -39,7 +66,7 @@ angular.module('app.services', [])
   };
 
   var isAuth = function () {
-    return !!$window.localStorage.getItem('contractFix_user') && !!$window.localStorage.getItem('contractFix_token');
+    return !!$window.localStorage.getItem('profile') && !!$window.localStorage.getItem('token');
   };
 
   return {
@@ -47,4 +74,6 @@ angular.module('app.services', [])
     signup: signup,
     isAuth: isAuth,
   };
+
 })
+

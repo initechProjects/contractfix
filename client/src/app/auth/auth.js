@@ -6,9 +6,9 @@ angular.module('app.auth', [])
 
   $scope.login = function () {
     Auth.login($scope.user)
-      .then(function (storageItem) {
-        $window.localStorage.setItem('contractFix_user', storageItem.userId);
-        $window.localStorage.setItem('contractFix_token', storageItem.token);
+      .then(function (profile, token) {
+        $window.localStorage.setItem('profile', token);
+        $window.localStorage.setItem('token', token);
         $location.path('/dashboard');
       })
       .catch(function (error) {
@@ -18,9 +18,9 @@ angular.module('app.auth', [])
 
   $scope.signup = function () {
     Auth.signup($scope.user)
-      .then(function (storageItem) {
-        $window.localStorage.setItem('contractFix_user', storageItem.userId);
-        $window.localStorage.setItem('contractFix_token', storageItem.token);
+      .then(function (profile, token) {
+        $window.localStorage.setItem('profile', profile);
+        $window.localStorage.setItem('token', token);
         $location.path('/login');
       })
       .catch(function (error) {
