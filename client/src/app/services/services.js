@@ -1,7 +1,7 @@
 angular.module('app.services', [])
 
 .factory('Auth', function ($http, $location, $window) {
-  // todo
+
   // auth service responsible for authenticating our user
   // by exchanging the user's username and password
   // for a JWT from the server
@@ -19,19 +19,19 @@ angular.module('app.services', [])
       }
     })
     .then(function (resp) {
-      console.log("DATA", resp.data);
       var storageItem = {
         token: resp.data.token,
         username: resp.data.username,
         scope: resp.data.scope
       };
+      if(resp.data.token === undefined){
+        return resp.data;
+      }
       return storageItem;
     })
     .catch(function(error){
-      //todo: show this message to the user
       console.log(error.data.message);
     })
-
   };
 
   var signup = function (user) {
@@ -52,7 +52,6 @@ angular.module('app.services', [])
     });
   };
 
- 
 
   return {
     login: login,

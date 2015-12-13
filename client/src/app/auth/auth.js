@@ -3,13 +3,24 @@ angular.module('app.auth', [])
 //todo: username if it is an email address or not
 .controller('AuthController', function($scope, $rootScope, $window, $location, Auth){
   $scope.user = {};
+  //to show error message on login page
+  $scope.flag = false;
 
   $scope.login = function () {
     Auth.login($scope.user)
-      .then(function (profile) {
+      .then(function (authResult) {
+
+        $scope.authResult = authResult;
+
         //accessible anywhere
-        $rootScope.profile = profile;
-        $location.path('/dashboard');
+        $rootScope.authResult = authResult;
+
+        if(authResult.token === undefined){
+          $scope.flag = true;
+          $location.path('/login');
+        } else {
+          $location.path('/dashboard');
+        }
       })
       .catch(function (error) {
         console.error(error);
@@ -18,9 +29,9 @@ angular.module('app.auth', [])
 
   $scope.signup = function () {
     Auth.signup($scope.user)
-      .then(function (profile) {
-        console.log(profile, "inside signup in AuthJS");
-        $rootScope.profile = profile;
+      .then(function (authResult) {
+        console.log(authResult, "inside signup in Auth.JS");
+        $rootScope.authResult = authResult;
         $location.path('/login');
       })
       .catch(function (error) {
