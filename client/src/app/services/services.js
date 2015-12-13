@@ -9,22 +9,6 @@ angular.module('app.services', [])
   // after you login/signup open devtools, click resources,
   // then localStorage and you'll see your token from the server
 
-   var getData = function(){
-    var token = $window.localStorage.getItem('token');
-    var profile = $window.localStorage.getItem('profile');
-
-    return $http({
-      method: 'GET',
-      url: '/user' + profile,
-      headers: {token: token}
-
-    }).then(function(resp){
-      console.log(resp.data);
-      return resp.data;
-    })
-  };
-
-
   var login = function (user) {
     return $http({
       method: 'POST',
@@ -35,16 +19,19 @@ angular.module('app.services', [])
       }
     })
     .then(function (resp) {
-      if(resp.status !== 200){
-        alert(resp.data);
-      };
+      console.log("DATA", resp.data);
       var storageItem = {
         token: resp.data.token,
-        userId: resp.data.userId
+        username: resp.data.username,
+        scope: resp.data.scope
       };
-      console.log(resp.data);
       return storageItem;
-    });
+    })
+    .catch(function(error){
+      //todo: show this message to the user
+      console.log(error.data.message);
+    })
+
   };
 
   var signup = function (user) {
@@ -59,20 +46,17 @@ angular.module('app.services', [])
     .then(function (resp) {
       var storageItem = {
         token: resp.data.token,
-        userId: resp.data.userId
+        userName: resp.data.username
       };
       return storageItem;
     });
   };
 
-  var isAuth = function () {
-    return !!$window.localStorage.getItem('profile') && !!$window.localStorage.getItem('token');
-  };
+ 
 
   return {
     login: login,
-    signup: signup,
-    isAuth: isAuth,
+    signup: signup
   };
 
 })
