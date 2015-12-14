@@ -37,7 +37,7 @@
                     </div>
                     <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Log in">
                 </form>
-                <a href="javascript:;" class="forget" data-toggle="modal" data-target=".forget-modal">Forgot your password?</a>
+                <a href="javascript:;" class="forget" data-toggle="modal" data-target=".forget-modal" ng-click="forgotPassword()">Forgot your password?</a>
                 <hr>
                 <a href="#/signup" class="signup">Don't have an account yet? Sign up</a>
           </div>
@@ -59,8 +59,12 @@
         <h4 class="modal-title">Recovery password</h4>
       </div>
       <div class="modal-body">
-        <p>Type your email account</p>
+        <p>Enter your email account</p>
         <input type="email" name="recovery-email" id="recovery-email" class="form-control" autocomplete="off">
+      </div>
+      <div class="modal-body">
+        <p>Enter your phone number (no spaces or dashes)</p>
+        <input type="tel" name="recovery-phone" id="recovery-phone" class="form-control" autocomplete="off">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
