@@ -11,6 +11,7 @@ angular.module('app.auth', [])
       .then(function (authResult) {
 
         $scope.authResult = authResult;
+        //console.log(authResult);
 
         //accessible anywhere
         $rootScope.authResult = authResult;
@@ -37,6 +38,15 @@ angular.module('app.auth', [])
       .catch(function (error) {
         console.error(error);
       });
+  };
+
+  $scope.inputType = 'password';
+  $scope.hideShowPassword = function(){
+    if($scope.inputType === 'password'){
+      $scope.inputType = 'text';
+    } else {
+      $scope.inputType = 'password';
+    }
   };
     
 });
