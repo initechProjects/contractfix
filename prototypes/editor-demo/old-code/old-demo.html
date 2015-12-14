@@ -1,0 +1,361 @@
+<html>
+<head>
+<style>
+  ins {
+    background: #e6ffe6;
+  }
+  del {
+    background: #ffe6e6;
+  }
+</style>
+</head>
+
+<button onclick="document.execCommand('bold', null, false);"><strong>B</strong></button>
+<button onclick="document.execCommand('italic', null, false);"><em><strong>I</strong></em></button>
+<button onclick="document.execCommand('underline', null, false);"><u><strong>U</strong></u></button>
+
+<div id="editor" contentEditable="true" spellcheck="false" style="border:2px solid black;height:300px;outline:none;overflow:auto"></div>
+
+<button id="save">Save</button>
+<button id="show-changes">Show Changes</button>
+<button id="accept-change">Accept Change</button>
+<button id="reject-change">Reject Change</button>
+<div id="doc"></div>
+
+<script src="jquery.js"></script>
+<script src="jquery.getChar.js"></script>
+<script src="diff-match-patch/diff_match_patch.js"></script>
+<script>
+
+/**
+ * 
+ * @param {}
+ * @param {}
+ * @return {}
+ * 
+ */
+
+function DocumentModel(initial) {
+  if (typeof initial === 'string') {
+    this.original = initial;
+    this.model = [{ type: 'original', content: initial }];
+  } else {
+    this.model = initial;
+    this.original = this.html();
+  }
+}
+
+DocumentModel.prototype.html = function() {
+  var text = '';
+  for (var i = 0; i < this.model.length; i++) {
+    var type = this.model[i].type;
+    var content = this.model[i].content;
+    if (type === 'insert') text += '<ins>' + content + '</ins>';
+    if (type === 'delete') text += '<del>' + content + '</del>';
+    if (type === 'original') text += content;
+  }
+  return text.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;').replace(/\n/g, '&NewLine;');
+};
+
+DocumentModel.prototype.insert = function(index, string) {
+  if (!string) return;
+
+  var indexTotal = 0;
+  var model = [];
+
+  for (var i = 0; i < this.model.length; i++) {
+    var segment = this.model[i];
+    if (index >= indexTotal && index < indexTotal + segment.content.length) {
+      var content = segment.content;
+      var insertPos = index - indexTotal;
+      var left = content.slice(0, insertPos);
+      var right = content.slice(insertPos);
+
+      if (left) model.push({ type: segment.type, content: left });
+      model.push({ type: 'insert', content: string });
+      if (right) model.push({ type: segment.type, content: right });
+    } else {
+      model.push(segment);
+    }
+    indexTotal += segment.content.length;
+  }
+
+  this.model = model;
+  this.simplify();
+};
+
+DocumentModel.prototype.delete = function(start, string) {
+  var model = [];
+  var indexTotal = 0;
+  var selectionStartIndex = 0;
+
+  var end = start + string.length;
+
+  for (var i = 0; i < this.model.length; i++) {
+    var segment = this.model[i];
+    var segmentStart = indexTotal;
+    var segmentEnd = indexTotal + segment.content.length;
+
+    if (start >= segmentStart && start < segmentEnd) {
+      if (end > segmentStart && end <= segmentEnd) {
+        var left = segment.content.slice(0, start - segmentStart);
+        var right = segment.content.slice(end - segmentStart);
+        if (left) model.push({ type: segment.type, content: left });
+        if (segment.type !== 'insert') model.push({ type: 'delete', content: string });
+        if (right) model.push({ type: segment.type, content: right });
+      } else {
+        var left = segment.content.slice(0, start - segmentStart);
+        if (left) model.push({ type: segment.type, content: left });
+      }
+    } else {
+      model.push(segment);
+    }
+
+    indexTotal += segment.content.length;
+  }
+
+  this.model = model;
+
+  this.simplify();
+};
+
+
+DocumentModel.prototype.replace = function(start, end, callback) {
+  var indexTotal = 0;
+  var segments = [];
+  for (var i = 0; i < this.model.length; i++) {
+    if (start >= indexTotal && start < indexTotal + this.model[i].length)
+      segments.push(this.model[i]);
+  }
+  return results;
+};
+
+DocumentModel.prototype.simplify = function() {
+  for (var i = 0; i < this.model.length; i++) {
+    var segment = this.model[i];
+    if (this.model[i +1] && this.model[i].type === this.model[i + 1].type) {
+      this.model[i].content += this.model[i + 1].content;
+      this.model[i].length += this.model[i + 1].length;
+      this.model.splice(i + 1, 1);
+    }
+  }
+};
+
+DocumentModel.prototype.print = function() {
+  console.log('Document model:');
+  for (var i = 0; i < this.model.length; i++) {
+    console.log('[' + this.model[i].type + ']', this.model[i].content);
+  }
+};
+// ----------------------------------------
+
+var original = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+var DIFF_INSERT = 1;
+var DIFF_DELETE = -1;
+var DIFF_EQUAL = 0;
+
+var $editor = $('#editor');
+var dmp = new diff_match_patch();
+
+var doc = new DocumentModel(original);
+var keyState = {};
+
+$editor.html(original);
+
+var changes = [];
+
+var documentModel = [];
+var showingChanges = false;
+var viewModel = original;
+
+$('#save').on('click', function(event) {
+  if (!showingChanges) {
+    var doc = $editor.html();
+    var diffs = dmp.diff_main(original, doc);
+    dmp.diff_cleanupSemantic(diffs);
+    documentModel = diffs;
+    viewModel = doc;
+  }
+});
+
+$('#show-changes').on('click', function(event) {
+  showingChanges = !showingChanges;
+  if (showingChanges) {
+    $editor.html(generateHtmlFromModel(documentModel));
+    $editor.attr('contentEditable', 'false');
+    this.textContent = 'Edit';
+  } else {
+    $editor.html(viewModel);
+    $editor.attr('contentEditable', 'true');
+  }
+});
+
+$editor.on('input', function(event) {
+  if (!showingChanges) {
+    var doc = $editor.html();
+    var diffs = dmp.diff_main(original, doc);
+    dmp.diff_cleanupSemantic(diffs);
+    documentModel = diffs;
+    viewModel = doc;
+  }
+});
+
+// $editor.on('input', function(event) {
+//   var doc = $editor.html().replace(/<del>.*<\/del>/g, '').replace(/<ins>|<\/ins>/g, '');
+//   console.log(doc);
+//   var diffs = dmp.diff_main(original, doc);
+//   var caret = getCaretCharacterOffsetWithin(this);
+//   dmp.diff_cleanupSemantic(diffs);
+//   documentModel = diffs;
+
+//   $editor.html(generateHtmlFromModel(documentModel));
+//   setSelectionRange(this, caret, caret);
+//   viewModel = doc;
+// });
+
+// function updateEditor(selectionStart, selectionEnd) {
+//   setSelectionRange(this, selectionStart, selectionEnd);
+// }
+
+// ----------------------------------------
+
+
+// ----------------------------------------
+
+function keyIsLetter(key) {
+  return key >= 65 && key <= 90;
+}
+
+function keyIsNumber(key) {
+  return (key >= 48 && key <= 57) || (key >= 96 && key <= 105);
+}
+
+function keyIsTab(key) {
+  return key === 9;
+}
+
+function keyIsSpace(key) {
+  return key === 32;
+}
+
+function keyIsEnter(key) {
+  return key === 13;
+}
+
+function keyIsBackspace(key) {
+  return key === 8;
+}
+
+function keyIsDelete(key) {
+  return key === 46;
+}
+
+function generateHtmlFromModel(model) {
+  var text = '';
+  for (var i = 0; i < model.length; i++) {
+    var type = model[i][0];
+    var content = model[i][1];
+    if (type === DIFF_INSERT) text += '<ins>' + content + '</ins>';
+    if (type === DIFF_DELETE) text += '<del>' + content + '</del>';
+    if (type === DIFF_EQUAL) text += content;
+  }
+  return text;
+}
+
+function getCaretCharacterOffsetWithin(element) {
+  var caretOffset = 0;
+  var doc = element.ownerDocument || element.document;
+  var win = doc.defaultView || doc.parentWindow;
+  var sel;
+  if (typeof win.getSelection != "undefined") {
+    sel = win.getSelection();
+    if (sel.rangeCount > 0) {
+      var range = win.getSelection().getRangeAt(0);
+      var preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      caretOffset = preCaretRange.toString().length;
+    }
+  } else if ((sel = doc.selection) && sel.type != "Control") {
+    var textRange = sel.createRange();
+    var preCaretTextRange = doc.body.createTextRange();
+    preCaretTextRange.moveToElementText(element);
+    preCaretTextRange.setEndPoint("EndToEnd", textRange);
+    caretOffset = preCaretTextRange.text.length;
+  }
+  return caretOffset;
+}
+
+function getSelectionHtml() {
+  var html = "";
+  if (typeof window.getSelection != "undefined") {
+    var sel = window.getSelection();
+    if (sel.rangeCount) {
+      var container = document.createElement("div");
+      for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+        container.appendChild(sel.getRangeAt(i).cloneContents());
+      }
+      html = container.innerHTML;
+    }
+  } else if (typeof document.selection != "undefined") {
+    if (document.selection.type == "Text") {
+      html = document.selection.createRange().htmlText;
+    }
+  }
+  return html;
+}
+
+function getTextNodesIn(node) {
+  var textNodes = [];
+  if (node.nodeType == 3) {
+    textNodes.push(node);
+  } else {
+    var children = node.childNodes;
+    for (var i = 0, len = children.length; i < len; ++i) {
+      textNodes.push.apply(textNodes, getTextNodesIn(children[i]));
+    }
+  }
+  return textNodes;
+}
+
+function setSelectionRange(el, start, end) {
+  if (document.createRange && window.getSelection) {
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var textNodes = getTextNodesIn(el);
+    var foundStart = false;
+    var charCount = 0, endCharCount;
+
+    for (var i = 0, textNode; textNode = textNodes[i++]; ) {
+      endCharCount = charCount + textNode.length;
+      if (!foundStart && start >= charCount
+            && (start < endCharCount ||
+            (start == endCharCount && i <= textNodes.length))) {
+        range.setStart(textNode, start - charCount);
+        foundStart = true;
+      }
+      if (foundStart && end <= endCharCount) {
+        range.setEnd(textNode, end - charCount);
+        break;
+      }
+      charCount = endCharCount;
+    }
+
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  } else if (document.selection && document.body.createTextRange) {
+    var textRange = document.body.createTextRange();
+    textRange.moveToElementText(el);
+    textRange.collapse(true);
+    textRange.moveEnd("character", end);
+    textRange.moveStart("character", start);
+    textRange.select();
+  }
+}
+
+
+</script>
+
+<html>
