@@ -10,13 +10,14 @@ angular.module('app.auth', [])
     Auth.login($scope.user)
       .then(function (authResult) {
 
-        $scope.authResult = authResult;
-        //console.log(authResult);
+        //$scope.authResult = authResult;
 
-        //accessible anywhere
         $rootScope.authResult = authResult;
-
-        if(authResult.token === undefined){
+        //console.log(authResult);
+        if(authResult === undefined){
+          $scope.flag = true;
+          $scope.authResult = "invalid username or password";
+        } else if(authResult.token === undefined){
           $scope.flag = true;
           $location.path('/login');
         } else {
@@ -31,7 +32,7 @@ angular.module('app.auth', [])
   $scope.signup = function () {
     Auth.signup($scope.user)
       .then(function (authResult) {
-        console.log(authResult, "inside signup in Auth.JS");
+        //console.log(authResult, "inside signup in Auth.JS");
         $rootScope.authResult = authResult;
         $location.path('/login');
       })
@@ -48,6 +49,8 @@ angular.module('app.auth', [])
       $scope.inputType = 'password';
     }
   };
+
+
     
 });
 
