@@ -2,7 +2,8 @@ var app = angular.module('app', [
     'ngRoute',
     'app.auth',
     'app.dashboard',
-    'app.services'
+    'app.services',
+    'app.editor'
     ]);
 
 
@@ -23,7 +24,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/dashboard/dashboard.html',
         controller: 'DashboardController'
     })
-    
+    .when('/editor', {
+        templateUrl: 'app/editor/editor.html',
+        controller: 'EditorController'
+    })
 });
 
 
