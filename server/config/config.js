@@ -1,4 +1,8 @@
-module.exports = {
+var Boom   = require('boom');
+var Jwt    = require('jsonwebtoken');
+var User   = require('../main/model/user').User;
+
+var config = {
   server: {
     host: '127.0.0.1',
     port: 8000
@@ -10,13 +14,60 @@ module.exports = {
     username: '',
     password: ''
   },
-  key: {
-    privateKey: 'f16fc55d48f2494d',
-    tokenExpiry: 1 * 60 * 60 * 1000 //1 hour
+  token: {
+    key: 'f16fc55d48f2494d',
+    expiry: {
+      emailVerification: 24 * 60, //1 day
+      refresh: 15 //15 minutes
+    }
   },
   email: {
-    username: 'test@test.com',
+    username: 'team@contractfix.com',
     accountName: 'ContractFix',
     verifyEmailUrl: 'verifyEmail'
+  },
+  // Validate function for auth
+  validate: function(token, callback) {
+
+    if (token === undefined) {
+      console.log('token undefined');
+      return callback(Boom.forbidden('wrong token'), false);
+    }
+    // if (token.userName !== request.payload.username) {
+    //   console.log('request damaged', request.headers.authorization);
+    //   return callback(Boom.forbidden('request damaged'), false);
+    // }
+    if (token.scope.indexOf('registered') < 0 && token.scope !== 'registered') {
+      console.log('not registered', token.scope[0]);
+      return callback(Boom.forbidden('wrong token'), false);
+    }
+    User.findUserByIdAndUserName(token.id, token.userName, function(err, user){
+      if (err) {
+        console.error(err);
+        return callback(Boom.badImplementation(err), false);
+      }
+      if (user === null) {
+        console.log('user not found', token.userName);
+        return callback(Boom.forbidden('user not found'), false);
+      }
+      if (user.isVerified === false) {
+        console.log('user not verified', token.userName);
+        return callback(Boom.forbidden('user not verified'), false);
+      }
+      if (user.userName !== token.userName) {
+        console.log('request damaged');
+        return callback(Boom.forbidden('request damaged'), false);
+      }
+
+      // If passed all above, user is authenticated
+
+      // add user's id to user's scope and send user credentials to callback
+      user.scope.push(user._id);
+      return callback(null, true, user);
+
+    });
   }
+
 };
+
+module.exports = config;

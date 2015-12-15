@@ -5,12 +5,12 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>EAE7E553-1DFC-4C9E-A454-E0AD2AF3DA48</UUID>
-        <nextObjectID>118</nextObjectID>
+        <nextObjectID>128</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
                     <key>NSPersistenceFrameworkVersion</key>
-                    <integer>640</integer>
+                    <integer>641</integer>
                     <key>NSStoreModelVersionHashes</key>
                     <dict>
                         <key>LMCookieJar</key>
@@ -135,6 +135,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z103"></relationship>
     </object>
     <object type="LMREQUEST" id="z109">
+        <attribute name="body" type="string">[{"data":{"json":"{}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">62E5113A-BE40-4DF1-B47D-33AEC21EC5A8</attribute>
         <attribute name="url" type="string">http://127.0.0.1:8000/verifyEmail</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -147,14 +148,14 @@
         <attribute name="name" type="string">Verify Email</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z114 z106"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z106 z114"></relationship>
     </object>
     <object type="LMREQUESTGROUP" id="z110">
         <attribute name="uuid" type="string">0EEE97E2-4CF2-4442-B432-CD9E89219387</attribute>
         <attribute name="order" type="int64">0</attribute>
-        <attribute name="name" type="string">ContractFix</attribute>
+        <attribute name="name" type="string">User functions</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z103 z117 z102 z109 z116"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z102 z103 z109 z116 z117 z119"></relationship>
         <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
@@ -184,7 +185,7 @@
         <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z104"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z114">
-        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiZWVhN2E0ZTAtOWYxMi0xMWU1LTkzMzktMGYyOWUxYmEyNTJmIiwiaWF0IjoxNDQ5NzMzOTM2fQ.wnk0iUOXE4ZvR2_rQmy9tWnV8phebPy6iAoqjskya4E</attribute>
+        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMDU2OTMxLCJleHAiOjE0NTAxNDMzMzF9.fY5Iq5neAoMnsjwWbGuq0lcDNaEfHs1LIunWYvSXIwo</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -239,5 +240,123 @@
         <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z102"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z119">
+        <attribute name="body" type="string">[{"data":{"json":"{}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="uuid" type="string">86C6796E-1F54-457B-A820-9137E2429527</attribute>
+        <attribute name="url" type="string">http://localhost:8000/test</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">5</attribute>
+        <attribute name="name" type="string">Test authentication with token</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z120 z121"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z120">
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMTM3NjEyLCJleHAiOjE0NTAxMzg1MTJ9.3fQ0d5nRDziWyd4DIstWgtqMFk5ydZoaRXeW6BZEvLM</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">Authorization</attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z119"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z121">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z119"></relationship>
+    </object>
+    <object type="LMREQUESTGROUP" id="z122">
+        <attribute name="uuid" type="string">BAFE4DCC-10B9-432C-A29F-8EAF47FB5D38</attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string">Contract</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z126 z124"></relationship>
+        <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z123">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z124"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z124">
+        <attribute name="uuid" type="string">A85984A8-92C1-45A0-826C-AD94E527A70D</attribute>
+        <attribute name="url" type="string">http://localhost:8000/newContract</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">POST</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"metadata\\":{\\"dateCreated\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"format\\\\\\":3,\\\\\\"customFormat\\\\\\":[],\\\\\\"now\\\\\\":true,\\\\\\"useTSeparator\\\\\\":1,\\\\\\"date\\\\\\":1450054003.633755,\\\\\\"delta\\\\\\":0,\\\\\\"useZForUTC\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.TimestampDynamicValue\\\\\\"}]\\",\\"template\\":\\"empty\\"},\\"original\\":\\"\u3c00h1\u3e00Lorem ipsum dolor sit amet aliquam\u3c00\\\\\\/h1\u3e00\u3c00h2\u3e00Sit aenean sapien\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Fermentum nunc integer. Wisi mollis vitae. Torquent magna libero. Nec vestibulum aenean. Suspendisse scelerisque a risus.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ac justo vestibulum. Per lobortis vitae. Id enim vitae pede integer mauris. Semper aliquet justo. Nec augue mi. Pretium posuere euismod. Ac lacus tortor integer.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ante nibh iaculis viverra luctus vestibulum ultricies risus et elit eros quis. Sodales velit mauris. Sit ut tellus lobortis taciti consectetuer. Laoreet ornare aenean. Ut tellus massa. Consectetuer vitae ipsum senectus interdum montes. Et sodales erat. Rutrum hendrerit nisl. Pellentesque sem sed. Vestibulum enim lacus. Non arcu et. Pharetra in arcu. Etiam quis vestibulum. Non malesuada quis. Sapien metus hendrerit. Nunc ut suscipit eget ullamcorper nec. Orci tristique eros. Ut exercitation quis. Tempus orci dignissim.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ante quis augue. Ante ad risus nisl suspendisse consectetuer. Justo euismod et ac et odio. Libero donec id. Augue mattis blandit. Turpis sapien mi. Dolor nam nulla. Risus id enim. Ac donec iaculis. Amet metus gravida. Quis et sed ligula mus nibh. Felis vitae lacus. Placerat leo sed ac dui.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pellentesque nisl elit. Pede ut repellat. Diam dui montes. In rhoncus mi. Autem varius blandit. Elementum suspendisse scelerisque. Ante id ut eros lobortis et urna.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ultrices enim velit. Ligula morbi odio. Sagittis in quam. Sociosqu fusce eleifend. Suspendisse erat id. Elit nec gravida. Quisque vitae libero amet ultricies vestibulum tempor.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pharetra blandit pellentesque metus risus ornare. Leo at dolor et sem nulla eros pellentesque inceptos. Suspendisse sit cras. Urna sit non. Felis class vestibulum. Erat justo sed. Mauris deleniti elit. Sed euismod ut. Nec vel pede. Lorem ut molestie. Posuere eleifend sem. Orci nibh blandit. Sollicitudin et donec ligula et.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Mauris quam a. Gravida nam libero odio rhoncus lacinia. Id fermentum suscipit. Amet molestie tellus. Quam mauris gravida. Elit quis ipsum. Praesentium nec pede ut.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Bibendum enim a\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Tortor in praesent. Libero viverra integer lectus elit enim. Curabitur semper vitae. Ut magna curabitur. Velit suspendisse nisl. At lectus a velit.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Faucibus integer sed. Tellus ad ea. Cras id eget. Neque porta felis. Urna curabitur duis. Aliquam et a. Etiam et odio libero aliquet donec gravida.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Tempor felis varius\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Nonummy libero suspendisse. Diam sollicitudin erat. Praesent in dui in a nam. Non nam hymenaeos. Sodales tempor ac. Suscipit eros fusce libero.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Rhoncus amet dapibus. Et scelerisque vel nulla mauris dignissim. Volutpat praesent in. Vehicula mollis duis. Vel velit natoque. Nullam sed magna. Nulla dui lobortis nec.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Leo etiam in\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Nulla adipisicing metus. Fames sit et duis tincidunt luctus. Mauris maecenas interdum. Lacus massa volutpat. Suspendisse fringilla quam. Habitasse nec mauris felis.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pretium vitae ac. Eleifend in cursus. Sit interdum elit. Consectetuer nulla a. Integer sed molestiae. Sed eu ac vel mauris vestibulum. Nec risus donec vestibulum.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Erat nisl adipiscing\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Eu eleifend sed. Aliquam tristique rutrum sed urna varius. Augue nullam ullamcorper. Amet volutpat suspendisse. Malesuada gravida parturient. Nec in mollis praesent.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00A pede nullam. Commodo blandit condimentum. Elit quam at. Urna vitae vel. Velit lobortis placerat. A non natoque magna libero mollis. Congue nec quam eget.\u3c00\\\\\\/p\u3e00\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">Create contract</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z123 z125"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z125">
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMTQzNTk2LCJleHAiOjE0NTAxNDQ0OTZ9.zcBbY45GuiWnHbCw5NJHQtgvxWbc8ij6OdZeXpHY_-c</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">Authorization</attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z124"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z126">
+        <attribute name="uuid" type="string">B7BB66EF-2C09-4912-AEC2-C9D5F70001F4</attribute>
+        <attribute name="url" type="string">http://localhost:8000/findmycontracts</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">POST</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string">Get user's contracts</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z127 z128"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z127">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z126"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z128">
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMTQ4MzkxLCJleHAiOjE0NTAxNDkyOTF9.eln2910V5P97dZPCJoRKCRbVSC5CNtOgBcix2KmJ6ds</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">Authorization</attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z126"></relationship>
     </object>
 </database>

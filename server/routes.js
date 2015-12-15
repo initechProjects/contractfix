@@ -1,6 +1,7 @@
 // Load modules
 
 var User   = require('./main/controller/user');
+var Contract   = require('./contract/controller/contract');
 var Static = require('./static');
 
 // API Server Endpoints
@@ -54,6 +55,44 @@ exports.endpoints = [
   *   returns:
   *     reminder text for email confirmation, and sends verification email
   */
-  { method: 'POST', path: '/resendVerificationEmail', config: User.resendVerificationEmail }
+  { method: 'POST', path: '/resendVerificationEmail', config: User.resendVerificationEmail },
+
+  /** Create new contract
+    requires:
+      metadata: {dateCreated: DATE, template: STRING}
+      original: STRING (text of the original contract)
+  */
+  { method: 'POST', path: '/newContract', config: Contract.create },
+
+  /** Update contract
+    requires:
+      contractId: STRING
+  */
+  { method: 'POST', path: '/updateContract', config: Contract.update },
+
+  /** Find user's contracts
+    requires:
+      contractId: STRING
+  */
+  { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
+
+  // Auth test route
+  { method: 'GET', path: '/test', config:
+    {
+      auth: {
+        strategy: 'token',
+        scope: ['admin', '7884ffd0-a078-11e5-a51b-33808da5a148']
+      },
+
+      handler: function(request, reply) {
+        if (request.auth.isAuthenticated) {
+          console.log(request.auth.credentials._id);
+          console.log(request.auth.credentials.userName);
+          console.log(request.auth.credentials.scope);
+          reply('success');
+        }
+      }
+    }
+  }
 
 ];

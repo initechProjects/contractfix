@@ -4,7 +4,7 @@ var crypto    = require('crypto');
 var algorithm = 'aes-256-ctr';
 var sendgrid  = require('sendgrid')('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');
 
-var privateKey = Config.key.privateKey;
+var privateKey = Config.token.key;
 
 exports.decrypt = function(password) {
   return decrypt(password);
