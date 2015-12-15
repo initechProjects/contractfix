@@ -28,6 +28,12 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/editor/editor.html',
         controller: 'EditorController'
     })
+    .when('/about', {
+        templateUrl: 'app/about/about.html',
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
 });
 
 
