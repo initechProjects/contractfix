@@ -1,4 +1,4 @@
-app.factory('Document', function() {
+app.factory('DocumentFactory', function() {
   var DIFF_INSERT = 1;
   var DIFF_DELETE = -1;
   var DIFF_EQUAL = 0;

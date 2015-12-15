@@ -1,3 +1,26 @@
+<!-- Signature modal -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Sign contract</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to sign the contract?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script> $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})</script>
+
 <!-- PRIMARY/SECONDARY NAVIGATION AND EDITOR TEMPLATE -->
 
 <nav class="navbar navbar-default navbar-inverse">
@@ -27,14 +50,17 @@
 </nav>
 
 <!-- ckEditor content area -->
-  <div class="container-fluid" ng-controller="EditorController">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-2">
-        <button type="" id="save" ng-onClick="ckEditor.save()"> Save </button>
-        <button type="" id="reject-changes" ng-onClick="ckEditor.rejectChanges()"> Reject Changes </button>
-        <button type="" id="accept-changes" ng-onClick="ckEditor.acceptChanges()"> Accept Changes </button>
+        <button type="" id="save" ng-click="ckEditor.save()"> Save </button>
+        <button type="" id="reject-changes" ng-click="ckEditor.rejectChanges()"> Reject Changes </button>
+        <button type="" id="accept-changes" ng-click="ckEditor.acceptChanges()"> Accept Changes </button>
         <button type="" id="send-draft"> Send Draft </button>
-        <button type="" id="show-edit-changes" ng-onClick="ckEditor.showChanges()"> Show Changes </button>
+        <button type="" id="show-edit-changes" ng-click="ckEditor.showChanges()">{{ buttonText }}</button>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+          SIGN CONTRACT
+        </button>
       </div>
       <div class="col-md-8">
             <form method="post">
@@ -42,13 +68,69 @@
             Contract: <!-- placeholder: interpolate contract name --><br>
             <textarea name="contractEditor" id="contractEditor"></textarea>
             <!-- Initialize editor by replacing textarea element-->
-            <script>
-                CKEDITOR.replace( 'contractEditor' );
-            </script>
         </p>
     </form>
 
       </div>
-      <div class="col-md-2"><!-- Right-most column --></div>
+      <div class="col-md-2">
+        <textarea ng-model="comment" id="comment-box" placeholder="Enter a comment..." style="width:100%"></textarea>
+        <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
+        <div class="comment-card" ng-repeat="comment in comments">
+          <div ng-if="comment.selection">{{ comment.selection }}</div>
+          <pre>{{ comment.comment }}</pre>
+          <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
+        </div>
       </div>
   </div>
+
+<!-- Slide out TODO
+  <script>
+  $(function () {
+        var $menu = $('#sidebar-wrapper');
+        var $content = $('#main-wrapper');
+        if ($.cookie('offcanvas') == 'hide') {
+            $content.addClass('no-transition');
+            $menu.hide();
+            $menu.css('right', -($menu.outerWidth() + 10));
+            $content.removeClass('col-md-10').addClass('col-md-12');
+        }
+        else if ($.cookie('offcanvas') == 'show') {
+            $menu.show(500).animate({ right: 0 });
+            //  $menu.show();
+            $content.removeClass('no-transition');
+            $content.removeClass('col-md-12').addClass('col-md-10');
+        }
+
+
+        $('#add-comment').click(function () {
+            $content.removeClass('no-transition');
+            if ($menu.is(':visible') && $content.hasClass('col-md-10')) {
+                // Slide out
+                $menu.animate({
+                    right: -($menu.outerWidth() + 10)
+                }, function () {
+                    $menu.hide(1000);
+                });
+                $content.removeClass('col-md-10').addClass('col-md-12');
+                $.cookie('offcanvas', 'hide');
+            }
+            else {
+                // Slide in
+                $menu.show(500).animate({ right: 0 });
+                $content.removeClass('col-md-12').addClass('col-md-10');
+                $.cookie('offcanvas', 'show');
+            }
+            if ($content.hasClass('col-md-12') && $menu.is(':hidden')) {
+                $menu.animate({
+                    right: 0
+                }, function () {
+                    $menu.show(1000);
+                });
+                //  $menu.show();
+                $content.removeClass('no-transition');
+                $content.removeClass('col-md-12').addClass('col-md-10');
+            }
+        });
+        $('.bs-tooltip').tooltip();
+    });
+</script> -->
