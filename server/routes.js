@@ -72,6 +72,8 @@ exports.endpoints = [
 
   /** Get contract
     requires:
+      in Headers -> Authentication: 'Bearer ' + token
+
       contractId: STRING
   */
   { method: 'POST', path: '/opencontract', config: Contract.open },

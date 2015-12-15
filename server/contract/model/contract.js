@@ -47,7 +47,8 @@ var Contract = new Schema({
   comments: [{
     userid: String,
     commentDate: Date,
-    text: String
+    text: String,
+    selection: String
   }],
 
   /**
