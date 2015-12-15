@@ -21,13 +21,34 @@ var Contract = new Schema({
   */
   metadata: {
     dateCreated: Date,
-    template: String
+    templateId: String
   },
 
   /**
-    original. Original contract draft in html format
+    Versions. Versions of contract draft in html format
   */
-  original: String,
+  versions: [{
+    userid: String,
+    versionDate: Date,
+    text: String
+  }],
+
+  /**
+    Drafts. Personal drafts of users in html format
+  */
+  drafts: [{
+    userid: String,
+    versionDate: Date,
+    text: String
+  }],
+
+
+
+  comments: [{
+    userid: String,
+    commentDate: Date,
+    text: String
+  }],
 
   /**
     users. Users of the contract
@@ -36,7 +57,7 @@ var Contract = new Schema({
 
 }, { autoIndex: false });
 
-Contract.statics.saveContract = function(requestData, callback) {
+Contract.statics.newContract = function(requestData, callback) {
   this.create(requestData, callback);
 };
 
@@ -45,15 +66,18 @@ Contract.statics.updateContract = function(contract, callback) {
 };
 
 Contract.statics.findContract = function(id, callback) {
-  this.findOne({
-    _id: id
-  }, callback);
+  this.findOne({ _id: id }, callback);
 };
 
 Contract.statics.findContractByUserId = function(userId, callback) {
-  this.find({
-    users: userId
-  }, callback);
+  this.find({ users: userId }, callback);
+};
+
+Contract.statics.addVersion = function(id, version, callback) {
+  this.findOne({ _id: id }, function(item) {
+    item.versions.push(version);
+    item.save(callback);
+  });
 };
 
 var contract = mongoose.model('contract', Contract);

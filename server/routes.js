@@ -38,7 +38,7 @@ exports.endpoints = [
   *   returns:
   *     text for password reminder email, and sends email containing password
   */
-  { method: 'POST', path: '/forgotPassword', config: User.forgotPassword },
+  { method: 'POST', path: '/forgotpassword', config: User.forgotPassword },
 
   /** Verify email
   *   requires:
@@ -46,7 +46,7 @@ exports.endpoints = [
   *   returns:
   *     marks user account as verified, and sends text about confirmation
   */
-  { method: 'POST', path: '/verifyEmail', config: User.verifyEmail },
+  { method: 'POST', path: '/verifyemail', config: User.verifyEmail },
 
   /** Resend verification email
   *   requires:
@@ -55,20 +55,26 @@ exports.endpoints = [
   *   returns:
   *     reminder text for email confirmation, and sends verification email
   */
-  { method: 'POST', path: '/resendVerificationEmail', config: User.resendVerificationEmail },
+  { method: 'POST', path: '/resendverificationemail', config: User.resendVerificationEmail },
 
-  /** Create new contract
+  /** Save contract
     requires:
-      metadata: {dateCreated: DATE, template: STRING}
-      original: STRING (text of the original contract)
-  */
-  { method: 'POST', path: '/newContract', config: Contract.create },
+      in Headers -> Authentication: 'Bearer ' + token
 
-  /** Update contract
+      in Body:
+      contractId: required to update, if null new contract
+      text: latest text of the contract
+      comments: array of string
+      templateId: if contract created based on existing template, id should be passed
+      personal: boolean, if true, it will be saved as personal draft
+  */
+  { method: 'POST', path: '/savecontract', config: Contract.save },
+
+  /** Get contract
     requires:
       contractId: STRING
   */
-  { method: 'POST', path: '/updateContract', config: Contract.update },
+  { method: 'POST', path: '/opencontract', config: Contract.open },
 
   /** Find user's contracts
     requires:
