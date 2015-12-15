@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 
 /**
- * @module  User
+ * @module  Contract
  * @description contain the details of Attribute
  */
 
@@ -30,37 +30,35 @@ var Contract = new Schema({
   original: String,
 
   /**
-    master. Original contract draft in html format
+    users. Users of the contract
   */
-  master: String,
+  users: { type: [String], index: true }
 
+}, { autoIndex: false });
 
-});
-
-User.statics.saveUser = function(requestData, callback) {
+Contract.statics.saveContract = function(requestData, callback) {
   this.create(requestData, callback);
 };
 
-User.statics.updateUser = function(user, callback) {
-  user.save(callback);
+Contract.statics.updateContract = function(contract, callback) {
+  contract.save(callback);
 };
 
-User.statics.findUser = function(userName, callback) {
+Contract.statics.findContract = function(id, callback) {
   this.findOne({
-    userName: userName
-  }, callback);
-};
-
-User.statics.findUserByIdAndUserName = function(id, userName, callback) {
-  this.findOne({
-    userName: userName,
     _id: id
   }, callback);
 };
 
-var user = mongoose.model('user', User);
+Contract.statics.findContractByUserId = function(userId, callback) {
+  this.find({
+    users: userId
+  }, callback);
+};
+
+var contract = mongoose.model('contract', Contract);
 
 /** export schema */
 module.exports = {
-  User: user
+  Contract: contract
 };

@@ -5,7 +5,7 @@ var Config = require('../../config/config');
 var Jwt    = require('jsonwebtoken');
 var User   = require('../model/user').User;
 
-var privateKey = Config.key.privateKey;
+var privateKey = Config.token.key;
 
 exports.create = {
   validate: {
@@ -16,15 +16,15 @@ exports.create = {
   },
   handler: function(request, reply) {
     request.payload.password = Common.encrypt(request.payload.password);
-    request.payload.scope = 'registered';
+    request.payload.scope = ['registered'];
     User.saveUser(request.payload, function(err, user) {
       if (!err) {
         var tokenData = {
           userName: user.userName,
-          scope: [user.scope],
+          scope: user.scope,
           id: user._id
         };
-        Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey));
+        Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresInMinutes: Config.token.expiry.emailVerification } ));
         reply('Please confirm your email id by clicking on link in email');
       } else {
         if ( err.code === 11000 || err.code === 11001 ) {
@@ -50,17 +50,17 @@ exports.login = {
         if (user === null) return reply(Boom.forbidden('invalid username or password'));
         if (request.payload.password === Common.decrypt(user.password)) {
 
-          if(!user.isVerified) return reply('Your email address is not verified. please verify your email address to proceed');
+          if(!user.isVerified) return reply(Boom.forbidden('Your email address is not verified. please verify your email address to proceed'));
 
           var tokenData = {
               userName: user.userName,
-              scope: [user.scope],
+              scope: user.scope,
               id: user._id
           };
           var res = {
               username: user.userName,
               scope: user.scope,
-              token: Jwt.sign(tokenData, privateKey)
+              token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresInMinutes: Config.token.expiry.refresh })
           };
 
           reply(res);
@@ -95,7 +95,7 @@ exports.resendVerificationEmail = {
             scope: [user.scope],
             id: user._id
           };
-          Common.sendMailVerificationLink(user,Jwt.sign(tokenData, privateKey));
+          Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresInMinutes: Config.token.expiry.emailVerification }));
           reply('account verification link is sucessfully send to your email');
         } else reply(Boom.forbidden('invalid username or password'));
       } else {
@@ -128,12 +128,12 @@ exports.forgotPassword = {
 
 exports.verifyEmail = {
   handler: function(request, reply) {
-    Jwt.verify(request.headers.authorization, privateKey, function(err, decoded) {
+    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
       if(decoded === undefined) {
         console.log('decoded undefined', request.headers.authorization);
         return reply(Boom.forbidden('invalid verification link'));
       }
-      if(decoded.scope[0] != 'registered') {
+      if(decoded.scope[0] !== 'registered') {
         console.log('not registered', decoded.scope[0]);
         return reply(Boom.forbidden('invalid verification link'));
       }

@@ -53,8 +53,8 @@ var User = new Schema({
   Scope. It can only contain string, is required field, and should have value from enum array.
   */
   scope: {
-    type: String,
-    enum: ['admin', 'registered', 'contract_owner', 'other_party'],
+    type: [String],
+    // enum: ['admin', 'registered', 'contract_owner', 'other_party'],
     required: true
   },
 
@@ -62,6 +62,14 @@ var User = new Schema({
     isVerified. Boolean value to  check if email address is verified.
   */
   isVerified: {
+    type: Boolean,
+    default: false
+  },
+
+  /**
+    isRevoked. Boolean value to  check if user access revoked.
+  */
+  isRevoked: {
     type: Boolean,
     default: false
   },
