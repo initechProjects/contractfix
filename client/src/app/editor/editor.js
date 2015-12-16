@@ -1,10 +1,11 @@
 angular.module('app.editor', [])
-.controller('EditorController', function ($scope) {
+.controller('EditorController', function ($scope, $rootScope) {
 
 
   // Lines 5 - 17 replace the textarea in editor.html
   // with the ckEditor proper using the editor API.
 
+  // var token = $rootScope.authResult.token;
 
   CKEDITOR.disableAutoInline = true;
   var editor = CKEDITOR.inline('contractEditor');
@@ -34,10 +35,9 @@ angular.module('app.editor', [])
 
   $scope.ckEditor.addComment = function() {
     if ($scope.comment) {
-      var html = editor.getSelectedHtml(true).replace(/&nbsp;/g, '');
-      html = html.replace(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g, '');
-      $scope.comments.push({ comment: $scope.comment, selection: html });
+      $scope.comments.push({ comment: $scope.comment, selection: $scope.selection });
       $scope.comment = '';
+      $scope.selection = '';
     }
   };
 
@@ -80,6 +80,14 @@ angular.module('app.editor', [])
 
   editor.on('lite:init', function() {
     $scope.lite = editor.plugins.lite.findPlugin(editor);
+  });
+
+  editor.on('selectionChange', function() {
+    $scope.$apply(function() {
+      var html = editor.getSelectedHtml(true).replace(/&nbsp;/g, '');
+      html = html.replace(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g, '');
+      $scope.selection = html;
+    });
   });
   
 });

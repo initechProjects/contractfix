@@ -47,8 +47,7 @@ app.run(function ($rootScope, $location, Auth) {
   // and send that token to the server to see if it is a real user or hasn't expired
   // if it's not valid, we then redirect back to signin/signup
   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-      console.log("Routing and authing!")
+    if (next.$$route && !Auth.isAuth()) {
       $location.path('/login');
     }
   });
