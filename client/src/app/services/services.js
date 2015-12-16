@@ -88,13 +88,6 @@ angular.module('app.services', [])
 
 })
 
-
-
-
-
-
-
-
 .factory('Dashboard', function ($http, $location, $window, $rootScope) {
 
   var findContracts = function (token) {
