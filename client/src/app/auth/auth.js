@@ -20,6 +20,9 @@ angular.module('app.auth', [])
           $location.path('/login');
         } else {
           $location.path('/dashboard');
+          console.log(authResult);
+          $rootScope.expires = Date.now() + 600000; // now + 10 minutes
+          localStorage.setItem('auth', JSON.stringify({ token: authResult.token, expires: Date.now() + 600000 }));
         }
       })
       .catch(function (error) {
