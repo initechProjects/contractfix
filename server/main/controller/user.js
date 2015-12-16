@@ -15,24 +15,28 @@ exports.create = {
     }
   },
   handler: function(request, reply) {
-    request.payload.password = Common.encrypt(request.payload.password);
     request.payload.scope = ['registered'];
-    User.saveUser(request.payload, function(err, user) {
-      if (!err) {
-        var tokenData = {
-          userName: user.userName,
-          scope: user.scope,
-          id: user._id
-        };
-        Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresInMinutes: Config.token.expiry.emailVerification } ));
-        reply('Please confirm your email id by clicking on link in email');
-      } else {
-        if ( err.code === 11000 || err.code === 11001 ) {
-          reply(Boom.forbidden('please provide another user email'));
+
+    Common.hash(request.payload.password, function(error, hashedPassword) {
+      request.payload.password = hashedPassword;
+
+      User.saveUser(request.payload, function(err, user) {
+        if (!err) {
+          var tokenData = {
+            userName: user.userName,
+            scope: user.scope,
+            id: user._id
+          };
+          Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+          reply('Please confirm your email id by clicking on link in email');
         } else {
-          reply(Boom.forbidden(err)); // HTTP 403
+          if ( err.code === 11000 || err.code === 11001 ) {
+            reply(Boom.forbidden('please provide another user email'));
+          } else {
+            reply(Boom.forbidden(err)); // HTTP 403
+          }
         }
-      }
+      });
     });
   }
 };
@@ -46,34 +50,74 @@ exports.login = {
   },
   handler: function(request, reply) {
     User.findUser(request.payload.userName, function(err, user) {
-      if (!err) {
-        if (user === null) return reply(Boom.forbidden('invalid username or password'));
-        if (request.payload.password === Common.decrypt(user.password)) {
-
-          if(!user.isVerified) return reply(Boom.forbidden('Your email address is not verified. please verify your email address to proceed'));
-
-          var tokenData = {
-              userName: user.userName,
-              scope: user.scope,
-              id: user._id
-          };
-          var res = {
-              username: user.userName,
-              scope: user.scope,
-              token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresInMinutes: Config.token.expiry.refresh })
-          };
-
-          reply(res);
-        } else {
-          reply(Boom.forbidden('invalid username or password'));
-        }
-      } else {
+      if (err) {
         console.error(err);
-        return reply(Boom.badImplementation(err));
+        reply(Boom.badImplementation(err));
       }
+
+      if (user === null) return reply(Boom.forbidden('invalid username or password'));
+
+      Common.checkPassword(request.payload.password, user.password, function(err, result) {
+        if (err) {
+          console.error(err);
+          reply(Boom.badImplementation(err));
+        }
+        if (!result) reply(Boom.forbidden('invalid username or password'));
+        if(!user.isVerified) return reply(Boom.forbidden('Your email address is not verified. please verify your email address to proceed'));
+
+        var tokenData = {
+          userName: user.userName,
+          scope: user.scope,
+          id: user._id
+        };
+        var res = {
+          username: user.userName,
+          scope: user.scope,
+          token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
+        };
+
+        reply(res);
+
+      });
     });
   }
 };
+
+exports.changePassword = {
+  validate: {
+    payload: {
+      password: Joi.string().required()
+    }
+  },
+  auth: {
+    strategy: 'token'
+  },
+  handler: function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      User.findUserById(request.auth.credentials._id, function(err, user) {
+        if (err) {
+          console.error(err);
+          reply(Boom.badImplementation(err));
+        }
+
+        if (user === null) return reply(Boom.forbidden('invalid username or password'));
+
+        Common.hash(request.payload.password, function(error, hashedPassword) {
+          user.password = hashedPassword;
+
+          User.updateUser(user, function(err, user) {
+            if (err) {
+              console.error(err);
+              reply(Boom.badImplementation(err));
+            }
+
+            reply('password changed successfully.');
+          });
+        });
+      });
+    }
+  }
+},
 
 exports.resendVerificationEmail = {
   validate: {
@@ -84,24 +128,30 @@ exports.resendVerificationEmail = {
   },
   handler: function(request, reply) {
     User.findUser(request.payload.userName, function(err, user) {
-      if (!err) {
-        if (user === null) return reply(Boom.forbidden('invalid username or password'));
-        if (request.payload.password === Common.decrypt(user.password)) {
-
-          if(user.isVerified) return reply('your email address is already verified');
-
-          var tokenData = {
-            userName: user.userName,
-            scope: [user.scope],
-            id: user._id
-          };
-          Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresInMinutes: Config.token.expiry.emailVerification }));
-          reply('account verification link is sucessfully send to your email');
-        } else reply(Boom.forbidden('invalid username or password'));
-      } else {
+      if (err) {
         console.error(err);
-        return reply(Boom.badImplementation(err));
+        reply(Boom.badImplementation(err));
       }
+
+      if (user === null) return reply(Boom.forbidden('invalid username or password'));
+
+      Common.checkPassword(request.payload.password, user.password, function(err, result) {
+        if (err) {
+          console.error(err);
+          reply(Boom.badImplementation(err));
+        }
+        if (!result) reply(Boom.forbidden('invalid username or password'));
+
+        if(user.isVerified) return reply('your email address is already verified');
+
+        var tokenData = {
+          userName: user.userName,
+          scope: [user.scope],
+          id: user._id
+        };
+        Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification }));
+        reply('account verification link is sucessfully send to your email');
+      });
     });
   }
 };
@@ -114,14 +164,21 @@ exports.forgotPassword = {
   },
   handler: function(request, reply) {
     User.findUser(request.payload.userName, function(err, user) {
-      if (!err) {
-        if (user === null) return reply(Boom.forbidden('invalid username'));
-        Common.sendMailForgotPassword(user);
-        reply('password is send to registered email id');
-      } else {
+      if (err) {
         console.error(err);
         return reply(Boom.badImplementation(err));
       }
+
+      if (user === null) return reply(Boom.forbidden('invalid username'));
+
+      var tokenData = {
+        userName: user.userName,
+        scope: user.scope,
+        id: user._id
+      };
+
+      Common.sendMailForgotPassword(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh }));
+      reply('instructions to reset password sent to your registered email.');
     });
   }
 };
