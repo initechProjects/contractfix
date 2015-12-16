@@ -1,6 +1,6 @@
 angular.module('app.services', [])
 
-.factory('Auth', function ($http, $location, $window) {
+.factory('Auth', function ($http, $location, $window, $rootScope) {
 
   // auth service responsible for authenticating our user
   // by exchanging the user's username and password
@@ -53,10 +53,27 @@ angular.module('app.services', [])
     });
   };
 
+  var isAuth = function() {
+    var token, expires;
+
+    if ($rootScope.authResult && $rootScope.expires) {
+      token = $rootScope.authResult.token;
+      expires = $rootScope.expires;
+    } else {
+      var storage = JSON.parse(localStorage.getItem('auth'));
+      if (storage) {
+        token = storage.token;
+        expires = storage.expires;
+      }
+    }
+
+    return !!token && expires > Date.now();
+  };
 
   return {
     login: login,
-    signup: signup
+    signup: signup,
+    isAuth: isAuth
   };
 
 })
