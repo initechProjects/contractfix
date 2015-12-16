@@ -17,10 +17,13 @@ exports.create = {
   handler: function(request, reply) {
     request.payload.scope = ['registered'];
 
-    User.hash(request.payload.password, function(error, hashedPassword) {
+    Common.hash(request.payload.password, function(error, hashedPassword) {
       request.payload.password = hashedPassword;
 
       User.saveUser(request.payload, function(err, user) {
+        console.log('returned from mongo');
+        // if (err) return reply(Boom.badImplementation(err));
+
         if (!err) {
           var tokenData = {
             userName: user.userName,
@@ -58,7 +61,7 @@ exports.login = {
       if (user === null) return reply(Boom.forbidden('invalid username or password'));
       if (user.isRevoked) return reply(Boom.forbidden('your account has been suspended'));
 
-      User.checkPassword(request.payload.password, user.password, function(err, result) {
+      Common.checkPassword(request.payload.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
           return reply(Boom.badImplementation(err));
@@ -127,7 +130,7 @@ exports.resetPassword = {
 
         if (user === null) return reply(Boom.forbidden('invalid username or password'));
 
-        User.hash(request.payload.password, function(error, hashedPassword) {
+        Common.hash(request.payload.password, function(error, hashedPassword) {
           user.password = hashedPassword;
 
           User.updateUser(user, function(err, user) {
@@ -160,7 +163,7 @@ exports.resendVerificationEmail = {
 
       if (user === null) return reply(Boom.forbidden('invalid username or password'));
 
-      User.checkPassword(request.payload.password, user.password, function(err, result) {
+      Common.checkPassword(request.payload.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
           return reply(Boom.badImplementation(err));
