@@ -85,17 +85,19 @@ exports.save = {
         };
         contract.versions.push(version);
 
-        request.payload.comments.forEach(function(item) {
-          let comment = {
-            userid: request.auth.credentials._id,
-            commentDate: Date.now(),
-            text: item.comment,
-            selection: item.selection
-          };
+        if (request.payload.comments) {
+          request.payload.comments.forEach(function(item) {
+            let comment = {
+              userid: request.auth.credentials._id,
+              commentDate: Date.now(),
+              text: item.comment,
+              selection: item.selection
+            };
 
-          if (!contract.comments) contract.comments = [];
-          contract.comments.push(comment);
-        });
+            if (!contract.comments) contract.comments = [];
+            contract.comments.push(comment);
+          });
+        }
 
         contract.users =[request.auth.credentials._id];
 
