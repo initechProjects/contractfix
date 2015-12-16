@@ -6,6 +6,7 @@ var Db       = require('./config/db');
 var Inert    = require('inert');
 var Config   = require('./config/config');
 var JwtToken = require('hapi-auth-jwt');
+var Blipp    = require('blipp');
 
 var app = {};
 app.config = Config;
@@ -20,6 +21,11 @@ server.register([{
   register: JwtToken
 }, {
   register: Inert
+}, {
+  register: Blipp,
+  options: {
+    showAuth: true
+  }
 }],
 function(err) {
   server.auth.strategy('token', 'jwt', {

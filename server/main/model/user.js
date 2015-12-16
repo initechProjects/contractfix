@@ -34,6 +34,14 @@ var User = new Schema({
   },
 
   /**
+    Full name. It can only contain string.
+  */
+  fullname: {
+    type: String,
+    required: false
+  },
+
+  /**
     password. It can only contain string, is required field.
   */
   privateKey: {
@@ -94,7 +102,6 @@ User.pre('save', function(next) {
 });
 
 User.statics.saveUser = function(requestData, callback) {
-  console.log(requestData);
   this.create(requestData, callback);
 };
 
@@ -120,7 +127,6 @@ User.statics.findUserByIdAndUserName = function(id, userName, callback) {
     _id: id
   }, callback);
 };
-
 
 var user = mongoose.model('user', User);
 
