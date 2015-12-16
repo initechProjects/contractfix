@@ -1,6 +1,9 @@
 // var nodemailer = require("nodemailer");
 var Config    = require('../../config/config');
 var crypto    = require('crypto');
+var Bcrypt    = require('bcrypt-nodejs');
+var Welcome   = require('./common_welcome_email.js');
+var Reset   = require('./common_reset_password_email.js');
 var algorithm = 'aes-256-ctr';
 var sendgrid  = require('sendgrid')('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');
 
@@ -14,13 +17,26 @@ exports.encrypt = function(password) {
   return encrypt(password);
 };
 
-exports.sendMailVerificationLink = function(user,token) {
-  var mailbody = `<p>Thanks for Registering on ${Config.email.accountName}.</p><p>Please verify your email by clicking on the verification link below.<br/><a href='http://${Config.server.host}:${Config.server.port}/${Config.email.verifyEmailUrl}/${token}'>Verification Link</a></p>`;
+exports.hash = function(password, callback) {
+  Bcrypt.genSalt(Config.params.saltRounds, function(error, salt) {
+    if (error) callback(error, null);
+    Bcrypt.hash(password, salt, null, callback);
+  });
+};
+
+exports.checkPassword = function(password, hash, callback) {
+  Bcrypt.compare(password, hash, callback);
+};
+
+exports.sendMailVerificationLink = function(user, token) {
+  // var mailbody = `<p>Thanks for Registering on ${Config.email.accountName}.</p><p>Please verify your email by clicking on the verification link below.<br/><a href='http://${Config.server.host}:${Config.server.port}/${Config.email.verifyEmailUrl}/${token}'>Verification Link</a></p>`;
+  var mailbody = Welcome.email(user, token);
   mail(Config.email.username, `${Config.email.accountName} Team`, user.userName , "Account Verification", mailbody);
 };
 
-exports.sendMailForgotPassword = function(user) {
-  var mailbody = `<p>Your ${Config.email.accountName} username: ${user.userName}.</p></p>Your password : ${decrypt(user.password)}</p>`;
+exports.sendMailForgotPassword = function(user, token) {
+  // var mailbody = `<p>Your ${Config.email.accountName} username: ${user.userName}.</p></p>Your password : ${decrypt(user.password)}</p>`;
+  var mailbody = Reset.email(user, token);
   mail(Config.email.username, `${Config.email.accountName} Team`, user.userName , 'Account password', mailbody);
 };
 

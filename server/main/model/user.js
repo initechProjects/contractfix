@@ -108,6 +108,12 @@ User.statics.findUser = function(userName, callback) {
   }, callback);
 };
 
+User.statics.findUserById = function(id, callback) {
+  this.findOne({
+    _id: id
+  }, callback);
+};
+
 User.statics.findUserByIdAndUserName = function(id, userName, callback) {
   this.findOne({
     userName: userName,

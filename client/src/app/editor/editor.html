@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Sign contract</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" contenteditable="true">
         Are you sure you want to sign the contract?
       </div>
       <div class="modal-footer">
@@ -17,13 +17,10 @@
     </div>
   </div>
 </div>
-<script> $('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').focus()
-})</script>
 
 <!-- PRIMARY/SECONDARY NAVIGATION AND EDITOR TEMPLATE -->
-
-<nav class="navbar navbar-default navbar-inverse">
+<div class="row">
+<nav class="navbar navbar-default navbar-inverse fade-object" id="top-bar">
   <div class="container-fluid">
     <div class="navbar-header">
       <!-- Mobile navigation -->
@@ -38,99 +35,74 @@
 
     <!-- Links for medium to large viewports -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Editor<span class="sr-only">(current)</span></a></li>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#/editor">Editor<span class="sr-only">(current)</span></a></li>
         <li><a href="#">Dashboard</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav pull-right">
         <li><a href="#">Settings</a></li>
       </ul>
     </div><!-- end navbar-collapse -->
   </div><!-- end container-fluid -->
 </nav>
 
+
 <!-- ckEditor content area -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-2">
-        <button type="" id="save" ng-click="ckEditor.save()"> Save </button>
-        <button type="" id="reject-changes" ng-click="ckEditor.rejectChanges()"> Reject Changes </button>
-        <button type="" id="accept-changes" ng-click="ckEditor.acceptChanges()"> Accept Changes </button>
-        <button type="" id="send-draft"> Send Draft </button>
-        <button type="" id="show-edit-changes" ng-click="ckEditor.showChanges()">{{ buttonText }}</button>
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
+      <div class="col-md-2" id="left-panel">
+        <div class="fade-object">
+        <button type="" class="btn btn-primary btn-sm" id="save" ng-click="ckEditor.save()"> Save </button><br>
+        <button type="" class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" id="reject-changes" ng-click="ckEditor.rejectChanges()"> Reject Changes </button>
+        <button type="" class="btn btn-primary btn-sm" id="accept-changes" ng-click="ckEditor.acceptChanges()"> Accept Changes </button>
+        <button type="" class="btn btn-primary btn-sm" id="send-draft"> Send Draft </button>
+        <button type="" class="btn btn-primary btn-sm" id="show-edit-changes" ng-click="ckEditor.showChanges()">{{ buttonText }}</button><br><br>
+        <button type="button" class="btn btn-primary btn-sm fixed" data-toggle="modal" data-target="#myModal">
           SIGN CONTRACT
-        </button>
+        </button></div>
       </div>
       <div class="col-md-8">
             <form method="post">
         <p>
-            Contract: <!-- placeholder: interpolate contract name --><br>
-            <textarea name="contractEditor" id="contractEditor"></textarea>
+            <h3>Contract:</h3> <!-- placeholder: interpolate contract name --><br>
+            <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor"></div>
             <!-- Initialize editor by replacing textarea element-->
         </p>
     </form>
 
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 fade-object">
         <textarea ng-model="comment" id="comment-box" placeholder="Enter a comment..." style="width:100%"></textarea>
         <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
         <div class="comment-card" ng-repeat="comment in comments">
-          <div ng-if="comment.selection">{{ comment.selection }}</div>
-          <pre>{{ comment.comment }}</pre>
+          <pre ng-if="comment.selection">{{ comment.selection }}</pre>
+          <p>{{ comment.comment }}</p>
           <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
         </div>
       </div>
   </div>
 
-<!-- Slide out TODO
-  <script>
-  $(function () {
-        var $menu = $('#sidebar-wrapper');
-        var $content = $('#main-wrapper');
-        if ($.cookie('offcanvas') == 'hide') {
-            $content.addClass('no-transition');
-            $menu.hide();
-            $menu.css('right', -($menu.outerWidth() + 10));
-            $content.removeClass('col-md-10').addClass('col-md-12');
-        }
-        else if ($.cookie('offcanvas') == 'show') {
-            $menu.show(500).animate({ right: 0 });
-            //  $menu.show();
-            $content.removeClass('no-transition');
-            $content.removeClass('col-md-12').addClass('col-md-10');
-        }
+
+<script>
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+});
+</script>
 
 
-        $('#add-comment').click(function () {
-            $content.removeClass('no-transition');
-            if ($menu.is(':visible') && $content.hasClass('col-md-10')) {
-                // Slide out
-                $menu.animate({
-                    right: -($menu.outerWidth() + 10)
-                }, function () {
-                    $menu.hide(1000);
-                });
-                $content.removeClass('col-md-10').addClass('col-md-12');
-                $.cookie('offcanvas', 'hide');
-            }
-            else {
-                // Slide in
-                $menu.show(500).animate({ right: 0 });
-                $content.removeClass('col-md-12').addClass('col-md-10');
-                $.cookie('offcanvas', 'show');
-            }
-            if ($content.hasClass('col-md-12') && $menu.is(':hidden')) {
-                $menu.animate({
-                    right: 0
-                }, function () {
-                    $menu.show(1000);
-                });
-                //  $menu.show();
-                $content.removeClass('no-transition');
-                $content.removeClass('col-md-12').addClass('col-md-10');
-            }
-        });
-        $('.bs-tooltip').tooltip();
-    });
-</script> -->
+<style>
+
+#top-bar, #top-bar a {
+  color:#A7FAE6;
+}
+
+#top-bar a:hover {
+  color: #fff;
+}
+
+#contractEditor {
+  font: 20px/1.5 'Source Code Pro';
+  color: #323232;
+  outline: none;
+}
+</style>

@@ -3,6 +3,9 @@ var Jwt    = require('jsonwebtoken');
 var User   = require('../main/model/user').User;
 
 var config = {
+  params: {
+    saltRounds: 12
+  },
   server: {
     host: '127.0.0.1',
     port: 8000
@@ -17,14 +20,15 @@ var config = {
   token: {
     key: 'f16fc55d48f2494d',
     expiry: {
-      emailVerification: 24 * 60, //1 day
-      refresh: 15 //15 minutes
+      emailVerification: 24 * 60 * 60, //1 day
+      refresh: 15 * 60 //15 minutes
     }
   },
   email: {
     username: 'team@contractfix.com',
     accountName: 'ContractFix',
-    verifyEmailUrl: 'verifyEmail'
+    verifyEmailUrl: 'verifyemail',
+    resetPasswordUrl: 'resetpassword'
   },
   // Validate function for auth
   validate: function(request, token, callback) {

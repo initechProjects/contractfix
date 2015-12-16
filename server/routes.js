@@ -1,8 +1,8 @@
 // Load modules
 
+var Static = require('./main/controller/static');
 var User   = require('./main/controller/user');
 var Contract   = require('./contract/controller/contract');
-var Static = require('./static');
 
 // API Server Endpoints
 exports.endpoints = [
@@ -47,6 +47,15 @@ exports.endpoints = [
   *     marks user account as verified, and sends text about confirmation
   */
   { method: 'POST', path: '/verifyemail', config: User.verifyEmail },
+
+  /** Reset password
+  *   requires:
+  *     Post call including token in the header (Authorization) which was sent by email
+  *     and password in body
+  *   returns:
+  *     changes password and returns confirmation message
+  */
+  { method: 'POST', path: '/resetpassword', config: User.changePassword },
 
   /** Resend verification email
   *   requires:
