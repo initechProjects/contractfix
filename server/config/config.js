@@ -37,6 +37,7 @@ var config = {
     //   console.log('request damaged', request.headers.authorization);
     //   return callback(Boom.forbidden('request damaged'), false);
     // }
+    console.log(token);
     if (token.scope.indexOf('registered') < 0 && token.scope !== 'registered') {
       console.log('not registered', token.scope[0]);
       return callback(Boom.forbidden('wrong token'), false);

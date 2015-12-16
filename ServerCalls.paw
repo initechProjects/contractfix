@@ -10,7 +10,7 @@
             <plist version="1.0">
                 <dict>
                     <key>NSPersistenceFrameworkVersion</key>
-                    <integer>641</integer>
+                    <integer>640</integer>
                     <key>NSStoreModelVersionHashes</key>
                     <dict>
                         <key>LMCookieJar</key>
@@ -137,7 +137,7 @@
     <object type="LMREQUEST" id="z109">
         <attribute name="body" type="string">[{"data":{"json":"{}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">62E5113A-BE40-4DF1-B47D-33AEC21EC5A8</attribute>
-        <attribute name="url" type="string">http://127.0.0.1:8000/verifyEmail</attribute>
+        <attribute name="url" type="string">http://127.0.0.1:8000/verifyemail</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -185,7 +185,7 @@
         <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z104"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z114">
-        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMDU2OTMxLCJleHAiOjE0NTAxNDMzMzF9.fY5Iq5neAoMnsjwWbGuq0lcDNaEfHs1LIunWYvSXIwo</attribute>
+        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiZmE5YTYzZDAtYTM4OC0xMWU1LTlkMTQtZTUxYTRjOWUxZTQ1IiwiaWF0IjoxNDUwMjI0NDQyLCJleHAiOjE0NTAzMTA4NDJ9.3yr-NchJ5g7ZeYGh4NsPc8X__hwnxAdViJ-jfJILnvc</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -208,7 +208,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"herashk@gmail.com\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Create user</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
@@ -299,7 +299,7 @@
     </object>
     <object type="LMREQUEST" id="z124">
         <attribute name="uuid" type="string">A85984A8-92C1-45A0-826C-AD94E527A70D</attribute>
-        <attribute name="url" type="string">http://localhost:8000/saveContract</attribute>
+        <attribute name="url" type="string">http://localhost:8000/savecontract</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -314,7 +314,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z123 z125"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z125">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMjE1NDA3LCJleHAiOjE0NTAyMTYzMDd9.PyBO8GoofHRVlz3eJ_TQyDl2_VrlQXYcC8bQq2--dhY</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiZmE5YTYzZDAtYTM4OC0xMWU1LTlkMTQtZTUxYTRjOWUxZTQ1IiwiaWF0IjoxNDUwMjI2MDQxLCJleHAiOjE0NTAyMjY5NDF9.TlKGQ7LMeta9q-2yvrG1D1zX-fYpVoTbP5w6ZT-04DA</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>

@@ -30,7 +30,8 @@ angular.module('app.services', [])
       return storageItem;
     })
     .catch(function(error){
-      console.log(error.data.message);
+      //console.log(error.data.message);
+      return error.data.message;
     })
   };
 
