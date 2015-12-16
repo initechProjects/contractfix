@@ -108,14 +108,10 @@ angular.module('app.services', [])
     })
   };
 
-<<<<<<< HEAD
-  
 
-
-  return {
-    findContracts: findContracts
     
-=======
+    
+
   var isAuth = function() {
     var token, expires;
 
@@ -136,8 +132,9 @@ angular.module('app.services', [])
   return {
     login: login,
     signup: signup,
-    isAuth: isAuth
->>>>>>> c5feeea7da752f23006a46bda4186976600645e2
+    isAuth: isAuth,
+    findContracts: findContracts
+
   };
 
 })
