@@ -5,7 +5,8 @@ angular.module('app.editor', [])
   // Lines 5 - 17 replace the textarea in editor.html
   // with the ckEditor proper using the editor API.
 
-  // var token = $rootScope.authResult.token;
+  var user = $rootScope.username;
+  var token = $rootScope.token;
 
   CKEDITOR.disableAutoInline = true;
   var editor = CKEDITOR.inline('contractEditor');
@@ -46,7 +47,7 @@ angular.module('app.editor', [])
   };
 
   $scope.ckEditor.handleClick = function(event) {
-    localStorage.setItem('data', editor.getSnapshot());
+    localStorage.setItem('data', editor.getData());
   };
 
   editor.on('instanceReady', function() {
@@ -75,11 +76,14 @@ angular.module('app.editor', [])
     });
 
     var text = localStorage.getItem('data');
-    editor.loadSnapshot(localStorage.getItem('data') || original);
+    editor.setData(localStorage.getItem('data') || original);
   });
 
   editor.on('lite:init', function() {
     $scope.lite = editor.plugins.lite.findPlugin(editor);
+    if ($rootScope.authResult) {
+      
+    }
   });
 
   editor.on('selectionChange', function() {

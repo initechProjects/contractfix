@@ -126,7 +126,7 @@ angular.module('app.services', [])
       return error.data.message;
     })
   };
- 
+
   return {
     findContracts: findContracts
   };

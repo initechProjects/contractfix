@@ -20,9 +20,12 @@ angular.module('app.auth', [])
           $location.path('/login');
         } else {
           $location.path('/dashboard');
-          console.log(authResult);
+          $rootScope.token = authResult.token;
           $rootScope.expires = Date.now() + 600000; // now + 10 minutes
-          localStorage.setItem('auth', JSON.stringify({ token: authResult.token, expires: Date.now() + 600000 }));
+          $rootScope.username = authResult.username;
+          localStorage.setItem('token', authResult.token);
+          localStorage.setItem('expires', Date.now() + 600000);
+          localStorage.setItem('username', authResult.username);
         }
       })
       .catch(function (error) {
