@@ -67,7 +67,7 @@ var config = {
         return callback(Boom.forbidden('request damaged'), false);
       }
 
-      Password.CheckPassword(token.password, user.password, function(err, result) {
+      Common.CheckPassword(token.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
           return callback(Boom.badImplementation(err), false);
