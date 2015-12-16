@@ -10,7 +10,7 @@
             <plist version="1.0">
                 <dict>
                     <key>NSPersistenceFrameworkVersion</key>
-                    <integer>641</integer>
+                    <integer>640</integer>
                     <key>NSStoreModelVersionHashes</key>
                     <dict>
                         <key>LMCookieJar</key>
@@ -185,6 +185,7 @@
         <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z104"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z114">
+
         <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InRlc3RAY2V0aW4uaW5mbyIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiJhYWJjMDAxMC1hMzhhLTExZTUtYTkwNi05OThkOTdhNmZhYTMiLCJpYXQiOjE0NTAyMjUxNjcsImV4cCI6MTQ1MDMxMTU2N30.3pniW-86AM-KlZo4_dsP-XCQaVOs7YLiN6bFCcBXIX0</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>

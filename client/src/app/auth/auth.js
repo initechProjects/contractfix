@@ -29,17 +29,17 @@ angular.module('app.auth', [])
       });
   };
 
-  $scope.signup = function () {
-    Auth.signup($scope.user)
-      .then(function (authResult) {
-        //console.log(authResult, "inside signup in Auth.JS");
-        $rootScope.authResult = authResult;
-        $location.path('/login');
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
+  // $scope.signup = function () {
+  //   Auth.signup($scope.user)
+  //     .then(function (authResult) {
+  //       //console.log(authResult, "inside signup in Auth.JS");
+  //       $rootScope.authResult = authResult;
+  //       $location.path('/login');
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
+  // };
 
   $scope.inputType = 'password';
   $scope.hideShowPassword = function(){
