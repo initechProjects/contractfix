@@ -65,24 +65,19 @@ angular.module('app.services', [])
     });
   };
 
-    var isAuth = function() {
+  var isAuth = function() {
     var token, expires;
 
-    if ($rootScope.authResult && $rootScope.expires) {
-      token = $rootScope.authResult.token;
+    if ($rootScope.token && $rootScope.expires) {
+      token = $rootScope.token;
       expires = $rootScope.expires;
     } else {
-      var storage = JSON.parse(localStorage.getItem('auth'));
-      if (storage) {
-        token = storage.token;
-        expires = storage.expires;
-      }
+      token = localStorage.getItem('token');
+      expires = parseInt(localStorage.getItem('expires'));
     }
 
-    return !!token && expires > Date.now();
+    return !!token && !!expires && expires > Date.now();
   };
-
-
 
   return {
     login: login,

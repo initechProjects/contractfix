@@ -81,9 +81,9 @@ angular.module('app.editor', [])
 
   editor.on('lite:init', function() {
     $scope.lite = editor.plugins.lite.findPlugin(editor);
-    if ($rootScope.authResult) {
-      
-    }
+
+    var username = $rootScope.username || localStorage.getItem('username');
+    $scope.lite.setUserInfo({ name: username, id: username });
   });
 
   editor.on('selectionChange', function() {
