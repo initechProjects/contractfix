@@ -27,7 +27,7 @@ var config = {
     verifyEmailUrl: 'verifyEmail'
   },
   // Validate function for auth
-  validate: function(token, callback) {
+  validate: function(request, token, callback) {
 
     if (token === undefined) {
       console.log('token undefined');
