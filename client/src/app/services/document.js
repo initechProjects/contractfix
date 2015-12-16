@@ -7,6 +7,7 @@ app.factory('DocumentFactory', function() {
   var _original;
   var _view;
   var _diffs = [];
+  var _comments = [];
 
   /**
    * Accept a change based on the index of the diff.
@@ -15,7 +16,7 @@ app.factory('DocumentFactory', function() {
    */
   var accept = function(i) {
     if (_diffs[i][0] === DIFF_INSERT)
-      _diffs[i][0] = 0;
+      _diffs[i][0] = DIFF_EQUAL;
     if (_diffs[i][0] === DIFF_DELETE)
       _diffs.splice(i, 1);
   };
@@ -27,7 +28,7 @@ app.factory('DocumentFactory', function() {
    */
   var reject = function(i) {
     if (_diffs[i][0] === DIFF_DELETE)
-      _diffs[i][0] = 0;
+      _diffs[i][0] = DIFF_EQUAL;
     if (_diffs[i][0] === DIFF_INSERT)
       _diffs.splice(i, 1);
   };
@@ -91,6 +92,21 @@ app.factory('DocumentFactory', function() {
     },
 
     /**
+     * Getter-setter for diffs.
+     * @param {string} [newComments]
+     * @return {array} _comments - array of comments associated with document version
+     */
+    comments: function(newComments) {
+      if (newComments)
+        _comments = newComments;
+      return _comments;
+    },
+
+    addComment: function(data) {
+      _comments.push({ comment: data.comment, selection: data.selection || null, createdAt: Date.now() });
+    },
+
+    /**
      * Create a new document.
      * @param {string|array} initial - string or diffs used to create a document.
      */
@@ -132,8 +148,10 @@ app.factory('DocumentFactory', function() {
      * @param {string} content - editor content that will be compared to the original document
      */
     update: function(content) {
+      var diffs = dmp.diff_main(_original, content, false);
+      dmp.diff_cleanupSemantic(diffs);
       _view = content;
-      _diffs = dmp.diff_cleanupSemantic(dmp.diff_main(_original, content, false));
+      _diffs = diffs;
     },
 
     /**
