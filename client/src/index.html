@@ -12,6 +12,7 @@
     <!-- Custom Fonts -->
     <link href="styles/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 	<script src="https://code.angularjs.org/1.4.5/angular-route.js"></script>
@@ -28,7 +29,8 @@
     <script src="styles/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- ckEditor -->
-    <script src="ckeditor/ckeditor.js"></script>
+    <script src="ckeditor2/plugins/lite/lite-interface.js"></script>
+    <script src="ckeditor2/ckeditor.js"></script>
     <script src="diff-match-patch/diff_match_patch.js"></script>
 
 </head>
@@ -56,6 +58,39 @@
                 </div>
             </div>
         </footer>
+
+        <script>
+$(function() {
+    var timer;
+    var fadeInBuffer = false;
+
+    $(document).mousemove(function () {
+        if (!fadeInBuffer) {
+            if (timer) {
+                console.log("clearTimer");
+                clearTimeout(timer);
+                timer = 0;
+            }
+//fadein
+            $('.fade-object').fadeIn('slow');
+            $('html').css({
+                cursor: ''
+            });
+        } else {
+            fadeInBuffer = false;
+        }
+
+        timer = setTimeout(function () {
+//fadeout
+            $('.fade-object').fadeOut(1000);
+            $('html').css({
+                cursor: 'none'
+            });
+            fadeInBuffer = true;
+        }, 3000)
+    });
+});
+</script>
 
 </body>
 </html>
