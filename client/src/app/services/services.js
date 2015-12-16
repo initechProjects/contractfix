@@ -124,7 +124,7 @@ angular.module('app.services', [])
   };
 
   return {
-    findContracts: findContracts,
+    findContracts: findContracts
   };
 
 })
