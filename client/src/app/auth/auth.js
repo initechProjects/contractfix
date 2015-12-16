@@ -9,8 +9,8 @@ angular.module('app.auth', [])
   $scope.login = function () {
     Auth.login($scope.user)
       .then(function (authResult) {
-        //$rootScope.authResult = authResult;
-        $rootScope.token = authResult.token;
+        $rootScope.authResult = authResult;
+        
         //console.log(authResult);
         if(authResult === undefined){
           $scope.flag = true;
@@ -64,7 +64,26 @@ angular.module('app.auth', [])
       console.log(error);
     });
     }
+    //Todo: fix logic for verifyEmail
+    $scope.verifyEmail = function(){
+      Auth.verifyEmail($scope.user)
+      .then(function (authResult) {
+        console.log("I am inside verifyEmail", authResult);
+      })
+      .catch(function(error){
+        console.log(error);
+      })
+    }
 
+    $scope.forgotPassword = function(){
+      Auth.forgotPassword($scope.user)
+      .then(function(authResult) {
+        console.log("I am inside forgotPassword", authResult);
+      })
+      .catch(function(error){
+        console.log(error);
+      })
+    }
 
 
     

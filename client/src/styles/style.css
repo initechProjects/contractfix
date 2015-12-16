@@ -324,6 +324,16 @@ p.copyright {
     text-align: center;
 }
 
+/*    --------------------------------------------------
+    :: Email Verification Section
+    -------------------------------------------------- */
+
+#verifyemail {
+    padding-top: 120px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
+}
 
 /*    --------------------------------------------------
     :: About Section
