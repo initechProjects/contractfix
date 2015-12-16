@@ -65,11 +65,26 @@ angular.module('app.services', [])
     });
   };
 
+  var isAuth = function() {
+    var token, expires;
+
+    if ($rootScope.token && $rootScope.expires) {
+      token = $rootScope.token;
+      expires = $rootScope.expires;
+    } else {
+      token = localStorage.getItem('token');
+      expires = parseInt(localStorage.getItem('expires'));
+    }
+
+    return !!token && !!expires && expires > Date.now();
+  };
+
 
   return {
     login: login,
     signup: signup,
-    resendEmail: resendEmail
+    resendEmail: resendEmail,
+    isAuth: isAuth
   };
 
 })
@@ -108,33 +123,8 @@ angular.module('app.services', [])
     })
   };
 
-<<<<<<< HEAD
-  
-
-
   return {
-    findContracts: findContracts
-    
-=======
-  var isAuth = function() {
-    var token, expires;
-
-    if ($rootScope.token && $rootScope.expires) {
-      token = $rootScope.token;
-      expires = $rootScope.expires;
-    } else {
-      token = localStorage.getItem('token');
-      expires = parseInt(localStorage.getItem('expires'));
-    }
-
-    return !!token && !!expires && expires > Date.now();
-  };
-
-  return {
-    login: login,
-    signup: signup,
-    isAuth: isAuth
->>>>>>> c5feeea7da752f23006a46bda4186976600645e2
+    findContracts: findContracts,
   };
 
 })
