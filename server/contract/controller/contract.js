@@ -24,7 +24,7 @@ exports.save = {
 
         Contract.findContract(request.payload.contractId, function(err, contract) {
           if (!err) {
-            if (!contract) { reply(Boom.badImplementation('wrong contractId')); }
+            if (!contract) { return reply(Boom.badImplementation('wrong contractId')); }
 
             // if user belongs to any group required by the contract
             if (_.intersection(contract.users, request.auth.credentials.scope).length > 0) {
@@ -55,17 +55,17 @@ exports.save = {
 
               Contract.updateContract(contract, function(err) {
                 if (!err) {
-                  reply('Contract has been updated');
+                  return reply('Contract has been updated');
                 } else {
-                  reply(Boom.badImplementation(err));
+                  return reply(Boom.badImplementation(err));
                 }
               });
 
             } else {
-              reply(Boom.forbidden("You don't have privileges for this contract."));
+              return reply(Boom.forbidden("You don't have privileges for this contract."));
             }
           } else {
-            reply(Boom.badImplementation(err));
+            return reply(Boom.badImplementation(err));
           }
         });
 
@@ -103,9 +103,9 @@ exports.save = {
 
         Contract.newContract(contract, function(err) {
           if (!err) {
-            reply('Contract has been saved');
+            return reply('Contract has been saved');
           } else {
-            reply(Boom.badImplementation(err));
+            return reply(Boom.badImplementation(err));
           }
         });
       }
@@ -126,7 +126,7 @@ exports.findContractByUserId = {
           contractsList.push(contract._id);
           console.log('Contract ID:', contract._id, ', Users:', contract.users);
         });
-        reply(contractsList);
+        return reply(contractsList);
       });
     }
   }
@@ -140,12 +140,12 @@ exports.open = {
     if (request.auth.isAuthenticated) {
 
       let contractId = request.payload.contractid;
-      if (!contractId) reply(Boom.badImplementation('No contract id'));
+      if (!contractId) return reply(Boom.badImplementation('No contract id'));
 
       Contract.findContract(contractId, function(err, contract) {
-        if (err) reply(Boom.badImplementation(err));
-        if (!contract) reply(Boom.badImplementation('wrong contractId'));
-        if (_.intersection(contract.users, request.auth.credentials.scope).length === 0) reply(Boom.forbidden("You don't have privileges for this contract."));
+        if (err) return reply(Boom.badImplementation(err));
+        if (!contract) return reply(Boom.badImplementation('wrong contractId'));
+        if (_.intersection(contract.users, request.auth.credentials.scope).length === 0) return reply(Boom.forbidden("You don't have privileges for this contract."));
 
         let result = {};
 
@@ -178,7 +178,7 @@ exports.open = {
           result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
         }
 
-        reply(result);
+        return reply(result);
       });
 
     }
