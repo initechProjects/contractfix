@@ -17,7 +17,7 @@ exports.create = {
   handler: function(request, reply) {
     request.payload.scope = ['registered'];
 
-    Common.hash(request.payload.password, function(error, hashedPassword) {
+    User.hash(request.payload.password, function(error, hashedPassword) {
       request.payload.password = hashedPassword;
 
       User.saveUser(request.payload, function(err, user) {
@@ -28,12 +28,12 @@ exports.create = {
             id: user._id
           };
           Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
-          reply('Please confirm your email id by clicking on link in email');
+          return reply('Please confirm your email id by clicking on link in email');
         } else {
           if ( err.code === 11000 || err.code === 11001 ) {
-            reply(Boom.forbidden('please provide another user email'));
+            return reply(Boom.forbidden('please provide another user email'));
           } else {
-            reply(Boom.forbidden(err)); // HTTP 403
+            return reply(Boom.forbidden(err)); // HTTP 403
           }
         }
       });
@@ -52,21 +52,23 @@ exports.login = {
     User.findUser(request.payload.userName, function(err, user) {
       if (err) {
         console.error(err);
-        reply(Boom.badImplementation(err));
+        return reply(Boom.badImplementation(err));
       }
 
       if (user === null) return reply(Boom.forbidden('invalid username or password'));
+      if (user.isRevoked) return reply(Boom.forbidden('your account has been suspended'));
 
-      Common.checkPassword(request.payload.password, user.password, function(err, result) {
+      User.checkPassword(request.payload.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
-          reply(Boom.badImplementation(err));
+          return reply(Boom.badImplementation(err));
         }
-        if (!result) reply(Boom.forbidden('invalid username or password'));
+        if (!result) return reply(Boom.forbidden('invalid username or password'));
         if(!user.isVerified) return reply(Boom.forbidden('Your email address is not verified. please verify your email address to proceed'));
 
         var tokenData = {
           userName: user.userName,
+          password: user.password,
           scope: user.scope,
           id: user._id
         };
@@ -76,14 +78,37 @@ exports.login = {
           token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
         };
 
-        reply(res);
+        return reply(res);
 
       });
     });
   }
 };
 
-exports.changePassword = {
+exports.refreshToken = {
+  auth: {
+    strategy: 'token'
+  },
+  handler: function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      var tokenData = {
+        userName: request.auth.credentials.userName,
+        password: request.auth.credentials.password,
+        scope: request.auth.credentials.scope,
+        id: request.auth.credentials._id
+      };
+      var res = {
+        username: request.auth.credentials.userName,
+        scope: request.auth.credentials.scope,
+        token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
+      };
+
+      return reply(res);
+    }
+  }
+};
+
+exports.resetPassword = {
   validate: {
     payload: {
       password: Joi.string().required()
@@ -97,21 +122,21 @@ exports.changePassword = {
       User.findUserById(request.auth.credentials._id, function(err, user) {
         if (err) {
           console.error(err);
-          reply(Boom.badImplementation(err));
+          return reply(Boom.badImplementation(err));
         }
 
         if (user === null) return reply(Boom.forbidden('invalid username or password'));
 
-        Common.hash(request.payload.password, function(error, hashedPassword) {
+        User.hash(request.payload.password, function(error, hashedPassword) {
           user.password = hashedPassword;
 
           User.updateUser(user, function(err, user) {
             if (err) {
               console.error(err);
-              reply(Boom.badImplementation(err));
+              return reply(Boom.badImplementation(err));
             }
 
-            reply('password changed successfully.');
+            return reply('password changed successfully.');
           });
         });
       });
@@ -130,27 +155,27 @@ exports.resendVerificationEmail = {
     User.findUser(request.payload.userName, function(err, user) {
       if (err) {
         console.error(err);
-        reply(Boom.badImplementation(err));
+        return reply(Boom.badImplementation(err));
       }
 
       if (user === null) return reply(Boom.forbidden('invalid username or password'));
 
-      Common.checkPassword(request.payload.password, user.password, function(err, result) {
+      User.checkPassword(request.payload.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
-          reply(Boom.badImplementation(err));
+          return reply(Boom.badImplementation(err));
         }
-        if (!result) reply(Boom.forbidden('invalid username or password'));
+        if (!result) return reply(Boom.forbidden('invalid username or password'));
 
         if(user.isVerified) return reply('your email address is already verified');
 
         var tokenData = {
           userName: user.userName,
-          scope: [user.scope],
+          scope: user.scope,
           id: user._id
         };
         Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification }));
-        reply('account verification link is sucessfully send to your email');
+        return reply('account verification link is sucessfully send to your email');
       });
     });
   }
@@ -178,7 +203,7 @@ exports.forgotPassword = {
       };
 
       Common.sendMailForgotPassword(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh }));
-      reply('instructions to reset password sent to your registered email.');
+      return reply('instructions to reset password sent to your registered email.');
     });
   }
 };

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "blipp": "^2.3.0",
     "boom": "^3.0.0",
     "hapi": "^11.1.2",
     "hapi-auth-jwt": "^4.0.0",

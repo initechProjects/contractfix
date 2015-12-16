@@ -1,5 +1,4 @@
 var Boom   = require('boom');
-var Jwt    = require('jsonwebtoken');
 var User   = require('../main/model/user').User;
 
 var config = {
@@ -58,16 +57,27 @@ var config = {
         console.log('user not verified', token.userName);
         return callback(Boom.forbidden('user not verified'), false);
       }
+      if (user.isRevoked === true) {
+        console.log('user is suspended', token.userName);
+        return callback(Boom.forbidden('user is suspended'), false);
+      }
       if (user.userName !== token.userName) {
         console.log('request damaged');
         return callback(Boom.forbidden('request damaged'), false);
       }
 
-      // If passed all above, user is authenticated
+      User.checkPassword(token.password, user.password, function(err, result) {
+        if (err) {
+          console.error(err);
+          return callback(Boom.badImplementation(err), false);
+        }
+        if (!result) return callback(Boom.forbidden("user's password has been changed"), false);
 
-      // add user's id to user's scope and send user credentials to callback
-      user.scope.push(user._id);
-      return callback(null, true, user);
+        // If passed all above, user is authenticated
+        // add user's id to user's scope and send user credentials to callback
+        user.scope.push(user._id);
+        return callback(null, true, user);
+      });
 
     });
   }

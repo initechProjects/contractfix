@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
+var Bcrypt    = require('bcrypt-nodejs');
 
 /**
  * @module  User
@@ -31,6 +32,14 @@ var User = new Schema({
   password: {
     type: String,
     required: true
+  },
+
+  /**
+    Full name. It can only contain string.
+  */
+  fullname: {
+    type: String,
+    required: false
   },
 
   /**
@@ -121,6 +130,16 @@ User.statics.findUserByIdAndUserName = function(id, userName, callback) {
   }, callback);
 };
 
+User.statics.hash = function(password, callback) {
+  Bcrypt.genSalt(Config.params.saltRounds, function(error, salt) {
+    if (error) callback(error, null);
+    Bcrypt.hash(password, salt, null, callback);
+  });
+};
+
+User.statics.checkPassword = function(password, hash, callback) {
+  Bcrypt.compare(password, hash, callback);
+};
 
 var user = mongoose.model('user', User);
 
