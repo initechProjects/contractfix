@@ -1,6 +1,7 @@
 // var nodemailer = require("nodemailer");
 var Config    = require('../../config/config');
 var crypto    = require('crypto');
+var Bcrypt    = require('bcrypt-nodejs');
 var Welcome   = require('./common_welcome_email.js');
 var Reset   = require('./common_reset_password_email.js');
 var algorithm = 'aes-256-ctr';
@@ -14,6 +15,17 @@ exports.decrypt = function(password) {
 
 exports.encrypt = function(password) {
   return encrypt(password);
+};
+
+exports.hash = function(password, callback) {
+  Bcrypt.genSalt(Config.params.saltRounds, function(error, salt) {
+    if (error) callback(error, null);
+    Bcrypt.hash(password, salt, null, callback);
+  });
+};
+
+exports.checkPassword = function(password, hash, callback) {
+  Bcrypt.compare(password, hash, callback);
 };
 
 exports.sendMailVerificationLink = function(user, token) {

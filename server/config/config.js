@@ -1,5 +1,6 @@
 var Boom   = require('boom');
 var User   = require('../main/model/user').User;
+var Common = require('../main/controller/common');
 
 var config = {
   params: {
@@ -66,7 +67,7 @@ var config = {
         return callback(Boom.forbidden('request damaged'), false);
       }
 
-      User.checkPassword(token.password, user.password, function(err, result) {
+      Password.CheckPassword(token.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
           return callback(Boom.badImplementation(err), false);

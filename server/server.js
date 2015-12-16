@@ -2,7 +2,7 @@
 
 var Hapi     = require('hapi');
 var Routes   = require('./routes');
-// var Db       = require('./config/db');
+var Db       = require('./config/db');
 var Inert    = require('inert');
 var Config   = require('./config/config');
 var JwtToken = require('hapi-auth-jwt');
