@@ -45,7 +45,8 @@ exports.save = {
                 let comment = {
                   userid: request.auth.credentials._id,
                   commentDate: Date.now(),
-                  text: item
+                  text: item.comment,
+                  selection: item.selection
                 };
 
                 if (!contract.comments) contract.comments = [];
@@ -83,6 +84,18 @@ exports.save = {
           text: request.payload.text
         };
         contract.versions.push(version);
+
+        request.payload.comments.forEach(function(item) {
+          let comment = {
+            userid: request.auth.credentials._id,
+            commentDate: Date.now(),
+            text: item.comment,
+            selection: item.selection
+          };
+
+          if (!contract.comments) contract.comments = [];
+          contract.comments.push(comment);
+        });
 
         contract.users =[request.auth.credentials._id];
 
@@ -157,9 +170,11 @@ exports.open = {
         result.latest = {};
         result.latest.text = contract.versions[result.revisions - 1].text;
         result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
-        result.previous = {};
-        result.previous.text = contract.versions[result.revisions - 2].text;
-        result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+        if (result.revisions > 1) {
+          result.previous = {};
+          result.previous.text = contract.versions[result.revisions - 2].text;
+          result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+        }
 
         reply(result);
       });
