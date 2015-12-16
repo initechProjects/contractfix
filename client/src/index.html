@@ -60,36 +60,36 @@
         </footer>
 
         <script>
-$(function() {
-    var timer;
-    var fadeInBuffer = false;
+// $(function() {
+//     var timer;
+//     var fadeInBuffer = false;
 
-    $(document).mousemove(function () {
-        if (!fadeInBuffer) {
-            if (timer) {
-                console.log("clearTimer");
-                clearTimeout(timer);
-                timer = 0;
-            }
-//fadein
-            $('.fade-object').fadeIn('slow');
-            $('html').css({
-                cursor: ''
-            });
-        } else {
-            fadeInBuffer = false;
-        }
+//     $(document).mousemove(function () {
+//         if (!fadeInBuffer) {
+//             if (timer) {
+//                 console.log("clearTimer");
+//                 clearTimeout(timer);
+//                 timer = 0;
+//             }
+// //fadein
+//             $('.fade-object').fadeIn('slow');
+//             $('html').css({
+//                 cursor: ''
+//             });
+//         } else {
+//             fadeInBuffer = false;
+//         }
 
-        timer = setTimeout(function () {
-//fadeout
-            $('.fade-object').fadeOut(1000);
-            $('html').css({
-                cursor: 'none'
-            });
-            fadeInBuffer = true;
-        }, 3000)
-    });
-});
+//         timer = setTimeout(function () {
+// //fadeout
+//             $('.fade-object').fadeOut(1000);
+//             $('html').css({
+//                 cursor: 'none'
+//             });
+//             fadeInBuffer = true;
+//         }, 3000)
+//     });
+// });
 </script>
 
 </body>

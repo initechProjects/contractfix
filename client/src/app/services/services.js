@@ -45,14 +45,77 @@ angular.module('app.services', [])
       }
     })
     .then(function (resp) {
-      var storageItem = {
-        token: resp.data.token,
-        userName: resp.data.username
-      };
-      return storageItem;
+    
+      return resp.data;
     });
   };
 
+  var resendEmail = function (user) {
+    return $http({
+      method: 'POST',
+      url: '/resendverificationemail',
+      data: {
+        userName: user.username,
+        password: user.password
+      }
+    })
+    .then(function (resp) {
+      
+      return resp.data;
+    });
+  };
+
+
+  return {
+    login: login,
+    signup: signup,
+    resendEmail: resendEmail
+  };
+
+})
+
+
+
+
+
+
+
+
+.factory('Dashboard', function ($http, $location, $window, $rootScope) {
+
+  var findContracts = function (token) {
+    return $http({
+      method: 'POST',
+      url: '/findmycontracts',
+      headers: {
+        Authorization : "Bearer " + token,
+        ContentType : "application/json"
+      }
+    })
+    .then(function (resp) {
+      var storageItem = {
+        contractID: contract.id,
+        username: contract.users
+      };
+      if(resp.data.token === undefined){
+        return resp.data;
+      }
+      return storageItem;
+    })
+    .catch(function(error){
+      //console.log(error.data.message);
+      return error.data.message;
+    })
+  };
+
+<<<<<<< HEAD
+  
+
+
+  return {
+    findContracts: findContracts
+    
+=======
   var isAuth = function() {
     var token, expires;
 
@@ -74,7 +137,38 @@ angular.module('app.services', [])
     login: login,
     signup: signup,
     isAuth: isAuth
+>>>>>>> c5feeea7da752f23006a46bda4186976600645e2
   };
 
 })
 
+
+// .factory('RequestService', function RequestService(){
+//   var token = null;
+
+//   var setToken = function setToken(someToken) {
+//       token = someToken;
+//   }
+
+//   var getToken = function getToken() {
+//       return token;
+//   }
+
+//   var request = function request(config) {
+//       if (token) {
+//           // jqXHR.setRequestHeader('Authorization','Token token="' + app.user.api_key.access_token + '"');
+//             config.headers['Authorization'] = 'Token token="' + token + '"';
+//         }
+//         return config;
+//   }
+
+//   return {
+//       setToken: setToken,
+//       getToken: getToken,
+//       request: request
+//   }
+// })
+
+// .config(['$httpProvider', function($httpProvider) {
+//     $httpProvider.interceptors.push('RequestService');
+// }]);

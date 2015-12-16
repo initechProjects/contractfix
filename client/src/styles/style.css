@@ -250,6 +250,7 @@ p.copyright {
 .btn-custom {
     color: #fff;
     background-color: #1fa67b;
+    text-align: center;
 }
 .btn-custom:hover,
 .btn-custom:focus {
@@ -319,7 +320,9 @@ p.copyright {
     font-size: 13px;
     font-weight: normal;
 }
-
+.re-send {
+    text-align: center;
+}
 
 
 /*    --------------------------------------------------
