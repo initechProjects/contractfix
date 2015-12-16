@@ -45,21 +45,41 @@ angular.module('app.services', [])
       }
     })
     .then(function (resp) {
-      var storageItem = {
-        token: resp.data.token,
-        userName: resp.data.username
-      };
-      return storageItem;
+    
+      return resp.data;
+    });
+  };
+
+  var resendEmail = function (user) {
+    return $http({
+      method: 'POST',
+      url: '/resendverificationemail',
+      data: {
+        userName: user.username,
+        password: user.password
+      }
+    })
+    .then(function (resp) {
+      
+      return resp.data;
     });
   };
 
 
   return {
     login: login,
-    signup: signup
+    signup: signup,
+    resendEmail: resendEmail
   };
 
 })
+
+
+
+
+
+
+
 
 .factory('Dashboard', function ($http, $location, $window, $rootScope) {
 
@@ -67,8 +87,9 @@ angular.module('app.services', [])
     return $http({
       method: 'POST',
       url: '/findmycontracts',
-      data: {
-        token: token
+      headers: {
+        Authorization : "Bearer " + token,
+        ContentType : "application/json"
       }
     })
     .then(function (resp) {

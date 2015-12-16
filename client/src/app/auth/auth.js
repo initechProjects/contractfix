@@ -9,10 +9,8 @@ angular.module('app.auth', [])
   $scope.login = function () {
     Auth.login($scope.user)
       .then(function (authResult) {
-
-        //$scope.authResult = authResult;
-
-        $rootScope.authResult = authResult;
+        //$rootScope.authResult = authResult;
+        $rootScope.token = authResult.token;
         //console.log(authResult);
         if(authResult === undefined){
           $scope.flag = true;
@@ -29,17 +27,15 @@ angular.module('app.auth', [])
       });
   };
 
-  // $scope.signup = function () {
-  //   Auth.signup($scope.user)
-  //     .then(function (authResult) {
-  //       //console.log(authResult, "inside signup in Auth.JS");
-  //       $rootScope.authResult = authResult;
-  //       $location.path('/login');
-  //     })
-  //     .catch(function (error) {
-  //       console.error(error);
-  //     });
-  // };
+  $scope.signup = function () {
+    Auth.signup($scope.user)
+      .then(function (authResult) {
+        console.log("I am inside signup", authResult);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
 
   $scope.inputType = 'password';
   $scope.hideShowPassword = function(){
@@ -49,6 +45,20 @@ angular.module('app.auth', [])
       $scope.inputType = 'password';
     }
   };
+
+  $scope.resendEmail = function(){
+    Auth.resendEmail($scope.user)
+    .then(function (authResult) {
+      //console.log(authResult);
+      $scope.authResult = authResult;
+      $scope.flag=true;
+      //Todo: erase the flag message for the next user
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+    }
+
 
 
     
