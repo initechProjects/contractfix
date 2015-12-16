@@ -65,11 +65,30 @@ angular.module('app.services', [])
     });
   };
 
+    var isAuth = function() {
+    var token, expires;
+
+    if ($rootScope.authResult && $rootScope.expires) {
+      token = $rootScope.authResult.token;
+      expires = $rootScope.expires;
+    } else {
+      var storage = JSON.parse(localStorage.getItem('auth'));
+      if (storage) {
+        token = storage.token;
+        expires = storage.expires;
+      }
+    }
+
+    return !!token && expires > Date.now();
+  };
+
+
 
   return {
     login: login,
     signup: signup,
-    resendEmail: resendEmail
+    resendEmail: resendEmail,
+    isAuth: isAuth
   };
 
 })
@@ -108,61 +127,8 @@ angular.module('app.services', [])
     })
   };
 
-
-    
-    
-
-  var isAuth = function() {
-    var token, expires;
-
-    if ($rootScope.token && $rootScope.expires) {
-      token = $rootScope.token;
-      expires = $rootScope.expires;
-    } else {
-      token = localStorage.getItem('token');
-      expires = parseInt(localStorage.getItem('expires'));
-    }
-
-    return !!token && !!expires && expires > Date.now();
-  };
-
   return {
-    login: login,
-    signup: signup,
-    isAuth: isAuth,
     findContracts: findContracts
-
   };
 
 })
-
-
-// .factory('RequestService', function RequestService(){
-//   var token = null;
-
-//   var setToken = function setToken(someToken) {
-//       token = someToken;
-//   }
-
-//   var getToken = function getToken() {
-//       return token;
-//   }
-
-//   var request = function request(config) {
-//       if (token) {
-//           // jqXHR.setRequestHeader('Authorization','Token token="' + app.user.api_key.access_token + '"');
-//             config.headers['Authorization'] = 'Token token="' + token + '"';
-//         }
-//         return config;
-//   }
-
-//   return {
-//       setToken: setToken,
-//       getToken: getToken,
-//       request: request
-//   }
-// })
-
-// .config(['$httpProvider', function($httpProvider) {
-//     $httpProvider.interceptors.push('RequestService');
-// }]);
