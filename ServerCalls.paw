@@ -10,7 +10,7 @@
             <plist version="1.0">
                 <dict>
                     <key>NSPersistenceFrameworkVersion</key>
-                    <integer>640</integer>
+                    <integer>641</integer>
                     <key>NSStoreModelVersionHashes</key>
                     <dict>
                         <key>LMCookieJar</key>
@@ -69,7 +69,8 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-
+        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">Login</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -184,9 +185,7 @@
         <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z104"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z114">
-
-        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImtpbS5taWNoYWVsODhAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6ImVkOGQ2ZjkwLWE0MjYtMTFlNS1iZGU5LWViZTE0MjczZmRiMCIsImlhdCI6MTQ1MDI5MjI4MCwiZXhwIjoxNDUwMzc4NjgwfQ.nMgpa1JHlgMuFjkxicW_lmOsUx6CnG5T2G2_6BhkCI0</attribute>
-
+        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InRlc3RAY2V0aW4uaW5mbyIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiJhYWJjMDAxMC1hMzhhLTExZTUtYTkwNi05OThkOTdhNmZhYTMiLCJpYXQiOjE0NTAyMjUxNjcsImV4cCI6MTQ1MDMxMTU2N30.3pniW-86AM-KlZo4_dsP-XCQaVOs7YLiN6bFCcBXIX0</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -209,9 +208,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"herashk@gmail.com\\",\\"password\\":\\"test\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
-
+        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Create user</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
@@ -258,10 +255,10 @@
         <attribute name="name" type="string">Test authentication with token</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z121 z120"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z120 z121"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z120">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImtpbS5taWNoYWVsODhAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6ImVkOGQ2ZjkwLWE0MjYtMTFlNS1iZGU5LWViZTE0MjczZmRiMCIsImlhdCI6MTQ1MDI5MjI4MCwiZXhwIjoxNDUwMzc4NjgwfQ.nMgpa1JHlgMuFjkxicW_lmOsUx6CnG5T2G2_6BhkCI0</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMTM3NjEyLCJleHAiOjE0NTAxMzg1MTJ9.3fQ0d5nRDziWyd4DIstWgtqMFk5ydZoaRXeW6BZEvLM</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -309,7 +306,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"text\\":\\"\u3c00h1\u3e00Lorem ipsum dolor sit amet aliquam\u3c00\\\\\\/h1\u3e00\u3c00h2\u3e00Sit aenean sapien\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Fermentum nunc integer. Wisi mollis vitae. Torquent magna libero. Nec vestibulum aenean. Suspendisse scelerisque a risus.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ac justo vestibulum. Per lobortis vitae. Id enim vitae pede integer mauris. Semper aliquet justo. Nec augue mi. Pretium posuere euismod. Ac lacus tortor integer.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ante nibh iaculis viverra luctus vestibulum ultricies risus et elit eros quis. Sodales velit mauris. Sit ut tellus lobortis taciti consectetuer. Laoreet ornare aenean. Ut tellus massa. Consectetuer vitae ipsum senectus interdum montes. Et sodales erat. Rutrum hendrerit nisl. Pellentesque sem sed. Vestibulum enim lacus. Non arcu et. Pharetra in arcu. Etiam quis vestibulum. Non malesuada quis. Sapien metus hendrerit. Nunc ut suscipit eget ullamcorper nec. Orci tristique eros. Ut exercitation quis. Tempus orci dignissim.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ante quis augue. Ante ad risus nisl suspendisse consectetuer. Justo euismod et ac et odio. Libero donec id. Augue mattis blandit. Turpis sapien mi. Dolor nam nulla. Risus id enim. Ac donec iaculis. Amet metus gravida. Quis et sed ligula mus nibh. Felis vitae lacus. Placerat leo sed ac dui.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pellentesque nisl elit. Pede ut repellat. Diam dui montes. In rhoncus mi. Autem varius blandit. Elementum suspendisse scelerisque. Ante id ut eros lobortis et urna.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ultrices enim velit. Ligula morbi odio. Sagittis in quam. Sociosqu fusce eleifend. Suspendisse erat id. Elit nec gravida. Quisque vitae libero amet ultricies vestibulum tempor.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pharetra blandit pellentesque metus risus ornare. Leo at dolor et sem nulla eros pellentesque inceptos. Suspendisse sit cras. Urna sit non. Felis class vestibulum. Erat justo sed. Mauris deleniti elit. Sed euismod ut. Nec vel pede. Lorem ut molestie. Posuere eleifend sem. Orci nibh blandit. Sollicitudin et donec ligula et.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Mauris quam a. Gravida nam libero odio rhoncus lacinia. Id fermentum suscipit. Amet molestie tellus. Quam mauris gravida. Elit quis ipsum. Praesentium nec pede ut.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Bibendum enim a\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Tortor in praesent. Libero viverra integer lectus elit enim. Curabitur semper vitae. Ut magna curabitur. Velit suspendisse nisl. At lectus a velit.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Faucibus integer sed. Tellus ad ea. Cras id eget. Neque porta felis. Urna curabitur duis. Aliquam et a. Etiam et odio libero aliquet donec gravida.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Tempor felis varius\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Nonummy libero suspendisse. Diam sollicitudin erat. Praesent in dui in a nam. Non nam hymenaeos. Sodales tempor ac. Suscipit eros fusce libero.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Rhoncus amet dapibus. Et scelerisque vel nulla mauris dignissim. Volutpat praesent in. Vehicula mollis duis. Vel velit natoque. Nullam sed magna. Nulla dui lobortis nec.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Leo etiam in\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Nulla adipisicing metus. Fames sit et duis tincidunt luctus. Mauris maecenas interdum. Lacus massa volutpat. Suspendisse fringilla quam. Habitasse nec mauris felis.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pretium vitae ac. Eleifend in cursus. Sit interdum elit. Consectetuer nulla a. Integer sed molestiae. Sed eu ac vel mauris vestibulum. Nec risus donec vestibulum.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Erat nisl adipiscing\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Eu eleifend sed. Aliquam tristique rutrum sed urna varius. Augue nullam ullamcorper. Amet volutpat suspendisse. Malesuada gravida parturient. Nec in mollis praesent.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00A pede nullam. Commodo blandit condimentum. Elit quam at. Urna vitae vel. Velit lobortis placerat. A non natoque magna libero mollis. Congue nec quam eget.\u3c00\\\\\\/p\u3e00\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"text\\":\\"\u3c00h1\u3e00Lorem ipsum dolor sit amet aliquam\u3c00\\\\\\/h1\u3e00\u3c00h2\u3e00Sit aenean sapien\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Fermentum nunc integer. Wisi mollis vitae. Torquent magna libero. Nec vestibulum aenean. Suspendisse scelerisque a risus.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ac justo vestibulum. Per lobortis vitae. Id enim vitae pede integer mauris. Semper aliquet justo. Nec augue mi. Pretium posuere euismod. Ac lacus tortor integer.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ante nibh iaculis viverra luctus vestibulum ultricies risus et elit eros quis. Sodales velit mauris. Sit ut tellus lobortis taciti consectetuer. Laoreet ornare aenean. Ut tellus massa. Consectetuer vitae ipsum senectus interdum montes. Et sodales erat. Rutrum hendrerit nisl. Pellentesque sem sed. Vestibulum enim lacus. Non arcu et. Pharetra in arcu. Etiam quis vestibulum. Non malesuada quis. Sapien metus hendrerit. Nunc ut suscipit eget ullamcorper nec. Orci tristique eros. Ut exercitation quis. Tempus orci dignissim.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ante quis augue. Ante ad risus nisl suspendisse consectetuer. Justo euismod et ac et odio. Libero donec id. Augue mattis blandit. Turpis sapien mi. Dolor nam nulla. Risus id enim. Ac donec iaculis. Amet metus gravida. Quis et sed ligula mus nibh. Felis vitae lacus. Placerat leo sed ac dui.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pellentesque nisl elit. Pede ut repellat. Diam dui montes. In rhoncus mi. Autem varius blandit. Elementum suspendisse scelerisque. Ante id ut eros lobortis et urna.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Ultrices enim velit. Ligula morbi odio. Sagittis in quam. Sociosqu fusce eleifend. Suspendisse erat id. Elit nec gravida. Quisque vitae libero amet ultricies vestibulum tempor.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pharetra blandit pellentesque metus risus ornare. Leo at dolor et sem nulla eros pellentesque inceptos. Suspendisse sit cras. Urna sit non. Felis class vestibulum. Erat justo sed. Mauris deleniti elit. Sed euismod ut. Nec vel pede. Lorem ut molestie. Posuere eleifend sem. Orci nibh blandit. Sollicitudin et donec ligula et.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Mauris quam a. Gravida nam libero odio rhoncus lacinia. Id fermentum suscipit. Amet molestie tellus. Quam mauris gravida. Elit quis ipsum. Praesentium nec pede ut.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Bibendum enim a\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Tortor in praesent. Libero viverra integer lectus elit enim. Curabitur semper vitae. Ut magna curabitur. Velit suspendisse nisl. At lectus a velit.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Faucibus integer sed. Tellus ad ea. Cras id eget. Neque porta felis. Urna curabitur duis. Aliquam et a. Etiam et odio libero aliquet donec gravida.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Tempor felis varius\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Nonummy libero suspendisse. Diam sollicitudin erat. Praesent in dui in a nam. Non nam hymenaeos. Sodales tempor ac. Suscipit eros fusce libero.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Rhoncus amet dapibus. Et scelerisque vel nulla mauris dignissim. Volutpat praesent in. Vehicula mollis duis. Vel velit natoque. Nullam sed magna. Nulla dui lobortis nec.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Leo etiam in\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Nulla adipisicing metus. Fames sit et duis tincidunt luctus. Mauris maecenas interdum. Lacus massa volutpat. Suspendisse fringilla quam. Habitasse nec mauris felis.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00Pretium vitae ac. Eleifend in cursus. Sit interdum elit. Consectetuer nulla a. Integer sed molestiae. Sed eu ac vel mauris vestibulum. Nec risus donec vestibulum.\u3c00\\\\\\/p\u3e00\u3c00h2\u3e00Erat nisl adipiscing\u3c00\\\\\\/h2\u3e00\u3c00p\u3e00Eu eleifend sed. Aliquam tristique rutrum sed urna varius. Augue nullam ullamcorper. Amet volutpat suspendisse. Malesuada gravida parturient. Nec in mollis praesent.\u3c00\\\\\\/p\u3e00\u3c00p\u3e00A pede nullam. Commodo blandit condimentum. Elit quam at. Urna vitae vel. Velit lobortis placerat. A non natoque magna libero mollis. Congue nec quam eget.\u3c00\\\\\\/p\u3e00\\",\\"comments\\":[{\\"comment\\":\\"comment 1\\",\\"selection\\":\\"selection 1\\"},{\\"comment\\":\\"comment 2\\"}]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Create contract</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
@@ -317,7 +314,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z123 z125"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z125">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6ImJkOTFmY2EwLWE0MjMtMTFlNS1hY2U4LTMxMGIyNzExZjI2NiIsImlhdCI6MTQ1MDI5MDkxMSwiZXhwIjoxNDUwMzc3MzExfQ.P47AZe0pyf2wqho77W--2SKSVnY8c1OI7tfj_fWh3v0</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJwYXNzd29yZCI6IiQyYSQxMiQzcnB3eWVmTmtWSjBTY0I0eFVHbS91d2NFcTM5WHhWeFVrRXQ4bXRPTFBpTng3OGhpWkh3YSIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiI1Y2JlMDNjMC1hNDRhLTExZTUtOTliMC1jM2VjYjc1ZDAxN2EiLCJpYXQiOjE0NTAzMTAzMDEsImV4cCI6MTQ1MDMxMTIwMX0.thMyxPGx6PcuZDVIt2D850XKz5DnQ1x5_g6CClC-U2U</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -353,7 +350,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z126"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z128">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6ImJkOTFmY2EwLWE0MjMtMTFlNS1hY2U4LTMxMGIyNzExZjI2NiIsImlhdCI6MTQ1MDI5MDkxMSwiZXhwIjoxNDUwMzc3MzExfQ.P47AZe0pyf2wqho77W--2SKSVnY8c1OI7tfj_fWh3v0</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMTQ4MzkxLCJleHAiOjE0NTAxNDkyOTF9.eln2910V5P97dZPCJoRKCRbVSC5CNtOgBcix2KmJ6ds</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -407,15 +404,15 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"31ccee40-a424-11e5-ace8-310b2711f266\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"f1575b00-a385-11e5-a4f8-f381967aed01\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">3</attribute>
         <attribute name="name" type="string">Open contract</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z136 z134"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z134 z136"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z134">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiZmE5YTYzZDAtYTM4OC0xMWU1LTlkMTQtZTUxYTRjOWUxZTQ1IiwiaWF0IjoxNDUwMjI2NzQ3LCJleHAiOjE0NTAyMjc2NDd9.yeM4PcojHg3ZovJbZOZ-ovJ7aeZtB7-6p7lxrhCB1VU</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMjIzMDk4LCJleHAiOjE0NTAyMjM5OTh9.dIixbUzEUXKcCV1bMgGp16vX4vX3lzLlQADsES9bFx4</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
