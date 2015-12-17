@@ -20,7 +20,7 @@
 
 <!-- PRIMARY/SECONDARY NAVIGATION AND EDITOR TEMPLATE -->
 <div class="row">
-<nav class="navbar navbar-default navbar-inverse fade-object" id="top-bar">
+<nav class="navbar navbar-default fade-object" id="top-bar">
   <div class="container-fluid">
     <div class="navbar-header">
       <!-- Mobile navigation -->
@@ -56,21 +56,16 @@
       <hr>
 
       <ul class="nav nav-stacked">
-        <li><a href="" target="ext"><i class="fa fa-folder-open-o"></i> My Contracts</a></li>
-        <li><a href="#/editor" target="ext"><i class="fa fa-pencil-square-o"></i> New Contract</a></li>
-        <li><a href="" target="ext"><i class="fa fa-user"></i> Settings</a></li>
+        <li id="save"><a href="#!" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
+        <li id="show-edit-changes"><a href="" target="ext" ng-click="ckEditor.showChanges()"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ buttonText }}</a></li>
+        <li id="reject-changes"><a href="#!" target="ext" ng-click="ckEditor.rejectChanges()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Changes</a></li>
+        <li id="accept-changes"><a href="" target="ext" ng-click="ckEditor.acceptChanges()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept Changes</a></li>
+        <li><a href="#!" target="ext" ng-click="ckEditor.acceptChanges()"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
+        <li><a href="#!" target="ext" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
       </ul>
 
       <hr>
-        <button type="" class="btn btn-primary btn-sm" id="save" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft </button><br>
-        <button type="" class="btn btn-primary btn-sm" id="publish" ng-click="ckEditor.save(false)"> Publish </button><br>
-        <button type="" class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" id="reject-changes" ng-click="ckEditor.rejectChanges()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Changes </button>
-        <button type="" class="btn btn-primary btn-sm" id="accept-changes" ng-click="ckEditor.acceptChanges()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept Changes </button>
-        <button type="" class="btn btn-primary btn-sm" id="send-draft"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft </button>
-        <button type="" class="btn btn-primary btn-sm" id="show-edit-changes" ng-click="ckEditor.showChanges()">{{ buttonText }}</button><br><br>
-        <button type="button" class="btn btn-primary btn-sm fixed" data-toggle="modal" data-target="#myModal">
-          SIGN CONTRACT
-        </button></div>
+</div>
       </div>
       <div class="col-md-8">
             <form method="post">
