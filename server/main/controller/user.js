@@ -250,7 +250,7 @@ exports.verifyEmail = {
 exports.updateProfile = {
   validate: {
     payload: {
-      userName: Joi.string().email(),
+      username: Joi.string().email(),
       password: Joi.string(),
       fullname: Joi.string()
     }
@@ -259,7 +259,6 @@ exports.updateProfile = {
     strategy: 'token'
   },
   handler: function(request, reply) {
-
 
     if (request.auth.isAuthenticated) {
       User.findUserById(request.auth.credentials._id, function(err, user) {
@@ -277,42 +276,35 @@ exports.updateProfile = {
           changed = true;
         }
 
+        if (request.payload.password) {
+          user.fullname = request.payload.password;
+          changed = true;
+        }
 
+        if (request.payload.username) {
+          User.findUser(request.payload.userName, function(err, user) {
+            if (err) {
+              console.error(err);
+              return reply(Boom.badImplementation(err));
+            }
+
+            if (user) return reply(Boom.forbidden('there is a user with this email'));
+
+            user.userName = request.payload.username;
+            changed = true;
+
+          });
+        }
+
+        if (changed) User.updateUser(user, function(err, user) {
+          if (err) {
+            console.error(err);
+            return reply(Boom.badImplementation(err));
+          }
+
+          return reply('updated successfully.');
+        });
       });
     }
-
-    User.findUser(request.payload.userName, function(err, user) {
-      if (err) {
-        console.error(err);
-        return reply(Boom.badImplementation(err));
-      }
-
-      if (user === null) return reply(Boom.forbidden('invalid username or password'));
-      if (user.isRevoked) return reply(Boom.forbidden('your account has been suspended'));
-
-      Common.checkPassword(request.payload.password, user.password, function(err, result) {
-        if (err) {
-          console.error(err);
-          return reply(Boom.badImplementation(err));
-        }
-        if (!result) return reply(Boom.forbidden('invalid username or password'));
-        if(!user.isVerified) return reply(Boom.forbidden('Your email address is not verified. please verify your email address to proceed'));
-
-        var tokenData = {
-          userName: user.userName,
-          password: user.password,
-          scope: user.scope,
-          id: user._id
-        };
-        var res = {
-          username: user.userName,
-          scope: user.scope,
-          token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
-        };
-
-        return reply(res);
-
-      });
-    });
   }
 };
