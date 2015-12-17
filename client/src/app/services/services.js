@@ -44,8 +44,10 @@ angular.module('app.services', [])
       }
     })
     .then(function (resp) {
-    
       return resp.data;
+    })
+    .catch(function(error) {
+      return error;
     });
   };
 
@@ -63,7 +65,7 @@ angular.module('app.services', [])
     
       return resp.data;
     });
-  }
+  };
 
   var resendEmail = function (user) {
     return $http({
@@ -107,13 +109,23 @@ angular.module('app.services', [])
     return !!token && !!expires && expires > Date.now();
   };
 
+  var save = function(data) {
+    $rootScope.token = data.token;
+    $rootScope.expires = Date.now() + 600000; // now + 10 minutes
+    $rootScope.username = data.username;
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('expires', Date.now() + 600000);
+    localStorage.setItem('username', data.username);
+  };
+
   return {
     login: login,
     signup: signup,
     resendEmail: resendEmail,
     isAuth: isAuth,
     verifyEmail: verifyEmail,
-    forgotPassword: forgotPassword
+    forgotPassword: forgotPassword,
+    save: save
   };
 
 })
