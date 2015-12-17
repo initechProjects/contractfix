@@ -67,9 +67,6 @@ var config = {
         return callback(Boom.forbidden('request damaged'), false);
       }
 
-      console.log(token.password);
-      console.log(user.password);
-
       if (token.password !== user.password) {
         console.log("User's password has been changed");
         return callback(Boom.forbidden("user's password has been changed"), false);

@@ -202,7 +202,7 @@ exports.email = function(user, token) {
                               <w:anchorlock/>
                               <center style="color:#ffffff;font-family:sans-serif;font-size:15px;">Reset your password</center>
                             </v:roundrect><![endif]-->
-                            <a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}/${token}" class="button button--red">Reset your password</a>
+                            <a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}" class="button button--red">Reset your password</a>
                           </div>
                         </td>
                       </tr>
@@ -215,7 +215,7 @@ exports.email = function(user, token) {
                       <tr>
                         <td>
                           <p class="sub">If you’re having trouble clicking the password reset button, copy and paste the URL below into your web browser.</p>
-                          <p class="sub"><a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}/${token}">http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}/${token}</a></p>
+                          <p class="sub"><a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}/${token}">http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}</a></p>
                         </td>
                       </tr>
                     </table>
