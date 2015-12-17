@@ -20,6 +20,14 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/auth/signup.html',
         controller: 'AuthController'
     })
+    .when('/verifyemail', {
+        templateUrl: 'app/auth/verifyemail.html',
+        controller: 'AuthController'
+    })
+    .when('/forgotpassword', {
+        templateUrl: 'app/auth/forgotpassword.html',
+        controller: 'AuthController'
+    })
     .when('/dashboard', {
         templateUrl: 'app/dashboard/dashboard.html',
         controller: 'DashboardController'
@@ -38,17 +46,17 @@ app.config(function($routeProvider, $httpProvider) {
 
 
 
-app.run(function ($rootScope, $location, Auth) {
-  // here inside the run phase of angular, our services and controllers
-  // have just been registered and our app is ready
-  // however, we want to make sure the user is authorized
-  // we listen for when angular is trying to change routes
-  // when it does change routes, we then look for the token in localstorage
-  // and send that token to the server to see if it is a real user or hasn't expired
-  // if it's not valid, we then redirect back to signin/signup
-  $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-    if (next.$$route && !Auth.isAuth()) {
-      $location.path('/login');
-    }
-  });
-})
+// app.run(function ($rootScope, $location, Auth) {
+//   // here inside the run phase of angular, our services and controllers
+//   // have just been registered and our app is ready
+//   // however, we want to make sure the user is authorized
+//   // we listen for when angular is trying to change routes
+//   // when it does change routes, we then look for the token in localstorage
+//   // and send that token to the server to see if it is a real user or hasn't expired
+//   // if it's not valid, we then redirect back to signin/signup
+//   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+//     if (next.$$route && !Auth.isAuth()) {
+//       $location.path('/login');
+//     }
+//   });
+// })
