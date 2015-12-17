@@ -3,7 +3,10 @@ var app = angular.module('app', [
     'app.auth',
     'app.dashboard',
     'app.services',
-    'app.editor'
+    'app.editor',
+    'app.forgotPassword',
+    'app.resetPassword',
+    'app.verifyemail'
     ]);
 
 
@@ -22,11 +25,11 @@ app.config(function($routeProvider, $httpProvider) {
     })
     .when('/verifyemail', {
         templateUrl: 'app/auth/verifyemail.html',
-        controller: 'AuthController'
+        controller: 'verifyEmailController'
     })
     .when('/forgotpassword', {
         templateUrl: 'app/auth/forgotpassword.html',
-        controller: 'AuthController'
+        controller: 'forgotPasswordController'
     })
     .when('/dashboard', {
         templateUrl: 'app/dashboard/dashboard.html',
