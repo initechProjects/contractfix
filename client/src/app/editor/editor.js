@@ -51,7 +51,7 @@ angular.module('app.editor', [])
     localStorage.setItem('data', editor.getData());
   };
 
-  $scope.ckEditor.publish = function() {
+  $scope.ckEditor.save = function(personal) {
     $http({
       method: 'POST',
       url: '/savecontract',
@@ -61,34 +61,14 @@ angular.module('app.editor', [])
       },
       data: {
         text: editor.getData(),
-        personal: false,
+        personal: personal,
         comments: $scope.comments
       }
     }).then(function(res) {
       console.log(res);
     }, function(res) {
       console.log(res);
-    })
-  };
-
-  $scope.ckEditor.save = function() {
-    $http({
-      method: 'POST',
-      url: '/savecontract',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
-      },
-      data: {
-        text: editor.getData(),
-        personal: true,
-        comments: $scope.comments
-      }
-    }).then(function(res) {
-      console.log(res);
-    }, function(res) {
-      console.log(res);
-    })
+    });
   };
 
   editor.on('instanceReady', function() {
