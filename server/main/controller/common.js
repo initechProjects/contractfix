@@ -41,18 +41,18 @@ exports.sendMailForgotPassword = function(user, token) {
 };
 
 
-// method to decrypt data(password)
-function decrypt(password) {
+// method to decrypt data
+function decrypt(data) {
   var decipher = crypto.createDecipher(algorithm, privateKey);
-  var dec = decipher.update(password, 'hex', 'utf8');
+  var dec = decipher.update(data, 'hex', 'utf8');
   dec += decipher.final('utf8');
   return dec;
 }
 
-// method to encrypt data(password)
-function encrypt(password) {
+// method to encrypt data
+function encrypt(data) {
   var cipher = crypto.createCipher(algorithm, privateKey);
-  var crypted = cipher.update(password, 'utf8', 'hex');
+  var crypted = cipher.update(data, 'utf8', 'hex');
   crypted += cipher.final('hex');
   return crypted;
 }

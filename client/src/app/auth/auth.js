@@ -19,13 +19,8 @@ angular.module('app.auth', [])
           $scope.flag = true;
           $location.path('/login');
         } else {
+          Auth.save(authResult);
           $location.path('/dashboard');
-          $rootScope.token = authResult.token;
-          $rootScope.expires = Date.now() + 600000; // now + 10 minutes
-          $rootScope.username = authResult.username;
-          localStorage.setItem('token', authResult.token);
-          localStorage.setItem('expires', Date.now() + 600000);
-          localStorage.setItem('username', authResult.username);
         }
       })
       .catch(function (error) {
@@ -36,7 +31,7 @@ angular.module('app.auth', [])
   $scope.signup = function () {
     Auth.signup($scope.user)
       .then(function (authResult) {
-        console.log("I am inside signup", authResult);
+        $location.path('/');
       })
       .catch(function (error) {
         console.error(error);
@@ -64,11 +59,8 @@ angular.module('app.auth', [])
       console.log(error);
     });
     }
-    
 
-  
-
-    
+ 
 });
 
 

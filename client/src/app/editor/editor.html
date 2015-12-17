@@ -37,7 +37,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="#/editor">Editor<span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Dashboard</a></li>
+        <li><a href="#/dashboard">Dashboard</a></li>
       </ul>
       <ul class="nav navbar-nav pull-right">
         <li><a href="#">Settings</a></li>
@@ -52,11 +52,21 @@
     <div class="row">
       <div class="col-md-2" id="left-panel">
         <div class="fade-object">
-        <button type="" class="btn btn-primary btn-sm" id="save" ng-click="ckEditor.save(true)"> Save Draft </button><br>
+        <h3><span class="glyphicon glyphicon-pencil"></span> Editor</h3>
+      <hr>
+
+      <ul class="nav nav-stacked">
+        <li><a href="" target="ext"><i class="fa fa-folder-open-o"></i> My Contracts</a></li>
+        <li><a href="#/editor" target="ext"><i class="fa fa-pencil-square-o"></i> New Contract</a></li>
+        <li><a href="" target="ext"><i class="fa fa-user"></i> Settings</a></li>
+      </ul>
+
+      <hr>
+        <button type="" class="btn btn-primary btn-sm" id="save" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft </button><br>
         <button type="" class="btn btn-primary btn-sm" id="publish" ng-click="ckEditor.save(false)"> Publish </button><br>
-        <button type="" class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" id="reject-changes" ng-click="ckEditor.rejectChanges()"> Reject Changes </button>
-        <button type="" class="btn btn-primary btn-sm" id="accept-changes" ng-click="ckEditor.acceptChanges()"> Accept Changes </button>
-        <button type="" class="btn btn-primary btn-sm" id="send-draft"> Send Draft </button>
+        <button type="" class="btn btn-primary btn-sm" class="btn btn-primary btn-sm" id="reject-changes" ng-click="ckEditor.rejectChanges()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Changes </button>
+        <button type="" class="btn btn-primary btn-sm" id="accept-changes" ng-click="ckEditor.acceptChanges()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept Changes </button>
+        <button type="" class="btn btn-primary btn-sm" id="send-draft"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft </button>
         <button type="" class="btn btn-primary btn-sm" id="show-edit-changes" ng-click="ckEditor.showChanges()">{{ buttonText }}</button><br><br>
         <button type="button" class="btn btn-primary btn-sm fixed" data-toggle="modal" data-target="#myModal">
           SIGN CONTRACT

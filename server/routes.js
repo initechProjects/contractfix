@@ -57,6 +57,19 @@ exports.endpoints = [
   */
   { method: 'POST', path: '/resetpassword', config: User.resetPassword },
 
+  /** Update profile
+  *   requires:
+  *     token in the header (Authorization)
+  *
+  *     username: optional (email - if sent, username will be changed)
+  *     password: optional (if sent, password will be changed)
+  *     fullname: optional (if sent, fullname will be changed)
+  *
+  *   returns:
+  *     OK - 200
+  */
+  { method: 'POST', path: '/updateprofile', config: User.updateProfile },
+
   /** Refresh token
   *   requires:
   *     Post call including token in the header (Authorization) which was sent by email
