@@ -200,7 +200,7 @@ p.copyright {
     font-size: 18px;
     margin-bottom: 20px;
 }
-#login .forget {
+#login .forgot {
     font-size: 15px;
     text-align: center;
     display: block;
@@ -327,13 +327,23 @@ p.copyright {
 /*    --------------------------------------------------
     :: Email Verification Section
     -------------------------------------------------- */
-
 #verifyemail {
     padding-top: 120px;
     padding-left: 50px;
     padding-right: 50px;
     text-align: center;
 }
+
+/*    --------------------------------------------------
+    :: Password Reset Section
+    -------------------------------------------------- */
+#forgotPassword {
+padding-top: 120px;
+padding-left: 50px;
+padding-right: 50px;
+text-align: center;
+}
+
 
 /*    --------------------------------------------------
     :: About Section

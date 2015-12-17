@@ -24,8 +24,8 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/auth/verifyemail.html',
         controller: 'AuthController'
     })
-    .when('/resetpassword', {
-        templateUrl: 'app/auth/resetpassword.html',
+    .when('/forgotpassword', {
+        templateUrl: 'app/auth/forgotpassword.html',
         controller: 'AuthController'
     })
     .when('/dashboard', {
