@@ -74,6 +74,7 @@ exports.login = {
         var tokenData = {
           userName: user.userName,
           password: user.password,
+          fullname: user.fullname,
           scope: user.scope,
           id: user._id
         };
@@ -99,6 +100,7 @@ exports.refreshToken = {
       var tokenData = {
         userName: request.auth.credentials.userName,
         password: request.auth.credentials.password,
+        fullname: request.auth.credentials.fullname,
         scope: request.auth.credentials.scope,
         id: request.auth.credentials._id
       };
@@ -306,5 +308,91 @@ exports.updateProfile = {
         });
       });
     }
+  }
+};
+
+exports.inviteCollaborators = {
+  validate: {
+    payload: {
+      contractId: Joi.string().required(),
+      title: Joi.string().required(),
+      collaborators: Joi.array().required()
+    }
+  },
+  auth: {
+    strategy: 'token'
+  },
+  handler: function(request, reply) {
+
+    request.payload.collaborators.forEach(function(email) {
+
+      if (request.auth.isAuthenticated) {
+        User.findUser(email, function(err, user) {
+
+          if (err) {
+            console.error(err);
+            return reply(Boom.badImplementation(err));
+          }
+
+          if (user === null) {
+            user = {};
+            user.userName = email;
+            user.scope = ['registered'];
+            user.isInvited = true;
+
+            User.saveUser(user, function(err, result) {
+              if (err) {
+                console.error(err);
+                return reply(Boom.badImplementation(err));
+              }
+
+              var tokenData = {
+                userName: user.userName,
+                scope: user.scope,
+                id: user._id
+              };
+
+              Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+            });
+
+          } else { // already registered user
+
+
+
+          }
+
+        });
+      }
+
+    });
+
+
+    let user ={};
+
+
+    Common.hash(request.payload.password, function(error, hashedPassword) {
+      request.payload.password = hashedPassword;
+
+      User.saveUser(request.payload, function(err, user) {
+        console.log('returned from mongo');
+        // if (err) return reply(Boom.badImplementation(err));
+
+        if (!err) {
+          var tokenData = {
+            userName: user.userName,
+            scope: user.scope,
+            id: user._id
+          };
+          Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+          return reply('Please confirm your email id by clicking on link in email');
+        } else {
+          if ( err.code === 11000 || err.code === 11001 ) {
+            return reply(Boom.forbidden('please provide another user email'));
+          } else {
+            return reply(Boom.forbidden(err)); // HTTP 403
+          }
+        }
+      });
+    });
   }
 };

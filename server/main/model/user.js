@@ -82,9 +82,16 @@ var User = new Schema({
     default: false
   },
 
+  /**
+    isInvited. Boolean value to  check if user created by invitation.
+  */
+  isInvited: {
+    type: Boolean,
+    default: false
+  },
+
   created_at: Date,
   updated_at: Date
-
 
 });
 

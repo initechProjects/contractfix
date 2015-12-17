@@ -21,7 +21,8 @@ var Contract = new Schema({
   */
   metadata: {
     dateCreated: Date,
-    templateId: String
+    templateId: String,
+    title: String
   },
 
   /**
@@ -42,8 +43,9 @@ var Contract = new Schema({
     text: String
   }],
 
-
-
+  /**
+    Comments.
+  */
   comments: [{
     userid: String,
     commentDate: Date,
