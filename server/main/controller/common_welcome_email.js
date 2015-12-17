@@ -203,7 +203,7 @@ exports.email = function(user, token) {
                               <w:anchorlock/>
                               <center style="color:#ffffff;font-family:sans-serif;font-size:15px;">Confirm your account</center>
                             </v:roundrect><![endif]-->
-                              <a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.verifyEmailUrl}/${token}" class="button button--green">Confirm your account</a>
+                              <a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.verifyEmailUrl}?q=${token}" class="button button--green">Confirm your account</a>
                             </div>
                           </td>
                         </tr>
@@ -217,7 +217,7 @@ exports.email = function(user, token) {
                           <td>
                             <p class="sub">If you’re having trouble clicking the confirm account button, copy and paste the URL below into your web browser.
                             </p>
-                            <p class="sub"><a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.verifyEmailUrl}/${token}">http://${Config.server.host}:${Config.server.port}/#/${Config.email.verifyEmailUrl}/${token}</a></p>
+                            <p class="sub"><a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.verifyEmailUrl}/${token}">http://${Config.server.host}:${Config.server.port}/#/${Config.email.verifyEmailUrl}?q=${token}</a></p>
                           </td>
                         </tr>
                       </table>
