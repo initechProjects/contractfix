@@ -1,12 +1,12 @@
 angular.module('app.editor', [])
-.controller('EditorController', function ($scope, $rootScope) {
+.controller('EditorController', function ($scope, $rootScope, $http) {
 
 
   // Lines 5 - 17 replace the textarea in editor.html
   // with the ckEditor proper using the editor API.
 
-  var user = $rootScope.username;
-  var token = $rootScope.token;
+  var user = $rootScope.username || localStorage.getItem('username');
+  var token = $rootScope.token || localStorage.getItem('token');
 
   CKEDITOR.disableAutoInline = true;
   var editor = CKEDITOR.inline('contractEditor');
@@ -32,6 +32,7 @@ angular.module('app.editor', [])
   };
 
   $scope.ckEditor.rejectChanges = function() {
+    console.log(editor.getData());
   };
 
   $scope.ckEditor.addComment = function() {
@@ -48,6 +49,26 @@ angular.module('app.editor', [])
 
   $scope.ckEditor.handleClick = function(event) {
     localStorage.setItem('data', editor.getData());
+  };
+
+  $scope.ckEditor.save = function(personal) {
+    $http({
+      method: 'POST',
+      url: '/savecontract',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        text: editor.getData(),
+        personal: personal,
+        comments: $scope.comments
+      }
+    }).then(function(res) {
+      console.log(res);
+    }, function(res) {
+      console.log(res);
+    });
   };
 
   editor.on('instanceReady', function() {
@@ -81,9 +102,7 @@ angular.module('app.editor', [])
 
   editor.on('lite:init', function() {
     $scope.lite = editor.plugins.lite.findPlugin(editor);
-
-    var username = $rootScope.username || localStorage.getItem('username');
-    $scope.lite.setUserInfo({ name: username, id: username });
+    $scope.lite.setUserInfo({ name: user, id: user });
   });
 
   editor.on('selectionChange', function() {

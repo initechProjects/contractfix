@@ -98,7 +98,7 @@ exports.endpoints = [
 
   /** Find user's contracts
     requires:
-      contractId: STRING
+      token only
   */
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 
