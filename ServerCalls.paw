@@ -70,7 +70,11 @@
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
         <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+
+        <attribute name="order" type="int64">3</attribute>
+
         <attribute name="order" type="int64">4</attribute>
+
         <attribute name="name" type="string">Login</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
@@ -185,7 +189,9 @@
         <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z104"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z114">
-        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InRlc3RAY2V0aW4uaW5mbyIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiJhYWJjMDAxMC1hMzhhLTExZTUtYTkwNi05OThkOTdhNmZhYTMiLCJpYXQiOjE0NTAyMjUxNjcsImV4cCI6MTQ1MDMxMTU2N30.3pniW-86AM-KlZo4_dsP-XCQaVOs7YLiN6bFCcBXIX0</attribute>
+
+        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOltbInJlZ2lzdGVyZWQiXV0sImlkIjoiN2VjMTkxMDAtYTQ0ZC0xMWU1LTk4OGEtZWQ1NGY0YzRmNWRjIiwiaWF0IjoxNDUwMzA4ODQ4LCJleHAiOjE0NTAzOTUyNDh9.oVSwIOs5mcU77BD0VH_6Q9AFBr6dz6HewMJRbC5X9Q4</attribute>
+
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -208,7 +214,9 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+
+        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"herashk@gmail.com\\",\\"password\\":\\"test\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Create user</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>

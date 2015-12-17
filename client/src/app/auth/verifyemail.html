@@ -1,0 +1,36 @@
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    <div class="container topnav">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand topnav" href="#/">ContractFix</a>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+
+<br>
+<br>
+<br>
+
+<!-- email verification page -->
+<section id="verifyemail">
+  <div class="row">
+      <div class="col-xs-12">
+          <div class="form-wrap">
+            <h1>Please click confirm to verify your account.</h1> <br>
+            <input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Confirm" ng-click="verifyEmail()">
+            <div class="alert alert-success" class="ng-hide" ng-show ="flag">{{ authResult }}</div>
+           
+                <br>
+                <br>
+          </div>
+    </div> <!-- /.col-xs-12 -->
+  </div> <!-- /.row -->
+</section>
