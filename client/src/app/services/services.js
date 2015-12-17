@@ -51,21 +51,6 @@ angular.module('app.services', [])
     });
   };
 
-  //Todo: fix logic for verifyEmail
-  var verifyEmail = function(user){
-      return $http({
-      method: 'POST',
-      url: '/verifyemail',
-      headers: {
-        Authorization : "Bearer " + token,
-        ContentType : "application/json"
-      }
-     })
-    .then(function (resp) {
-    
-      return resp.data;
-    });
-  };
 
   var resendEmail = function (user) {
     return $http({
@@ -123,7 +108,6 @@ angular.module('app.services', [])
     signup: signup,
     resendEmail: resendEmail,
     isAuth: isAuth,
-    verifyEmail: verifyEmail,
     forgotPassword: forgotPassword,
     save: save
   };
