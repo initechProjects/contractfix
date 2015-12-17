@@ -30,8 +30,7 @@ angular.module('app.services', [])
       return storageItem;
     })
     .catch(function(error){
-      //console.log(error.data.message);
-      return error.data.message;
+      return error;
     })
   };
 
@@ -118,13 +117,6 @@ angular.module('app.services', [])
   };
 
 })
-
-
-
-
-
-
-
 
 .factory('Dashboard', function ($http, $location, $window, $rootScope) {
 
