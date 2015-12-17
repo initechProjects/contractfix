@@ -121,18 +121,26 @@ exports.resetPassword = {
       password: Joi.string().required()
     }
   },
-  auth: {
-    strategy: 'token'
-  },
   handler: function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      User.findUserById(request.auth.credentials._id, function(err, user) {
+    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
+      if(decoded === undefined) {
+        console.log('decoded undefined', request.headers.authorization);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      if(decoded.scope[0] !== 'registered') {
+        console.log('not registered', decoded.scope[0]);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      User.findUserByIdAndUserName(decoded.id, decoded.userName, function(err, user){
         if (err) {
           console.error(err);
           return reply(Boom.badImplementation(err));
         }
-
-        if (user === null) return reply(Boom.forbidden('invalid username or password'));
+        if (user === null) {
+          console.log('user not found', decoded.userName);
+          return reply(Boom.forbidden('invalid verification link'));
+        }
+        if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
 
         Common.hash(request.payload.password, function(error, hashedPassword) {
           user.password = hashedPassword;
@@ -147,7 +155,7 @@ exports.resetPassword = {
           });
         });
       });
-    }
+    });
   }
 },
 
