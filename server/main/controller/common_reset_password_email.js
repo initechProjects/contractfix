@@ -197,7 +197,7 @@ exports.email = function(user, token) {
                       <tr>
                         <td align="center">
                           <div>
-                            <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}/${token}" style="height:45px;v-text-anchor:middle;width:200px;" arcsize="7%" stroke="f" fill="t">
+                            <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}" style="height:45px;v-text-anchor:middle;width:200px;" arcsize="7%" stroke="f" fill="t">
                               <v:fill type="tile" color="#dc4d2f" />
                               <w:anchorlock/>
                               <center style="color:#ffffff;font-family:sans-serif;font-size:15px;">Reset your password</center>
@@ -215,7 +215,7 @@ exports.email = function(user, token) {
                       <tr>
                         <td>
                           <p class="sub">If you’re having trouble clicking the password reset button, copy and paste the URL below into your web browser.</p>
-                          <p class="sub"><a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}/${token}">http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}</a></p>
+                          <p class="sub"><a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}">http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}</a></p>
                         </td>
                       </tr>
                     </table>
