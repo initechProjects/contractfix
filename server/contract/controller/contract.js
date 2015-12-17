@@ -9,6 +9,7 @@ exports.save = {
   validate: {
     payload: {
       contractId: Joi.string(),
+      title: Joi.string(),
       templateId: Joi.string(), //Joi.when('contractId', { is: undefined, then: Joi.string().required() }),
       text: Joi.string().required(),
       comments: Joi.array(),
@@ -34,6 +35,8 @@ exports.save = {
                 versionDate: Date.now(),
                 text: request.payload.text
               };
+
+              if (request.payload.title) contract.metadata.title = request.payload.title;
 
               if (request.payload.personal) {
                 contract.drafts.push(version);
@@ -76,6 +79,7 @@ exports.save = {
         contract.metadata = {};
         contract.metadata.dateCreated = Date.now();
         if (request.payload.templateId) contract.metadata.templateId = request.payload.templateId;
+        if (request.payload.title) contract.metadata.title = request.payload.title;
 
         contract.versions = [];
         let version = {
