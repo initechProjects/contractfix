@@ -67,18 +67,18 @@ var config = {
         return callback(Boom.forbidden('request damaged'), false);
       }
 
-      Common.checkPassword(token.password, user.password, function(err, result) {
-        if (err) {
-          console.error(err);
-          return callback(Boom.badImplementation(err), false);
-        }
-        if (!result) return callback(Boom.forbidden("user's password has been changed"), false);
+      console.log(token.password);
+      console.log(user.password);
 
-        // If passed all above, user is authenticated
-        // add user's id to user's scope and send user credentials to callback
-        user.scope.push(user._id);
-        return callback(null, true, user);
-      });
+      if (token.password !== user.password) {
+        console.log("User's password has been changed");
+        return callback(Boom.forbidden("user's password has been changed"), false);
+      }
+
+      // If passed all above, user is authenticated
+      // add user's id to user's scope and send user credentials to callback
+      user.scope.push(user._id);
+      return callback(null, true, user);
 
     });
   }
