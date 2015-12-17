@@ -31,6 +31,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/auth/forgotpassword.html',
         controller: 'forgotPasswordController'
     })
+    .when('/resetpassword', {
+        templateUrl: 'app/auth/resetpassword.html',
+        controller: 'resetPasswordController'
+    })
     .when('/dashboard', {
         templateUrl: 'app/dashboard/dashboard.html',
         controller: 'DashboardController'
