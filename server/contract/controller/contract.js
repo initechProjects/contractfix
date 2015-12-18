@@ -148,7 +148,8 @@ exports.findContractByUserId = {
             let l = contract.drafts.length;
 
             while (l--) {
-              if (contract.drafts[l].userid === request.auth.credentials._id) {
+              console.log(contract.drafts[l].userid, request.auth.credentials._id);
+              if (contract.drafts[l].userid == request.auth.credentials._id) {
                 item.drafts = contract.drafts[l].tag || true;
                 break;
               }
@@ -156,7 +157,7 @@ exports.findContractByUserId = {
           }
 
           if (contract.versions && contract.versions.length > 0) {
-            item.versions = contract.versions[contract.versions.length - 1] || true;
+            item.versions = contract.versions[contract.versions.length - 1].tag || true;
           }
 
           contractsList.push(item);
@@ -188,15 +189,17 @@ exports.open = {
         result.contractId = contract._id;
         result.metadata = contract.metadata;
         result.comments = contract.comments;
+        result.users = contract.users;
 
         if (contract.drafts) {
           let l = contract.drafts.length;
 
           while (l--) {
-            if (contract.drafts[l].userid === request.auth.credentials._id) {
+            if (contract.drafts[l].userid == request.auth.credentials._id) {
               result.personal = {};
               result.personal.text = contract.drafts[l].text;
               result.personal.versionDate = contract.drafts[l].versionDate;
+              if (contract.drafts[l].tag) result.personal.tag = contract.drafts[l].tag;
               break;
             }
           }
@@ -208,10 +211,13 @@ exports.open = {
           result.latest = {};
           result.latest.text = contract.versions[result.revisions - 1].text;
           result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
+          if (contract.versions[result.revisions - 1].tag) result.latest.tag = contract.versions[result.revisions - 1].tag;
+
           if (result.revisions > 1) {
             result.previous = {};
             result.previous.text = contract.versions[result.revisions - 2].text;
             result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+            if (contract.versions[result.revisions - 2].tag) result.latest.tag = contract.versions[result.revisions - 2].tag;
           }
         }
 

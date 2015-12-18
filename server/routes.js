@@ -25,6 +25,7 @@ exports.endpoints = [
   *   requires:
   *     userName: email, required
   *     password: required
+  *     valid: boolean - makes token valid for 48hrs !!!DEVELOPMENT ONLY!!!
   *   returns:
   *     username (email)
   *     scope (user's role)
@@ -45,8 +46,9 @@ exports.endpoints = [
 
   /** Invite Collaborators
   *   requires:
-  *     userName: email, required
-  *     password: required
+  *     contractid: string().required(),
+  *     title: string().required(),
+  *     collaborators: array(emails).required()
   *   returns:
   *     username (email)
   *     scope (user's role)
