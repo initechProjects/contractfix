@@ -394,3 +394,36 @@ text-align: center;
     padding-left: 50px;
     padding-right: 50px;
 }
+/*    --------------------------------------------------
+    :: Editor Section
+    -------------------------------------------------- */
+#editor {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#placeholdernav {
+  height: 60px;
+}
+
+#top-bar, #top-bar a {
+  color:#A7FAE6;
+}
+
+#top-bar a:hover {
+  color: #fff;
+}
+
+#contractEditor {
+  font: 20px/1.5 'Source Code Pro';
+  color: #323232;
+  outline: none;
+}
+
+/*    --------------------------------------------------
+    :: Dashboard Section
+    -------------------------------------------------- */
+.dashboard-container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
