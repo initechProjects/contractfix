@@ -23,6 +23,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/auth/signup.html',
         controller: 'AuthController'
     })
+    .when('/signup2', {
+        templateUrl: 'app/auth/signup2.html',
+        controller: 'AuthController'
+    })
     .when('/verifyemail', {
         templateUrl: 'app/auth/verifyemail.html',
         controller: 'verifyEmailController'
@@ -68,3 +72,24 @@ app.run(function ($rootScope, $location, Auth) {
     }
   });
 })
+
+// app.run(function ($http, $scope, $rootScope, $location) {
+//     $http({
+//     method: 'POST',
+//     url: '/refreshtoken',
+//     headers: {
+//       'Authorization': token,
+//       'Content-Type': 'application/json'
+//     },
+//     data: {}
+//     })
+//    .success(function(data){
+    
+//    })
+//    .catch(function(err){
+//     console.log(err);
+//    })
+
+
+
+// })

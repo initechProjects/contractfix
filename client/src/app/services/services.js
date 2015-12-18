@@ -22,7 +22,8 @@ angular.module('app.services', [])
       var storageItem = {
         token: resp.data.token,
         username: resp.data.username,
-        scope: resp.data.scope
+        scope: resp.data.scope,
+        fullname: resp.data.fullname
       };
       if(resp.data.token === undefined){
         return resp.data;

@@ -387,6 +387,16 @@ text-align: center;
 }
 
 /*    --------------------------------------------------
+    :: Enter Fullname Section
+    -------------------------------------------------- */
+#enterFullname {
+    text-align: center;
+    padding-top: 120px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+/*    --------------------------------------------------
     :: About Section
     -------------------------------------------------- */
 #appinfo {
