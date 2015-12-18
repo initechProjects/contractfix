@@ -44,17 +44,19 @@ exports.save = {
                 contract.versions.push(version);
               }
 
-              request.payload.comments.forEach(function(item) {
-                let comment = {
-                  userid: request.auth.credentials._id,
-                  commentDate: Date.now(),
-                  text: item.comment,
-                  selection: item.selection
-                };
+              if (request.payload.comments && Array.isArray(request.payload.comments)) {
+                request.payload.comments.forEach(function(item) {
+                  let comment = {
+                    userid: request.auth.credentials._id,
+                    commentDate: Date.now(),
+                    text: item.comment,
+                    selection: item.selection
+                  };
 
-                if (!contract.comments) contract.comments = [];
-                contract.comments.push(comment);
-              });
+                  if (!contract.comments) contract.comments = [];
+                  contract.comments.push(comment);
+                });
+              }
 
               Contract.updateContract(contract, function(err) {
                 if (!err) {
@@ -81,15 +83,26 @@ exports.save = {
         if (request.payload.templateId) contract.metadata.templateId = request.payload.templateId;
         if (request.payload.title) contract.metadata.title = request.payload.title;
 
-        contract.versions = [];
-        let version = {
-          userid: request.auth.credentials._id,
-          versionDate: Date.now(),
-          text: request.payload.text
-        };
-        contract.versions.push(version);
 
-        if (request.payload.comments) {
+        if (request.payload.personal) {
+          contract.drafts = [];
+          let draft = {
+            userid: request.auth.credentials._id,
+            versionDate: Date.now(),
+            text: request.payload.text
+          };
+          contract.drafts.push(draft);
+        } else {
+          contract.versions = [];
+          let version = {
+            userid: request.auth.credentials._id,
+            versionDate: Date.now(),
+            text: request.payload.text
+          };
+          contract.versions.push(version);
+        }
+
+        if (request.payload.comments && Array.isArray(request.payload.comments)) {
           request.payload.comments.forEach(function(item) {
             let comment = {
               userid: request.auth.credentials._id,
@@ -127,7 +140,27 @@ exports.findContractByUserId = {
         let contractsList = [];
 
         contracts.forEach(function(contract) {
-          contractsList.push(contract._id);
+          let item = {};
+          item.id = contract._id;
+          if (contract.metadata.title) item.title = contract.metadata.title;
+
+          if (contract.drafts) {
+            let l = contract.drafts.length;
+
+            while (l--) {
+              console.log(contract.drafts[l].userid, request.auth.credentials._id);
+              if (contract.drafts[l].userid == request.auth.credentials._id) {
+                item.drafts = contract.drafts[l].tag || true;
+                break;
+              }
+            }
+          }
+
+          if (contract.versions && contract.versions.length > 0) {
+            item.versions = contract.versions[contract.versions.length - 1].tag || true;
+          }
+
+          contractsList.push(item);
           console.log('Contract ID:', contract._id, ', Users:', contract.users);
         });
         return reply(contractsList);
@@ -156,35 +189,40 @@ exports.open = {
         result.contractId = contract._id;
         result.metadata = contract.metadata;
         result.comments = contract.comments;
+        result.users = contract.users;
 
         if (contract.drafts) {
           let l = contract.drafts.length;
 
           while (l--) {
-            if (contract.drafts[l].userid === request.auth.credentials._id) {
+            if (contract.drafts[l].userid == request.auth.credentials._id) {
               result.personal = {};
               result.personal.text = contract.drafts[l].text;
               result.personal.versionDate = contract.drafts[l].versionDate;
+              if (contract.drafts[l].tag) result.personal.tag = contract.drafts[l].tag;
               break;
             }
           }
         }
 
-        result.revisions = contract.versions.length;
+        if (contract.versions) {
+          result.revisions = contract.versions.length;
 
-        // console.log(result);
-        result.latest = {};
-        result.latest.text = contract.versions[result.revisions - 1].text;
-        result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
-        if (result.revisions > 1) {
-          result.previous = {};
-          result.previous.text = contract.versions[result.revisions - 2].text;
-          result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+          result.latest = {};
+          result.latest.text = contract.versions[result.revisions - 1].text;
+          result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
+          if (contract.versions[result.revisions - 1].tag) result.latest.tag = contract.versions[result.revisions - 1].tag;
+
+          if (result.revisions > 1) {
+            result.previous = {};
+            result.previous.text = contract.versions[result.revisions - 2].text;
+            result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+            if (contract.versions[result.revisions - 2].tag) result.latest.tag = contract.versions[result.revisions - 2].tag;
+          }
         }
 
         return reply(result);
       });
-
     }
   }
 };

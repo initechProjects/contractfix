@@ -25,12 +25,36 @@ exports.endpoints = [
   *   requires:
   *     userName: email, required
   *     password: required
+  *     valid: boolean - makes token valid for 48hrs !!!DEVELOPMENT ONLY!!!
   *   returns:
   *     username (email)
   *     scope (user's role)
   *     token (valid for 1 hour)
   */
   { method: 'POST', path: '/login', config: User.login },
+
+  /** Invitation login
+  *   requires:
+  *     userName: email, required
+  *     password: required
+  *   returns:
+  *     username (email)
+  *     scope (user's role)
+  *     token (valid for 1 hour)
+  */
+  { method: 'POST', path: '/invitationlogin', config: User.invitationLogin },
+
+  /** Invite Collaborators
+  *   requires:
+  *     contractid: string().required(),
+  *     title: string().required(),
+  *     collaborators: array(emails).required()
+  *   returns:
+  *     username (email)
+  *     scope (user's role)
+  *     token (valid for 1 hour)
+  */
+  { method: 'POST', path: '/invite', config: User.inviteCollaborators },
 
   /** Forgot password (needs to be changed with another strategy)
   *   requires:
@@ -95,6 +119,7 @@ exports.endpoints = [
       in Body:
       contractId: required to update, if null new contract
       text: latest text of the contract
+      title: string
       comments: array of string
       templateId: if contract created based on existing template, id should be passed
       personal: boolean, if true, it will be saved as personal draft
@@ -105,13 +130,19 @@ exports.endpoints = [
     requires:
       in Headers -> Authorization: 'Bearer ' + token
 
-      contractId: STRING
+      contracti§d: STRING
   */
   { method: 'POST', path: '/opencontract', config: Contract.open },
 
   /** Find user's contracts
     requires:
       token only
+
+    returns:
+      id
+      title
+      drafts(bool)
+      versions(bool)
   */
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var uuid = require('node-uuid');
+// var uuid = require('node-uuid');
 
 /**
  * @module  Contract
@@ -11,10 +11,10 @@ var Contract = new Schema({
   /**
     _id: using UUID for id field
   */
-  _id: {
-    type: String,
-    default: uuid.v1
-  },
+  // _id: {
+  //   type: String,
+  //   default: uuid.v1
+  // },
 
   /**
     metadata. Object keeps different static data about the contract
@@ -31,7 +31,8 @@ var Contract = new Schema({
   versions: [{
     userid: String,
     versionDate: Date,
-    text: String
+    text: String,
+    tag: String
   }],
 
   /**
@@ -40,7 +41,8 @@ var Contract = new Schema({
   drafts: [{
     userid: String,
     versionDate: Date,
-    text: String
+    text: String,
+    tag: String
   }],
 
   /**

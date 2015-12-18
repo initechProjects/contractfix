@@ -6,6 +6,7 @@ var Common = require('./common');
 var Config = require('../../config/config');
 var Jwt    = require('jsonwebtoken');
 var User   = require('../model/user').User;
+var Contract   = require('../../contract/model/contract').Contract;
 
 var privateKey = Config.token.key;
 
@@ -50,7 +51,8 @@ exports.login = {
   validate: {
     payload: {
       userName: Joi.string().email().required(),
-      password: Joi.string().required()
+      password: Joi.string().required(),
+      valid: Joi.boolean() // ONLY FOR DEVELOPMENT!!!!!
     }
   },
   handler: function(request, reply) {
@@ -78,11 +80,16 @@ exports.login = {
           scope: user.scope,
           id: user._id
         };
-        var res = {
-          username: user.userName,
-          scope: user.scope,
-          token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
-        };
+        var res = {};
+
+        res.username = user.userName;
+        res.scope = user.scope;
+
+        if (request.payload.valid) {
+          res.token = Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification });
+        } else {
+          res.token = Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh });
+        }
 
         return reply(res);
 
@@ -319,10 +326,55 @@ exports.updateProfile = {
   }
 };
 
+exports.invitationLogin = {
+  // TO BE CHANGED TOTALLY
+  validate: {
+    payload: {
+      password: Joi.string().required()
+    }
+  },
+  handler: function(request, reply) {
+    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
+      if(decoded === undefined) {
+        console.log('decoded undefined', request.headers.authorization);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      if(decoded.scope[0] !== 'registered') {
+        console.log('not registered', decoded.scope[0]);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      User.findUserByIdAndUserName(decoded.id, decoded.userName, function(err, user){
+        if (err) {
+          console.error(err);
+          return reply(Boom.badImplementation(err));
+        }
+        if (user === null) {
+          console.log('user not found', decoded.userName);
+          return reply(Boom.forbidden('invalid verification link'));
+        }
+        if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
+
+        Common.hash(request.payload.password, function(error, hashedPassword) {
+          user.password = hashedPassword;
+
+          User.updateUser(user, function(err, user) {
+            if (err) {
+              console.error(err);
+              return reply(Boom.badImplementation(err));
+            }
+
+            return reply('password changed successfully.');
+          });
+        });
+      });
+    });
+  }
+};
+
 exports.inviteCollaborators = {
   validate: {
     payload: {
-      contractId: Joi.string().required(),
+      contractid: Joi.string().required(),
       title: Joi.string().required(),
       collaborators: Joi.array().required()
     }
@@ -332,27 +384,70 @@ exports.inviteCollaborators = {
   },
   handler: function(request, reply) {
 
-    request.payload.collaborators.forEach(function(email) {
+    if (request.auth.isAuthenticated) {
 
-      if (request.auth.isAuthenticated) {
-        User.findUser(email, function(err, user) {
+      Contract.findContract(request.payload.contractid, function(err, contract){
+        if (err) {
+          console.error(err);
+          return reply(Boom.badImplementation(err));
+        }
 
-          if (err) {
-            console.error(err);
-            return reply(Boom.badImplementation(err));
-          }
+        if (contract === null) return reply(Boom.preconditionFailed('wrong contractid'));
 
-          if (user === null) {
-            user = {};
-            user.userName = email;
-            user.scope = ['registered'];
-            user.isInvited = true;
+        var counter = 0;
 
-            User.saveUser(user, function(err, result) {
-              if (err) {
-                console.error(err);
-                return reply(Boom.badImplementation(err));
-              }
+        request.payload.collaborators.forEach(function(email) {
+          User.findUser(email, function(err, user) {
+
+            if (err) {
+              console.error(err);
+              return reply(Boom.badImplementation(err));
+            }
+
+            if (user === null) {
+
+              Common.hash('temporary_pass', function(error, hashedPassword) {
+                request.payload.password = hashedPassword;
+
+                user = {};
+                user.userName = email;
+                user.scope = ['registered'];
+                user.isInvited = true;
+                user.password = hashedPassword;
+
+                User.saveUser(user, function(err, result) {
+                  if (err) {
+                    console.error(err);
+                    return reply(Boom.badImplementation(err));
+                  }
+
+                  user._id = result._id;
+
+                  var tokenData = {
+                    userName: user.userName,
+                    scope: user.scope,
+                    id: user._id
+                  };
+
+                  contract.users.push(user._id);
+
+                  Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+
+                  Contract.updateContract(contract, function(err, result) {
+                    if (err) {
+                      console.error(err);
+                      return reply(Boom.badImplementation(err));
+                    }
+
+                    if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
+
+                    return reply('Invitation(s) sent');
+                  });
+                });
+              });
+
+            } else {
+              contract.users.push(user._id);
 
               var tokenData = {
                 userName: user.userName,
@@ -360,47 +455,54 @@ exports.inviteCollaborators = {
                 id: user._id
               };
 
-              Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
-            });
+              Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
 
-          } else { // already registered user
+              Contract.updateContract(contract, function(err, result) {
+                if (err) {
+                  console.error(err);
+                  return reply(Boom.badImplementation(err));
+                }
 
+                if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
 
+                return reply('Invitation(s) sent');
+              });
+            }
 
-          }
+          });
 
         });
-      }
-
-    });
-
-
-    let user ={};
-
-
-    Common.hash(request.payload.password, function(error, hashedPassword) {
-      request.payload.password = hashedPassword;
-
-      User.saveUser(request.payload, function(err, user) {
-        console.log('returned from mongo');
-        // if (err) return reply(Boom.badImplementation(err));
-
-        if (!err) {
-          var tokenData = {
-            userName: user.userName,
-            scope: user.scope,
-            id: user._id
-          };
-          Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
-          return reply('Please confirm your email id by clicking on link in email');
-        } else {
-          if ( err.code === 11000 || err.code === 11001 ) {
-            return reply(Boom.forbidden('please provide another user email'));
-          } else {
-            return reply(Boom.forbidden(err)); // HTTP 403
-          }
-        }
       });
-    });
+
+    }
+
+
+    // let user ={};
+
+
+    // Common.hash(request.payload.password, function(error, hashedPassword) {
+    //   request.payload.password = hashedPassword;
+
+    //   User.saveUser(request.payload, function(err, user) {
+    //     console.log('returned from mongo');
+    //     // if (err) return reply(Boom.badImplementation(err));
+
+    //     if (!err) {
+    //       var tokenData = {
+    //         userName: user.userName,
+    //         scope: user.scope,
+    //         id: user._id
+    //       };
+    //       Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+    //       return reply('Please confirm your email id by clicking on link in email');
+    //     } else {
+    //       if ( err.code === 11000 || err.code === 11001 ) {
+    //         return reply(Boom.forbidden('please provide another user email'));
+    //       } else {
+    //         return reply(Boom.forbidden(err)); // HTTP 403
+    //       }
+    //     }
+    //   });
+    // });
   }
 };
