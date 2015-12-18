@@ -79,7 +79,7 @@
     </form>
 
       </div>
-      <div class="col-md-2 fade-object">
+      <div class="col-md-2" id="left-menu">
         <pre ng-if="selection">{{ selection }}</pre>
         <textarea ng-model="comment" id="comment-box" placeholder="Enter a comment..." style="width:100%"></textarea>
         <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
@@ -91,14 +91,11 @@
       </div>
   </div>
 
-
 <script>
 $('#myModal').on('shown.bs.modal', function () {
   $('#myInput').focus()
 });
 </script>
-
-
 <style>
 #placeholdernav {
   height: 60px;
@@ -117,4 +114,5 @@ $('#myModal').on('shown.bs.modal', function () {
   color: #323232;
   outline: none;
 }
+
 </style>
