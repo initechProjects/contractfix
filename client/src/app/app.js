@@ -46,9 +46,6 @@ app.config(function($routeProvider, $httpProvider) {
     .when('/about', {
         templateUrl: 'app/about/about.html',
     })
-    .otherwise({
-      redirectTo: '/'
-    });
 });
 
 
