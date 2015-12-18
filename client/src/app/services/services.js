@@ -53,6 +53,7 @@ angular.module('app.services', [])
   };
 
 
+
   var resendEmail = function (user) {
     return $http({
       method: 'POST',

@@ -29,9 +29,10 @@
               <div class="form-wrap">
                 <h1>Welcome first time user!</h1>
                 <h2>Please enter your fullname to complete your profile.</h2> <br>
-                    <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='enterName()'>
+                 <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }} redirecting to dashboard...</div>
+                    <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='enterName(fullname)'>
                         <div class="form-group">
-                            <input type="text" name="fullname" id="fullname" class="form-control" placeholder="name">
+                            <input type="text" ng-model='fullname' id="fullname" class="form-control" placeholder="name">
                         </div>
                         <br>
                         <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">

@@ -6,7 +6,8 @@ var app = angular.module('app', [
     'app.editor',
     'app.forgotPassword',
     'app.resetPassword',
-    'app.verifyemail'
+    'app.verifyemail',
+    'app.signup2'
     ]);
 
 
@@ -25,7 +26,7 @@ app.config(function($routeProvider, $httpProvider) {
     })
     .when('/signup2', {
         templateUrl: 'app/auth/signup2.html',
-        controller: 'AuthController'
+        controller: 'signup2Controller'
     })
     .when('/verifyemail', {
         templateUrl: 'app/auth/verifyemail.html',

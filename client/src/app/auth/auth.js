@@ -1,9 +1,9 @@
 angular.module('app.auth', [])
 
 //todo: username if it is an email address or not
-.controller('AuthController', function($scope, $rootScope, $window, $location, Auth){
+.controller('AuthController', function($scope, $rootScope, $window, $location, Auth, $http){
   $scope.user = {};
-  //to show error message on login page
+  var token;
   $scope.flag = false;
 
   $scope.login = function () {
@@ -12,11 +12,12 @@ angular.module('app.auth', [])
         $rootScope.authResult = authResult;
         
         console.log(authResult);
-        // if(authResult === undefined){
-        //   $scope.flag = true;
-        //   $scope.authResult = "invalid username or password";
-        // } else 
-        if(authResult.token === undefined){
+        token = authResult.token;
+        console.log("I am token", token);
+       
+        if(authResult.fullname === undefined){
+          $location.path('/signup2');
+        } else if(authResult.token === undefined){
           $scope.flag = true;
           $scope.authResult = authResult.data.message;
           $location.path('/login');
