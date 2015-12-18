@@ -115,6 +115,7 @@ exports.refreshToken = {
       var res = {
         username: request.auth.credentials.userName,
         scope: request.auth.credentials.scope,
+        fullname: request.auth.credentials.fullname,
         token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
       };
 
@@ -295,8 +296,10 @@ exports.updateProfile = {
         }
 
         if (request.payload.password) {
-          user.fullname = request.payload.password;
-          changed = true;
+          Common.hash(request.payload.password, function(error, hashedPassword) {
+            user.password = hashedPassword;
+            changed = true;
+          });
         }
 
         if (request.payload.username) {
@@ -421,8 +424,8 @@ exports.inviteCollaborators = {
                   User.saveUser(user, function(err, result) {
                     if (err) {
                       console.error(err);
-                      reject('db write error');
-                      return reply(Boom.badImplementation(err));
+                      return reject('db write error');
+                      // return reply(Boom.badImplementation(err));
                     }
 
                     user._id = result._id;
@@ -440,13 +443,13 @@ exports.inviteCollaborators = {
                     Contract.updateContract(contract, function(err, result) {
                       if (err) {
                         console.error(err);
-                        reject('db write error');
-                        return reply(Boom.badImplementation(err));
+                        return reject('db write error');
+                        // return reply(Boom.badImplementation(err));
                       }
 
                       if (result === null) {
-                        reject('contract not found');
-                        reply(Boom.badImplementation('contract cannot be saved'));
+                        return reject('contract not found');
+                        // return reply(Boom.badImplementation('contract cannot be saved'));
                       }
 
                       resolve(user);
@@ -465,27 +468,46 @@ exports.inviteCollaborators = {
               };
 
               Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+              promises[index] = new Promise(function(resolve, reject) {
 
-              Contract.updateContract(contract, function(err, result) {
-                if (err) {
-                  console.error(err);
-                  return reply(Boom.badImplementation(err));
-                }
+                Contract.updateContract(contract, function(err, result) {
+                  if (err) {
+                    console.error(err);
+                    return reject('db write error');
+                    // return reply(Boom.badImplementation(err));
+                  }
 
-                if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
+                  if (result === null) {
+                    console.log('contract not found');
+                    return reject('contract not found');
+                    // reply(Boom.badImplementation('contract cannot be saved'));
+                  }
 
-                return reply('Invitation(s) sent');
+                  resolve(user);
+                });
               });
             }
-
           });
+        });
 
+        Promise.all(promises).then(function(values) {
+          let str = '';
+
+          values.reduce(function(memo, user) {
+            return str += user.userName + ' ';
+          }, str);
+
+          str = str.trim();
+          if (str[str.length-1] === ',') str.slice(0, -1);
+
+          return reply(`Invitation(s) sent to ${str}.`);
+        }, function(error) {
+          return reply(Boom.badImplementation(error));
         });
       });
 
     }
 
-    return reply('Invitation(s) sent');
 
     // let user ={};
 
