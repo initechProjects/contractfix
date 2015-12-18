@@ -134,6 +134,12 @@ exports.endpoints = [
   /** Find user's contracts
     requires:
       token only
+
+    returns:
+      id
+      title
+      drafts(bool)
+      versions(bool)
   */
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 
