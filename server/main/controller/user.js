@@ -83,7 +83,7 @@ exports.login = {
         var res = {};
 
         res.username = user.userName;
-        if (user.userName) res.fullname = user.userName;
+        if (user.fullname) res.fullname = user.fullname;
         res.scope = user.scope;
 
         if (request.payload.valid) {
