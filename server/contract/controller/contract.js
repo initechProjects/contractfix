@@ -149,14 +149,14 @@ exports.findContractByUserId = {
 
             while (l--) {
               if (contract.drafts[l].userid === request.auth.credentials._id) {
-                item.drafts = true;
+                item.drafts = contract.drafts[l].tag || true;
                 break;
               }
             }
           }
 
           if (contract.versions && contract.versions.length > 0) {
-            item.versions = true;
+            item.versions = contract.versions[contract.versions.length - 1] || true;
           }
 
           contractsList.push(item);
