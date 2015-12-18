@@ -6,6 +6,7 @@ angular.module('app.editor', [])
   // with the ckEditor proper using the editor API.
 
   var contractid = $location.search().id;
+  var isDraft = $location.search().draft;
   var user = $rootScope.username || localStorage.getItem('username');
   var token = $rootScope.token || localStorage.getItem('token');
   var original = '';
@@ -24,7 +25,6 @@ angular.module('app.editor', [])
     }).then(function success(res) {
       original = res.data.latest.text;
       editor.setData(original);
-      console.log(res);
     }, function error(res) {
       console.log(res);
     });
@@ -71,14 +71,15 @@ angular.module('app.editor', [])
   };
 
   $scope.ckEditor.handleClick = function(event) {
-    localStorage.setItem('data', editor.getData());
+    console.log($scope.title);
   };
 
   $scope.ckEditor.save = function(personal) {
     var data = {
       text: editor.getData(),
       personal: personal,
-      comments: $scope.comments
+      comments: $scope.comments,
+      title: $scope.title
     };
 
     if (contractid)
@@ -133,7 +134,6 @@ angular.module('app.editor', [])
     });
 
     editor.setData(original);
-    editor.focus();
   });
 
   editor.on('lite:init', function() {

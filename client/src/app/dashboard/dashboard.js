@@ -4,6 +4,7 @@ angular.module('app.dashboard', [])
 .controller('DashboardController', function ($scope, $rootScope, $window, $location, Dashboard, $http) {
   var token = $rootScope.token || localStorage.getItem('token');
   $scope.contracts = [];
+  $scope.drafts = [];
 
   $http({
     method: 'POST',
@@ -14,12 +15,14 @@ angular.module('app.dashboard', [])
     }
   }).then(function(res) {
     $scope.contracts = res.data;
-    console.log(res);
+    $scope.drafts = res.data.filter(function(contract) { return contract.drafts; });
   }, function(res) {
     console.log(res);
   });
 
-  $scope.handleClick = function(contract) {
+  $scope.handleClick = function(contract, draft) {
     $location.path('/editor').search('id', contract);
+    if (draft)
+      $location.search('draft', true);
   };
 });
