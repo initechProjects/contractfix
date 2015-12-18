@@ -28,6 +28,7 @@ var config = {
     username: 'team@contractfix.com',
     accountName: 'ContractFix',
     verifyEmailUrl: 'verifyemail',
+    invitationUrl: 'invitationlogin',
     resetPasswordUrl: 'resetpassword'
   },
   // Validate function for auth
