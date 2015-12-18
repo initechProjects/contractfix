@@ -140,10 +140,9 @@ exports.findContractByUserId = {
         let contractsList = [];
 
         contracts.forEach(function(contract) {
-          let item = {
-            id: contract._id,
-            title: contract.title
-          };
+          let item = {};
+          item.id = contract._id;
+          if (contract.metadata.title) item.title = contract.metadata.title;
 
           if (contract.drafts) {
             let l = contract.drafts.length;
