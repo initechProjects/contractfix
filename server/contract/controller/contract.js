@@ -127,7 +127,10 @@ exports.findContractByUserId = {
         let contractsList = [];
 
         contracts.forEach(function(contract) {
-          contractsList.push(contract._id);
+          contractsList.push({
+            id: contract._id,
+            title: contract.title
+          });
           console.log('Contract ID:', contract._id, ', Users:', contract.users);
         });
         return reply(contractsList);
