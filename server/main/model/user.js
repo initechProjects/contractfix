@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 // var uuid = require('node-uuid');
-var Hoek = require('hoek');
+// var Hoek = require('hoek');
 
 /**
  * @module  User
