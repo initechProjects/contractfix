@@ -83,6 +83,7 @@ exports.login = {
         var res = {};
 
         res.username = user.userName;
+        if (user.userName) res.fullname = user.userName;
         res.scope = user.scope;
 
         if (request.payload.valid) {
@@ -406,44 +407,49 @@ exports.inviteCollaborators = {
 
             if (user === null) {
 
-              Common.hash('temporary_pass', function(error, hashedPassword) {
-                request.payload.password = hashedPassword;
+              promises[index] = new Promise(function(resolve, reject) {
 
-                user = {};
-                user.userName = email;
-                user.scope = ['registered'];
-                user.isInvited = true;
-                user.password = hashedPassword;
+                Common.hash('temporary_pass', function(error, hashedPassword) {
+                  request.payload.password = hashedPassword;
 
-                User.saveUser(user, function(err, result) {
-                  if (err) {
-                    console.error(err);
-                    return reply(Boom.badImplementation(err));
-                  }
+                  user = {};
+                  user.userName = email;
+                  user.scope = ['registered'];
+                  user.isInvited = true;
+                  user.password = hashedPassword;
 
-                  user._id = result._id;
+                  User.saveUser(user, function(err, result) {
+                    if (err) {
+                      console.error(err);
+                      reject('db write error');
+                      return reply(Boom.badImplementation(err));
+                    }
 
-                  let tokenData = {
-                    userName: user.userName,
-                    scope: user.scope,
-                    id: user._id
-                  };
+                    user._id = result._id;
 
-                  contract.users.push(user._id);
+                    let tokenData = {
+                      userName: user.userName,
+                      scope: user.scope,
+                      id: user._id
+                    };
 
-                  Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+                    contract.users.push(user._id);
 
-                  promises[index] = new Promise(function(resolve, reject) {
+                    Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
 
                     Contract.updateContract(contract, function(err, result) {
                       if (err) {
                         console.error(err);
+                        reject('db write error');
                         return reply(Boom.badImplementation(err));
                       }
 
-                      if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
+                      if (result === null) {
+                        reject('contract not found');
+                        reply(Boom.badImplementation('contract cannot be saved'));
+                      }
 
-                      resolve();
+                      resolve(user);
                     });
                   });
                 });
