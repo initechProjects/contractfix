@@ -32,6 +32,28 @@ exports.endpoints = [
   */
   { method: 'POST', path: '/login', config: User.login },
 
+  /** Invitation login
+  *   requires:
+  *     userName: email, required
+  *     password: required
+  *   returns:
+  *     username (email)
+  *     scope (user's role)
+  *     token (valid for 1 hour)
+  */
+  { method: 'POST', path: '/invitationlogin', config: User.invitationLogin },
+
+  /** Invite Collaborators
+  *   requires:
+  *     userName: email, required
+  *     password: required
+  *   returns:
+  *     username (email)
+  *     scope (user's role)
+  *     token (valid for 1 hour)
+  */
+  { method: 'POST', path: '/invite', config: User.inviteCollaborators },
+
   /** Forgot password (needs to be changed with another strategy)
   *   requires:
   *     userName: email, required
@@ -105,7 +127,7 @@ exports.endpoints = [
     requires:
       in Headers -> Authorization: 'Bearer ' + token
 
-      contractId: STRING
+      contracti§d: STRING
   */
   { method: 'POST', path: '/opencontract', config: Contract.open },
 
