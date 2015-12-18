@@ -6,7 +6,8 @@ var app = angular.module('app', [
     'app.editor',
     'app.forgotPassword',
     'app.resetPassword',
-    'app.verifyemail'
+    'app.verifyemail',
+    'app.signup2'
     ]);
 
 
@@ -23,16 +24,20 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/auth/signup.html',
         controller: 'AuthController'
     })
+    .when('/signup2', {
+        templateUrl: 'app/auth/signup2.html',
+        controller: 'signup2Controller'
+    })
     .when('/verifyemail', {
         templateUrl: 'app/auth/verifyemail.html',
         controller: 'verifyEmailController'
     })
     .when('/forgotpassword', {
-        templateUrl: 'app/auth/forgotpassword.html',
+        templateUrl: 'app/settings/forgotpassword.html',
         controller: 'forgotPasswordController'
     })
     .when('/resetpassword', {
-        templateUrl: 'app/auth/resetpassword.html',
+        templateUrl: 'app/settings/resetpassword.html',
         controller: 'resetPasswordController'
     })
     .when('/dashboard', {
@@ -46,9 +51,9 @@ app.config(function($routeProvider, $httpProvider) {
     .when('/about', {
         templateUrl: 'app/about/about.html',
     })
-    .otherwise({
-      redirectTo: '/'
-    });
+    .when('/usersetting', {
+        templateUrl: 'app/settings/usersetting.html',
+    })
 });
 
 
@@ -68,3 +73,24 @@ app.run(function ($rootScope, $location, Auth) {
     }
   });
 })
+
+// app.run(function ($http, $scope, $rootScope, $location) {
+//     $http({
+//     method: 'POST',
+//     url: '/refreshtoken',
+//     headers: {
+//       'Authorization': token,
+//       'Content-Type': 'application/json'
+//     },
+//     data: {}
+//     })
+//    .success(function(data){
+    
+//    })
+//    .catch(function(err){
+//     console.log(err);
+//    })
+
+
+
+// })

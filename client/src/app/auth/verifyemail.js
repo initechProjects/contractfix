@@ -20,10 +20,10 @@ angular.module('app.verifyemail', [])
    .success(function(data){
     $scope.response = data;
     $timeout(function(){ $location.path("/login")}, 5000);
-
    })
    .catch(function(err){
     $scope.response = err.data.message;
+
     $timeout(function(){ $location.path("/login")}, 5000);
     console.log(err);
    })

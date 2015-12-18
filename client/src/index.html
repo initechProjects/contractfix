@@ -13,7 +13,6 @@
     <link href="styles/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="assets/css/jquery.sidr.light.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 	<script src="https://code.angularjs.org/1.4.5/angular-route.js"></script>
 
@@ -21,14 +20,14 @@
     <script src="app/dashboard/dashboard.js"></script>
     <script src="app/services/services.js"></script>
     <script src="app/editor/editor.js"></script>
-    <script src="app/auth/forgotpassword.js"></script>
     <script src="app/auth/verifyemail.js"></script>
-    <script src="app/auth/resetpassword.js"></script>
-    <script src="app/auth/resetpassword.js"></script>
+    <script src="app/auth/signup2.js"></script>
+    <script src="app/settings/forgotpassword.js"></script>
+    <script src="app/settings/resetpassword.js"></script>
     <script src="app/app.js"></script>
     <!-- jQuery -->
     <script src="styles/bootstrap/js/jquery.js"></script>
-    <script src="assets/js/jquery.sidr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="styles/bootstrap/js/bootstrap.min.js"></script>
@@ -65,36 +64,36 @@
         </footer>
 
         <script>
-$(function() {
-    var timer;
-    var fadeInBuffer = false;
+// $(function() {
+//     var timer;
+//     var fadeInBuffer = false;
 
-    $(document).mousemove(function () {
-        if (!fadeInBuffer) {
-            if (timer) {
-                console.log("clearTimer");
-                clearTimeout(timer);
-                timer = 0;
-            }
-//fadein
-            $('.fade-object').fadeIn(2000);
-            $('html').css({
-                cursor: ''
-            });
-        } else {
-            fadeInBuffer = false;
-        }
+//     $(document).mousemove(function () {
+//         if (!fadeInBuffer) {
+//             if (timer) {
+//                 console.log("clearTimer");
+//                 clearTimeout(timer);
+//                 timer = 0;
+//             }
+// //fadein
+//             $('.fade-object').fadeIn(2000);
+//             $('html').css({
+//                 cursor: ''
+//             });
+//         } else {
+//             fadeInBuffer = false;
+//         }
 
-        timer = setTimeout(function () {
-//fadeout
-            $('.fade-object').fadeOut(4000);
-            $('html').css({
-                cursor: 'none'
-            });
-            fadeInBuffer = true;
-        }, 6000)
-    });
-});
+//         timer = setTimeout(function () {
+// //fadeout
+//             $('.fade-object').fadeOut(4000);
+//             $('html').css({
+//                 cursor: 'none'
+//             });
+//             fadeInBuffer = true;
+//         }, 6000)
+//     });
+// });
 </script>
 
 </body>
