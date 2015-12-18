@@ -28,11 +28,11 @@ app.config(function($routeProvider, $httpProvider) {
         controller: 'verifyEmailController'
     })
     .when('/forgotpassword', {
-        templateUrl: 'app/auth/forgotpassword.html',
+        templateUrl: 'app/settings/forgotpassword.html',
         controller: 'forgotPasswordController'
     })
     .when('/resetpassword', {
-        templateUrl: 'app/auth/resetpassword.html',
+        templateUrl: 'app/settings/resetpassword.html',
         controller: 'resetPasswordController'
     })
     .when('/dashboard', {
@@ -45,6 +45,9 @@ app.config(function($routeProvider, $httpProvider) {
     })
     .when('/about', {
         templateUrl: 'app/about/about.html',
+    })
+    .when('/usersetting', {
+        templateUrl: 'app/settings/usersetting.html',
     })
 });
 
