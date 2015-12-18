@@ -19,11 +19,13 @@ angular.module('app.verifyemail', [])
     })
    .success(function(data){
     $scope.response = data;
-    $timeout(function(){ $location.path("/login")}, 5000);
+    $scope.flag = true;
+    
 
    })
    .catch(function(err){
     $scope.response = err.data.message;
+    $scope.flag2 = true;
     $timeout(function(){ $location.path("/login")}, 5000);
     console.log(err);
    })
@@ -38,6 +40,13 @@ angular.module('app.verifyemail', [])
     }
    }
    var mytimeout = $timeout($scope.onTimeout, 1000);
+
+   $scope.enterName = function(){
+
+    //Saving to the db?
+    //$timeout(function(){ $location.path("/login")}, 5000);
+
+   }
 
 
 });
