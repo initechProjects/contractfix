@@ -394,9 +394,9 @@ exports.inviteCollaborators = {
 
         if (contract === null) return reply(Boom.preconditionFailed('wrong contractid'));
 
-        var counter = 0;
+        let promises = [];
 
-        request.payload.collaborators.forEach(function(email) {
+        request.payload.collaborators.forEach(function(email, index) {
           User.findUser(email, function(err, user) {
 
             if (err) {
@@ -423,7 +423,7 @@ exports.inviteCollaborators = {
 
                   user._id = result._id;
 
-                  var tokenData = {
+                  let tokenData = {
                     userName: user.userName,
                     scope: user.scope,
                     id: user._id
@@ -433,15 +433,18 @@ exports.inviteCollaborators = {
 
                   Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
 
-                  Contract.updateContract(contract, function(err, result) {
-                    if (err) {
-                      console.error(err);
-                      return reply(Boom.badImplementation(err));
-                    }
+                  promises[index] = new Promise(function(resolve, reject) {
 
-                    if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
+                    Contract.updateContract(contract, function(err, result) {
+                      if (err) {
+                        console.error(err);
+                        return reply(Boom.badImplementation(err));
+                      }
 
-                    return reply('Invitation(s) sent');
+                      if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
+
+                      resolve();
+                    });
                   });
                 });
               });
@@ -476,6 +479,7 @@ exports.inviteCollaborators = {
 
     }
 
+    return reply('Invitation(s) sent');
 
     // let user ={};
 
