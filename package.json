@@ -1,7 +1,11 @@
 {
-  "name": "ContractFix",
-  "description": "Contract negotiation, ",
-  "version": "0.1.0",
+  "name": "contractfix",
+  "version": "1.0.0",
+  "description": "Contract Negotiation Management Made Easy",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "main": "server",
   "engines": {
     "node": ">=4.0.0"
@@ -21,5 +25,15 @@
     "mongoose": "^4.3.1",
     "node-uuid": "^1.4.7",
     "sendgrid": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/initech-thesis/contractfix"
+  },
+  "keywords": [],
+  "author": "Nick Papayiannakis, Michael Kim, Hera Kim, Ahmet Cetin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/initech-thesis/contractfix"
   }
 }
