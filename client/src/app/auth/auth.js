@@ -11,12 +11,14 @@ angular.module('app.auth', [])
       .then(function (authResult) {
         $rootScope.authResult = authResult;
         
-        //console.log(authResult);
-        if(authResult === undefined){
+        console.log(authResult);
+        // if(authResult === undefined){
+        //   $scope.flag = true;
+        //   $scope.authResult = "invalid username or password";
+        // } else 
+        if(authResult.token === undefined){
           $scope.flag = true;
-          $scope.authResult = "invalid username or password";
-        } else if(authResult.token === undefined){
-          $scope.flag = true;
+          $scope.authResult = authResult.data.message;
           $location.path('/login');
         } else {
           Auth.save(authResult);
