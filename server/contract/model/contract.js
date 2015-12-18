@@ -31,7 +31,8 @@ var Contract = new Schema({
   versions: [{
     userid: String,
     versionDate: Date,
-    text: String
+    text: String,
+    tag: String
   }],
 
   /**
@@ -40,7 +41,8 @@ var Contract = new Schema({
   drafts: [{
     userid: String,
     versionDate: Date,
-    text: String
+    text: String,
+    tag: String
   }],
 
   /**
