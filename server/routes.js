@@ -141,8 +141,8 @@ exports.endpoints = [
     returns:
       id
       title
-      drafts(bool)
-      versions(bool)
+      drafts(bool) if exists, true or the tag of draft
+      versions(bool) if exists, true or the tag of version
   */
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 
