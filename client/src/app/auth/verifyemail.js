@@ -28,6 +28,17 @@ angular.module('app.verifyemail', [])
     console.log(err);
    })
 
+   $scope.counter = 5;
+   $scope.onTimeout = function(){
+    if($scope.counter > 0){
+      $scope.counter--;
+      mytimeout = $timeout($scope.onTimeout, 1000);
+    } else {
+      $scope.counter = 0;
+    }
+   }
+   var mytimeout = $timeout($scope.onTimeout, 1000);
+
 
 });
 

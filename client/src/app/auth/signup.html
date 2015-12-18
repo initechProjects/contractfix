@@ -34,7 +34,7 @@
                             <span class="character-checkbox" ng-click="hideShowPassword()"></span>
                             <span class="label">Show password</span>
                     </div>             
-                    <input type="submit" id="btn-signup" class="btn btn-custom btn-lg btn-block" value="Sign up">
+                    <input type="submit" id="btn-signup" class="btn btn-custom btn-lg btn-block" data-toggle="modal" data-target=".email-veri-modal" value="Sign up">
                 </form>
           </div>
     </div> <!-- /.col-xs-12 -->
@@ -51,19 +51,20 @@
           <span aria-hidden="true">×</span>
           <span class="sr-only">Close</span>
         </button>
-        <h4 class="modal-title">Sign up is almost complete...</h4>
+        <h4 class="modal-title">Attention</h4>
       </div>
       <div class="modal-body">
-        <p>ContractFix just sent you an email with a link in it. Please confirm your email id by clicking on link in email.</p><br>
-        <div class="re-send"><button type="button" class="btn btn-custom" ng-click="resendEmail()">Re-send email verification</button></div><br>
-        <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ authResult }}</div>
+        <p>{{ message }}</p><br>
+        <div class="re-send" class="ng-hide" ng-show ="flag">
+        <button type="button" class="btn btn-custom" ng-click="resendEmail()">Re-send email verification</button></div><br>
+        <div class="alert alert-info" class="ng-hide" ng-show ="flag2">{{ authResult }}</div>
       </div>
 
       <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="redirect()">Redirect to Login</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div> <!-- /.modal-content -->
   </div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
-
 

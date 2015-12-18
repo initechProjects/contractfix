@@ -31,7 +31,15 @@ angular.module('app.auth', [])
   $scope.signup = function () {
     Auth.signup($scope.user)
       .then(function (authResult) {
-        $location.path('/');
+        console.log(authResult, typeof authResult);
+        if(typeof authResult === "string"){
+          $scope.flag=true;
+          $scope.message = authResult;
+        } else {
+        $scope.message = authResult.data.message;
+        console.log(authResult.data.message);  
+        }
+        
       })
       .catch(function (error) {
         console.error(error);
@@ -50,15 +58,18 @@ angular.module('app.auth', [])
   $scope.resendEmail = function(){
     Auth.resendEmail($scope.user)
     .then(function (authResult) {
-      //console.log(authResult);
       $scope.authResult = authResult;
-      $scope.flag=true;
-      //Todo: erase the flag message for the next user
+      $scope.flag2=true;
     })
     .catch(function(error) {
       console.log(error);
     });
     }
+
+  $scope.redirect = function(){
+    //Why does the screen turn gray here?
+    $location.path("/login");
+  };
 
  
 });
