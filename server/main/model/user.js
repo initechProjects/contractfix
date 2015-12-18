@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var uuid = require('node-uuid');
+// var uuid = require('node-uuid');
+var Hoek = require('hoek');
 
 /**
  * @module  User
@@ -11,10 +12,10 @@ var User = new Schema({
   /**
     _id: using UUID for id field
   */
-  _id: {
-    type: String,
-    default: uuid.v1
-  },
+  // _id: {
+  //   type: String,
+  //   default: uuid.v1
+  // },
 
   /**
     userName. It can only contain valid email id, should be unique, is required and indexed.
@@ -109,7 +110,15 @@ User.pre('save', function(next) {
 });
 
 User.statics.saveUser = function(requestData, callback) {
+  // requestData._id = uuid.v1();
+  // var nextFn = Hoek.nextTick(callback);
+
   this.create(requestData, callback);
+
+  // this.create(requestData, function(error, requestData) {
+  //   console.log(requestData);
+  //   return callback(error, requestData);
+  // });
 };
 
 User.statics.updateUser = function(user, callback) {
