@@ -145,8 +145,15 @@ exports.findContractByUserId = {
             title: contract.title
           };
 
-          if (contract.drafts && contract.drafts.length > 0) {
-            item.drafts = true;
+          if (contract.drafts) {
+            let l = contract.drafts.length;
+
+            while (l--) {
+              if (contract.drafts[l].userid === request.auth.credentials._id) {
+                item.drafts = true;
+                break;
+              }
+            }
           }
 
           if (contract.versions && contract.versions.length > 0) {
@@ -196,21 +203,21 @@ exports.open = {
           }
         }
 
-        result.revisions = contract.versions.length;
+        if (contract.versions) {
+          result.revisions = contract.versions.length;
 
-        // console.log(result);
-        result.latest = {};
-        result.latest.text = contract.versions[result.revisions - 1].text;
-        result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
-        if (result.revisions > 1) {
-          result.previous = {};
-          result.previous.text = contract.versions[result.revisions - 2].text;
-          result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+          result.latest = {};
+          result.latest.text = contract.versions[result.revisions - 1].text;
+          result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
+          if (result.revisions > 1) {
+            result.previous = {};
+            result.previous.text = contract.versions[result.revisions - 2].text;
+            result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+          }
         }
 
         return reply(result);
       });
-
     }
   }
 };
