@@ -51,9 +51,11 @@
     </div><!-- /span-3 -->
     <div class="col-sm-9">
       <!-- column 2 -->
-       <h3>Welcome username</h3>
-       <hr>
-       <a href="#/editor">Housing Rental Contract</a>
+      <h3>Welcome username</h3>
+      <hr>
+      <ul>
+        <li style="cursor:pointer" ng-click="handleClick(contract)" ng-repeat="contract in contracts">{{ contract }}</li>
+      </ul>
     </div><!--/col-span-9-->
   </div><!--/row-->
 <!-- /upper section -->
