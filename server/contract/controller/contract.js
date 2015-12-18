@@ -9,6 +9,7 @@ exports.save = {
   validate: {
     payload: {
       contractId: Joi.string(),
+      title: Joi.string(),
       templateId: Joi.string(), //Joi.when('contractId', { is: undefined, then: Joi.string().required() }),
       text: Joi.string().required(),
       comments: Joi.array(),
@@ -35,23 +36,27 @@ exports.save = {
                 text: request.payload.text
               };
 
+              if (request.payload.title) contract.metadata.title = request.payload.title;
+
               if (request.payload.personal) {
                 contract.drafts.push(version);
               } else {
                 contract.versions.push(version);
               }
 
-              request.payload.comments.forEach(function(item) {
-                let comment = {
-                  userid: request.auth.credentials._id,
-                  commentDate: Date.now(),
-                  text: item.comment,
-                  selection: item.selection
-                };
+              if (request.payload.comments && Array.isArray(request.payload.comments)) {
+                request.payload.comments.forEach(function(item) {
+                  let comment = {
+                    userid: request.auth.credentials._id,
+                    commentDate: Date.now(),
+                    text: item.comment,
+                    selection: item.selection
+                  };
 
-                if (!contract.comments) contract.comments = [];
-                contract.comments.push(comment);
-              });
+                  if (!contract.comments) contract.comments = [];
+                  contract.comments.push(comment);
+                });
+              }
 
               Contract.updateContract(contract, function(err) {
                 if (!err) {
@@ -76,16 +81,28 @@ exports.save = {
         contract.metadata = {};
         contract.metadata.dateCreated = Date.now();
         if (request.payload.templateId) contract.metadata.templateId = request.payload.templateId;
+        if (request.payload.title) contract.metadata.title = request.payload.title;
 
-        contract.versions = [];
-        let version = {
-          userid: request.auth.credentials._id,
-          versionDate: Date.now(),
-          text: request.payload.text
-        };
-        contract.versions.push(version);
 
-        if (request.payload.comments) {
+        if (request.payload.personal) {
+          contract.drafts = [];
+          let draft = {
+            userid: request.auth.credentials._id,
+            versionDate: Date.now(),
+            text: request.payload.text
+          };
+          contract.drafts.push(draft);
+        } else {
+          contract.versions = [];
+          let version = {
+            userid: request.auth.credentials._id,
+            versionDate: Date.now(),
+            text: request.payload.text
+          };
+          contract.versions.push(version);
+        }
+
+        if (request.payload.comments && Array.isArray(request.payload.comments)) {
           request.payload.comments.forEach(function(item) {
             let comment = {
               userid: request.auth.credentials._id,
@@ -123,7 +140,20 @@ exports.findContractByUserId = {
         let contractsList = [];
 
         contracts.forEach(function(contract) {
-          contractsList.push(contract._id);
+          let item = {
+            id: contract._id,
+            title: contract.title
+          };
+
+          if (contract.drafts && contract.drafts.length > 0) {
+            item.drafts = true;
+          }
+
+          if (contract.versions && contract.versions.length > 0) {
+            item.versions = true;
+          }
+
+          contractsList.push(item);
           console.log('Contract ID:', contract._id, ', Users:', contract.users);
         });
         return reply(contractsList);

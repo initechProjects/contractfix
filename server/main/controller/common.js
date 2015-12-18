@@ -34,6 +34,12 @@ exports.sendMailVerificationLink = function(user, token) {
   mail(Config.email.username, `${Config.email.accountName} Team`, user.userName , "Account Verification", mailbody);
 };
 
+exports.sendMailInvitation = function(user, sender, title, token) {
+  var mailbody = `<p>You have received this invitation from ${sender.email}.</p><p>You can clicking on the link below to review, comment and sign ${title}.<br/><a href='http://${Config.server.host}:${Config.server.port}/${Config.email.invitationUrl}/${token}'>Verification Link</a></p>`;
+  // var mailbody = Welcome.email(user, token);
+  mail(Config.email.username, `${Config.email.accountName} Team`, user.userName , `Invitation to ${title}`, mailbody);
+};
+
 exports.sendMailForgotPassword = function(user, token) {
   // var mailbody = `<p>Your ${Config.email.accountName} username: ${user.userName}.</p></p>Your password : ${decrypt(user.password)}</p>`;
   var mailbody = Reset.email(user, token);

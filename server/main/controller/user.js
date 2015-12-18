@@ -6,6 +6,7 @@ var Common = require('./common');
 var Config = require('../../config/config');
 var Jwt    = require('jsonwebtoken');
 var User   = require('../model/user').User;
+var Contract   = require('../../contract/model/contract').Contract;
 
 var privateKey = Config.token.key;
 
@@ -74,6 +75,7 @@ exports.login = {
         var tokenData = {
           userName: user.userName,
           password: user.password,
+          fullname: user.fullname,
           scope: user.scope,
           id: user._id
         };
@@ -99,6 +101,7 @@ exports.refreshToken = {
       var tokenData = {
         userName: request.auth.credentials.userName,
         password: request.auth.credentials.password,
+        fullname: request.auth.credentials.fullname,
         scope: request.auth.credentials.scope,
         id: request.auth.credentials._id
       };
@@ -119,18 +122,26 @@ exports.resetPassword = {
       password: Joi.string().required()
     }
   },
-  auth: {
-    strategy: 'token'
-  },
   handler: function(request, reply) {
-    if (request.auth.isAuthenticated) {
-      User.findUserById(request.auth.credentials._id, function(err, user) {
+    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
+      if(decoded === undefined) {
+        console.log('decoded undefined', request.headers.authorization);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      if(decoded.scope[0] !== 'registered') {
+        console.log('not registered', decoded.scope[0]);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      User.findUserByIdAndUserName(decoded.id, decoded.userName, function(err, user){
         if (err) {
           console.error(err);
           return reply(Boom.badImplementation(err));
         }
-
-        if (user === null) return reply(Boom.forbidden('invalid username or password'));
+        if (user === null) {
+          console.log('user not found', decoded.userName);
+          return reply(Boom.forbidden('invalid verification link'));
+        }
+        if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
 
         Common.hash(request.payload.password, function(error, hashedPassword) {
           user.password = hashedPassword;
@@ -145,7 +156,7 @@ exports.resetPassword = {
           });
         });
       });
-    }
+    });
   }
 },
 
@@ -306,5 +317,148 @@ exports.updateProfile = {
         });
       });
     }
+  }
+};
+
+exports.invitationLogin = {
+  // TO BE CHANGED TOTALLY
+  validate: {
+    payload: {
+      password: Joi.string().required()
+    }
+  },
+  handler: function(request, reply) {
+    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
+      if(decoded === undefined) {
+        console.log('decoded undefined', request.headers.authorization);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      if(decoded.scope[0] !== 'registered') {
+        console.log('not registered', decoded.scope[0]);
+        return reply(Boom.forbidden('invalid verification link'));
+      }
+      User.findUserByIdAndUserName(decoded.id, decoded.userName, function(err, user){
+        if (err) {
+          console.error(err);
+          return reply(Boom.badImplementation(err));
+        }
+        if (user === null) {
+          console.log('user not found', decoded.userName);
+          return reply(Boom.forbidden('invalid verification link'));
+        }
+        if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
+
+        Common.hash(request.payload.password, function(error, hashedPassword) {
+          user.password = hashedPassword;
+
+          User.updateUser(user, function(err, user) {
+            if (err) {
+              console.error(err);
+              return reply(Boom.badImplementation(err));
+            }
+
+            return reply('password changed successfully.');
+          });
+        });
+      });
+    });
+  }
+};
+
+exports.inviteCollaborators = {
+  validate: {
+    payload: {
+      contractId: Joi.string().required(),
+      title: Joi.string().required(),
+      collaborators: Joi.array().required()
+    }
+  },
+  auth: {
+    strategy: 'token'
+  },
+  handler: function(request, reply) {
+
+    if (request.auth.isAuthenticated) {
+
+      Contract.findContract(request.payload.contractId, function(err, contract){
+        if (err) {
+          console.error(err);
+          return reply(Boom.badImplementation(err));
+        }
+
+        if (contract === null) return reply(Boom.preconditionFailed('wrong contractid'));
+
+        request.payload.collaborators.forEach(function(email) {
+          User.findUser(email, function(err, user) {
+
+            if (err) {
+              console.error(err);
+              return reply(Boom.badImplementation(err));
+            }
+
+            if (user === null) {
+              user = {};
+              user.userName = email;
+              user.scope = ['registered'];
+              user.isInvited = true;
+
+              User.saveUser(user, function(err, result) {
+                if (err) {
+                  console.error(err);
+                  return reply(Boom.badImplementation(err));
+                }
+
+                user._id = result._id;
+
+              });
+            }
+
+            contract.users.push(user._id);
+
+            var tokenData = {
+              userName: user.userName,
+              scope: user.scope,
+              id: user._id
+            };
+
+            Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+
+
+          });
+
+        });
+
+      });
+
+    }
+
+
+    let user ={};
+
+
+    Common.hash(request.payload.password, function(error, hashedPassword) {
+      request.payload.password = hashedPassword;
+
+      User.saveUser(request.payload, function(err, user) {
+        console.log('returned from mongo');
+        // if (err) return reply(Boom.badImplementation(err));
+
+        if (!err) {
+          var tokenData = {
+            userName: user.userName,
+            scope: user.scope,
+            id: user._id
+          };
+          Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+          return reply('Please confirm your email id by clicking on link in email');
+        } else {
+          if ( err.code === 11000 || err.code === 11001 ) {
+            return reply(Boom.forbidden('please provide another user email'));
+          } else {
+            return reply(Boom.forbidden(err)); // HTTP 403
+          }
+        }
+      });
+    });
   }
 };
