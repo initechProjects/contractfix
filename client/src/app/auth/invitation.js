@@ -1,13 +1,15 @@
-/*
+/*-----------------------------------------------------------------------------
 *
 * This angular module encompasses all controllers and services
 * related to the redirection and processing of invited users.
 *
 * If a user does not have an account, they will be asked to provide
 * a full name before being registered.  If the invited user already
-* has an account, they will be redirected to the login page.
+* has an account, they will be redirected to the login page. In
+* either case, the user will arrive at the editor page after
+* registration/login.
 *
-*/
+-----------------------------------------------------------------------------*/
 
 angular.module('app.invitation', [])
 
@@ -29,7 +31,9 @@ angular.module('app.invitation', [])
     })
     .success(function(data){
       $scope.response = data;
-      console.log(data);
+
+      $window.location.href =  data.newuser === true  ?  '/signup2' : '/login';
+
     })
     .catch(function(err){
       console.log(err);
@@ -43,30 +47,3 @@ angular.module('app.invitation', [])
     $scope.validateInvite();
   });
 });
-
-
-/*-----------------------------------------------------------------------------
-*
-* Developer notes.
-*
-*------------------------------------------------------------------------------
-
-newuser (true/false)
-contractid (string)
-username (email address)
-*/
-//if new user
-  //route to name and password page
-  //pass with contract id to new page
-    //on new page call update profile with full name, pass, contract id
-    //receive login token/contract id
-      //open editor page with contract id
-      //save token in memeory ($rootscope)
-
-//if returning user
-  //forward to login page with contract id & username
-
-  //in login page, username will be already filled in
-    //when login, call login with username, password and contract id
-    //receive token & contract id
-      //send to editor page with contract id
