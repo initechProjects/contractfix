@@ -41,7 +41,8 @@
       <hr>
 
       <ul class="nav nav-stacked">
-        <li><a href="" target="ext"><i class="fa fa-folder-open-o"></i> My Contracts</a></li>
+        <li ng-click="showContracts()"><a href="" target="ext"><i class="fa fa-folder-open-o"></i> My Contracts</a></li>
+        <li ng-click="showDrafts()"><a href="" target="ext"><i class="fa fa-inbox"></i></i> My Drafts</a></li>
         <li><a href="#/editor" target="ext"><i class="fa fa-pencil-square-o"></i> New Contract</a></li>
         <li><a href="" target="ext"><i class="fa fa-user"></i> Settings</a></li>
       </ul>
@@ -53,11 +54,10 @@
       <!-- column 2 -->
       <h3>Welcome username</h3>
       <hr>
-      <ul>
+      <ul ng-if="!showingDrafts">
         <li ng-repeat="contract in contracts" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
       </ul>
-      <p>Drafts:</p>
-      <ul>
+      <ul ng-if="showingDrafts">
         <li ng-repeat="draft in drafts" ng-click="handleClick(draft.id, true)"><a href="">{{ draft.title || 'Untitled' }}</a></li>
       </ul>
     </div><!--/col-span-9-->

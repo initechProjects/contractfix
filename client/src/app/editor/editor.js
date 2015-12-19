@@ -23,7 +23,16 @@ angular.module('app.editor', [])
         contractid: contractid
       }
     }).then(function success(res) {
-      original = res.data.latest.text;
+      console.log(res);
+      if (isDraft) {
+        original = res.data.personal.text;
+        $scope.title = res.data.personal.title;
+      } else {
+        original = res.data.latest.text;
+        $scope.title = res.data.latest.title;
+      }
+
+      $scope.title = res
       editor.setData(original);
     }, function error(res) {
       console.log(res);
