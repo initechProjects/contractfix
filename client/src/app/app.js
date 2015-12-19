@@ -7,7 +7,8 @@ var app = angular.module('app', [
     'app.forgotPassword',
     'app.resetPassword',
     'app.verifyemail',
-    'app.signup2'
+    'app.signup2',
+    'app.usersetting'
     ]);
 
 
@@ -53,6 +54,7 @@ app.config(function($routeProvider, $httpProvider) {
     })
     .when('/usersetting', {
         templateUrl: 'app/settings/usersetting.html',
+        controller: 'usersettingController'
     })
 });
 

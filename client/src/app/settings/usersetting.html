@@ -33,3 +33,124 @@
 <br>
 <br>
 <br>
+
+
+<!-- Main -->
+<div class="dashboard-container">
+  <!-- upper section -->
+  <div class="row">
+    <div class="col-sm-3">
+      <!-- left -->
+      <h3><i class="fa fa-tachometer"></i> Dashboard</h3>
+      <hr>
+
+      <ul class="nav nav-stacked">
+        <li><a href=""><i class="fa fa-folder-open-o"></i> My Contracts</a></li>
+        <li><a href="#/editor"><i class="fa fa-pencil-square-o"></i> New Contract</a></li>
+        <li><a href="#/usersetting"><i class="fa fa-user"></i> Settings</a></li>
+      </ul>
+
+      <hr>
+
+    </div><!-- /span-3 -->
+    <div class="col-sm-9">
+      <!-- column 2 -->
+      <h3>Welcome {{user}}!</h3>
+      <hr>
+          <i class="fa fa-smile-o"> Email Account: {{email}}</i><br>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#emailmodal">Update Email</button>
+              
+          <br>
+          <br>
+          <br>
+          <i class="fa fa-user"> Name: {{user}}</i></li><br>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#namemodal">Update Name</button>
+             
+          <br>
+          <br>
+          <br>
+          <i class="fa fa-unlock-alt"> Password: xxxx</i><br>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passwordmodal">Update Password</button>
+    </div><!--/col-span-9-->
+  </div><!--/row-->
+<!-- /upper section -->
+</div><!-- /Main -->
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+
+
+
+  <!-- Email Modal -->
+  <div class="modal fade" id="emailmodal" role="dialog">
+    <div class="modal-dialog">   
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update your email account.</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='updateEmail(newEmail)'>
+            <div class="form-group">
+                <input type="text" ng-model='newEmail' id="key" class="form-control" placeholder="New Email">
+            </div>
+            <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
+          <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">       
+          </form>
+        </div>
+      </div>    
+    </div>
+  </div>
+
+ <!-- Name Modal -->
+  <div class="modal fade" id="namemodal" role="dialog">
+    <div class="modal-dialog">  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update your name.</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='updateName(newName)'>
+            <div class="form-group">
+                <input type="text" ng-model='newName' id="key" class="form-control" placeholder="New Name">
+            </div>
+            <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
+            <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">
+          </form>
+        </div>
+      </div>    
+    </div>
+  </div>
+
+   <!-- Password Modal -->
+  <div class="modal fade" id="passwordmodal" role="dialog">
+    <div class="modal-dialog">   
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Reset your password</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='resetPassword(newPassword)'>
+                    <div class="form-group">
+                        <label for="key" class="sr-only">Password</label>
+                        <input type="{{inputType}}" name="key" ng-model='newPassword' id="key" class="form-control" placeholder="New Password">
+                    </div>
+                    <div class="checkbox">
+                            <span class="character-checkbox" ng-click="hideShowPassword()"></span>
+                            <span class="label">Show password</span>
+                    </div>
+            <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
+            <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
