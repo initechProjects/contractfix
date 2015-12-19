@@ -25,7 +25,6 @@ exports.create = {
 
       User.saveUser(request.payload, function(err, user) {
         console.log('returned from mongo');
-        // if (err) return reply(Boom.badImplementation(err));
 
         if (!err) {
           var tokenData = {
@@ -52,6 +51,7 @@ exports.login = {
     payload: {
       userName: Joi.string().email().required(),
       password: Joi.string().required(),
+      contractid: Joi.string(),
       valid: Joi.boolean() // ONLY FOR DEVELOPMENT!!!!!
     }
   },
@@ -85,6 +85,7 @@ exports.login = {
         res.username = user.userName;
         if (user.fullname) res.fullname = user.fullname;
         res.scope = user.scope;
+        if (request.payload.contractid) res.contractid = request.payload.contractid;
 
         if (request.payload.valid) {
           res.token = Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification });
@@ -271,7 +272,8 @@ exports.updateProfile = {
     payload: {
       username: Joi.string().email(),
       password: Joi.string(),
-      fullname: Joi.string()
+      fullname: Joi.string(),
+      contractid: Joi.string()
     }
   },
   auth: {
@@ -323,7 +325,12 @@ exports.updateProfile = {
             return reply(Boom.badImplementation(err));
           }
 
-          return reply('updated successfully.');
+          if (request.payload.contractid) {
+            reply({ contractid: request.payload.contractid });
+          } else {
+            return reply('updated successfully.');
+          }
+
         });
       });
     }
@@ -331,13 +338,13 @@ exports.updateProfile = {
 };
 
 exports.invitationLogin = {
-  // TO BE CHANGED TOTALLY
   validate: {
     payload: {
       password: Joi.string().required()
     }
   },
   handler: function(request, reply) {
+
     Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
       if(decoded === undefined) {
         console.log('decoded undefined', request.headers.authorization);
@@ -356,20 +363,12 @@ exports.invitationLogin = {
           console.log('user not found', decoded.userName);
           return reply(Boom.forbidden('invalid verification link'));
         }
-        if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
 
-        Common.hash(request.payload.password, function(error, hashedPassword) {
-          user.password = hashedPassword;
+        let res = {};
+        res.newuser = user.isInvited;
+        res.contractid = request.payload.contractid;
 
-          User.updateUser(user, function(err, user) {
-            if (err) {
-              console.error(err);
-              return reply(Boom.badImplementation(err));
-            }
-
-            return reply('password changed successfully.');
-          });
-        });
+        reply(res);
       });
     });
   }
@@ -449,7 +448,6 @@ exports.inviteCollaborators = {
             let emails = [];
 
             Contract.updateContract(contract, function(err, result) {
-              // console.log('saved');
               if (err) {
                 console.error(err);
                 return reply(Boom.badImplementation(err));
