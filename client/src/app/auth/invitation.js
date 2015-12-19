@@ -1,12 +1,24 @@
+/*
+*
+* This angular module encompasses all controllers and services
+* related to the redirection and processing of invited users.
+*
+* If a user does not have an account, they will be asked to provide
+* a full name before being registered.  If the invited user already
+* has an account, they will be redirected to the login page.
+*
+*/
+
 angular.module('app.invitation', [])
 
 
-.controller('invitationController', function ($scope, $rootScope, $window, $location, $http, $timeout) {
-  console.log('controller');
-   var url = $location.url();
-   var token = url.slice(url.indexOf("=")).slice(1);
-   console.log(token);
+.controller('invitationController', function ($scope, $rootScope, $window, $location, $http) {
+
+  var url = $location.url();
+  var token = url.slice(url.indexOf("=")).slice(1);
+
   $scope.validateInvite = function(){
+
     $http({
       method: 'POST',
       url: '/invitation',
@@ -16,15 +28,15 @@ angular.module('app.invitation', [])
       }
     })
     .success(function(data){
-      console.log('SUCCESS');
       $scope.response = data;
-      //$timeout(function(){ $location.path("/dashboard")}, 3000);
       console.log(data);
     })
     .catch(function(err){
       console.log(err);
     })
   };
+
+  // Execute immediate token verification on page-load.
 
   angular.element(document).ready(function () {
     console.log('page loaded')
@@ -33,7 +45,12 @@ angular.module('app.invitation', [])
 });
 
 
-/*
+/*-----------------------------------------------------------------------------
+*
+* Developer notes.
+*
+*------------------------------------------------------------------------------
+
 newuser (true/false)
 contractid (string)
 username (email address)
