@@ -52,7 +52,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/about/about.html',
     })
     .when('/usersetting', {
-        templateUrl: 'app/settings/usersetting.html',
+        templateUrl: 'app/settings/usersetting.html'
+    })
+    .when('/invitation', {
+        templateUrl: 'app/auth/invitation.html'
     })
 });
 
