@@ -2,6 +2,8 @@ angular.module('app.dashboard', [])
 
 
 .controller('DashboardController', function ($scope, $rootScope, $window, $location, Dashboard, $http) {
+
+  $scope.user = $rootScope.authResult.fullname;
   var token = $rootScope.token || localStorage.getItem('token');
   $scope.contracts = [];
   $scope.drafts = [];
