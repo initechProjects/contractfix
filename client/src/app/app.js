@@ -7,7 +7,8 @@ var app = angular.module('app', [
     'app.forgotPassword',
     'app.resetPassword',
     'app.verifyemail',
-    'app.signup2'
+    'app.signup2',
+    'app.invite'
     ]);
 
 
