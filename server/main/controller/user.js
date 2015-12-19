@@ -25,7 +25,6 @@ exports.create = {
 
       User.saveUser(request.payload, function(err, user) {
         console.log('returned from mongo');
-        // if (err) return reply(Boom.badImplementation(err));
 
         if (!err) {
           var tokenData = {
@@ -52,6 +51,7 @@ exports.login = {
     payload: {
       userName: Joi.string().email().required(),
       password: Joi.string().required(),
+      contractid: Joi.string(),
       valid: Joi.boolean() // ONLY FOR DEVELOPMENT!!!!!
     }
   },
@@ -83,7 +83,9 @@ exports.login = {
         var res = {};
 
         res.username = user.userName;
+        if (user.fullname) res.fullname = user.fullname;
         res.scope = user.scope;
+        if (request.payload.contractid) res.contractid = request.payload.contractid;
 
         if (request.payload.valid) {
           res.token = Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification });
@@ -114,6 +116,7 @@ exports.refreshToken = {
       var res = {
         username: request.auth.credentials.userName,
         scope: request.auth.credentials.scope,
+        fullname: request.auth.credentials.fullname,
         token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
       };
 
@@ -269,7 +272,8 @@ exports.updateProfile = {
     payload: {
       username: Joi.string().email(),
       password: Joi.string(),
-      fullname: Joi.string()
+      fullname: Joi.string(),
+      contractid: Joi.string()
     }
   },
   auth: {
@@ -294,8 +298,10 @@ exports.updateProfile = {
         }
 
         if (request.payload.password) {
-          user.fullname = request.payload.password;
-          changed = true;
+          Common.hash(request.payload.password, function(error, hashedPassword) {
+            user.password = hashedPassword;
+            changed = true;
+          });
         }
 
         if (request.payload.username) {
@@ -319,7 +325,12 @@ exports.updateProfile = {
             return reply(Boom.badImplementation(err));
           }
 
-          return reply('updated successfully.');
+          if (request.payload.contractid) {
+            reply({ contractid: request.payload.contractid });
+          } else {
+            return reply('updated successfully.');
+          }
+
         });
       });
     }
@@ -327,13 +338,13 @@ exports.updateProfile = {
 };
 
 exports.invitationLogin = {
-  // TO BE CHANGED TOTALLY
   validate: {
     payload: {
       password: Joi.string().required()
     }
   },
   handler: function(request, reply) {
+
     Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
       if(decoded === undefined) {
         console.log('decoded undefined', request.headers.authorization);
@@ -352,20 +363,12 @@ exports.invitationLogin = {
           console.log('user not found', decoded.userName);
           return reply(Boom.forbidden('invalid verification link'));
         }
-        if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
 
-        Common.hash(request.payload.password, function(error, hashedPassword) {
-          user.password = hashedPassword;
+        let res = {};
+        res.newuser = user.isInvited;
+        res.contractid = request.payload.contractid;
 
-          User.updateUser(user, function(err, user) {
-            if (err) {
-              console.error(err);
-              return reply(Boom.badImplementation(err));
-            }
-
-            return reply('password changed successfully.');
-          });
-        });
+        reply(res);
       });
     });
   }
@@ -394,115 +397,90 @@ exports.inviteCollaborators = {
 
         if (contract === null) return reply(Boom.preconditionFailed('wrong contractid'));
 
-        var counter = 0;
+        let promises = [];
 
         request.payload.collaborators.forEach(function(email) {
-          User.findUser(email, function(err, user) {
+          promises.push(new Promise(function(resolve, reject){
 
-            if (err) {
-              console.error(err);
-              return reply(Boom.badImplementation(err));
-            }
+            User.findUser(email, function(err, user) {
 
-            if (user === null) {
+              if (err) {
+                console.error(err);
+                return reject('db read error');
+              }
 
-              Common.hash('temporary_pass', function(error, hashedPassword) {
-                request.payload.password = hashedPassword;
+              if (user === null) {
 
-                user = {};
-                user.userName = email;
-                user.scope = ['registered'];
-                user.isInvited = true;
-                user.password = hashedPassword;
+                Common.hash('temporary_pass', function(error, hashedPassword) {
 
-                User.saveUser(user, function(err, result) {
-                  if (err) {
-                    console.error(err);
-                    return reply(Boom.badImplementation(err));
-                  }
+                  user = {};
+                  user.userName = email;
+                  user.scope = ['registered'];
+                  user.isInvited = true;
+                  user.password = hashedPassword;
 
-                  user._id = result._id;
-
-                  var tokenData = {
-                    userName: user.userName,
-                    scope: user.scope,
-                    id: user._id
-                  };
-
-                  contract.users.push(user._id);
-
-                  Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
-
-                  Contract.updateContract(contract, function(err, result) {
+                  User.saveUser(user, function(err, result) {
                     if (err) {
                       console.error(err);
-                      return reply(Boom.badImplementation(err));
+                      return reject('db write error');
                     }
 
-                    if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
+                    user._id = result._id;
 
-                    return reply('Invitation(s) sent');
+                    contract.users.push(user._id);
+
+                    resolve(user);
+
                   });
                 });
-              });
 
-            } else {
-              contract.users.push(user._id);
+              } else {
+                contract.users.push(user._id);
 
-              var tokenData = {
+                resolve(user);
+              }
+            });
+          }));
+        });
+
+        let response = {
+          success: function(values) {
+            let emails = [];
+
+            Contract.updateContract(contract, function(err, result) {
+              if (err) {
+                console.error(err);
+                return reply(Boom.badImplementation(err));
+              }
+
+              if (result === null) {
+                return reply(Boom.badImplementation('contract cannot be saved'));
+              }
+            });
+
+            values.forEach(function(user) {
+              emails.push(user.userName);
+
+              let tokenData = {
                 userName: user.userName,
                 scope: user.scope,
+                contractid: contract._id,
                 id: user._id
               };
 
-              Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+              Common.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+            });
 
-              Contract.updateContract(contract, function(err, result) {
-                if (err) {
-                  console.error(err);
-                  return reply(Boom.badImplementation(err));
-                }
+            return reply(`Invitation(s) sent to ${emails.join(', ')}.`);
+          },
+          error: function(result) {
+            console.log(result);
+            return reply(Boom.badImplementation(result));
+          }
+        };
 
-                if (result === null) reply(Boom.badImplementation('contract cannot be saved'));
-
-                return reply('Invitation(s) sent');
-              });
-            }
-
-          });
-
-        });
+        Promise.all(promises).then(response.success, response.error);
       });
-
     }
-
-
-    // let user ={};
-
-
-    // Common.hash(request.payload.password, function(error, hashedPassword) {
-    //   request.payload.password = hashedPassword;
-
-    //   User.saveUser(request.payload, function(err, user) {
-    //     console.log('returned from mongo');
-    //     // if (err) return reply(Boom.badImplementation(err));
-
-    //     if (!err) {
-    //       var tokenData = {
-    //         userName: user.userName,
-    //         scope: user.scope,
-    //         id: user._id
-    //       };
-    //       Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
-    //       return reply('Please confirm your email id by clicking on link in email');
-    //     } else {
-    //       if ( err.code === 11000 || err.code === 11001 ) {
-    //         return reply(Boom.forbidden('please provide another user email'));
-    //       } else {
-    //         return reply(Boom.forbidden(err)); // HTTP 403
-    //       }
-    //     }
-    //   });
-    // });
   }
 };

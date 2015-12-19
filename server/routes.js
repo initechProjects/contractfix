@@ -29,7 +29,8 @@ exports.endpoints = [
   *   returns:
   *     username (email)
   *     scope (user's role)
-  *     token (valid for 1 hour)
+  *     fullname
+  *     token (valid for 15 minutes)
   */
   { method: 'POST', path: '/login', config: User.login },
 
@@ -40,7 +41,7 @@ exports.endpoints = [
   *   returns:
   *     username (email)
   *     scope (user's role)
-  *     token (valid for 1 hour)
+  *     token (valid for 48 hours)
   */
   { method: 'POST', path: '/invitationlogin', config: User.invitationLogin },
 
@@ -141,8 +142,8 @@ exports.endpoints = [
     returns:
       id
       title
-      drafts(bool)
-      versions(bool)
+      drafts(bool) if exists, true or the tag of draft
+      versions(bool) if exists, true or the tag of version
   */
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 
