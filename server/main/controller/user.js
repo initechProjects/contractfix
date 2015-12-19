@@ -400,20 +400,19 @@ exports.inviteCollaborators = {
 
         let promises = [];
 
-        request.payload.collaborators.forEach(function(email, index) {
-          User.findUser(email, function(err, user) {
+        request.payload.collaborators.forEach(function(email) {
+          promises.push(new Promise(function(resolve, reject){
 
-            if (err) {
-              console.error(err);
-              return reply(Boom.badImplementation(err));
-            }
+            User.findUser(email, function(err, user) {
 
-            if (user === null) {
+              if (err) {
+                console.error(err);
+                return reject('db read error');
+              }
 
-              promises[index] = new Promise(function(resolve, reject) {
+              if (user === null) {
 
                 Common.hash('temporary_pass', function(error, hashedPassword) {
-                  request.payload.password = hashedPassword;
 
                   user = {};
                   user.userName = email;
@@ -425,116 +424,65 @@ exports.inviteCollaborators = {
                     if (err) {
                       console.error(err);
                       return reject('db write error');
-                      // return reply(Boom.badImplementation(err));
                     }
 
                     user._id = result._id;
 
-                    let tokenData = {
-                      userName: user.userName,
-                      scope: user.scope,
-                      id: user._id
-                    };
-
                     contract.users.push(user._id);
 
-                    Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+                    resolve(user);
 
-                    Contract.updateContract(contract, function(err, result) {
-                      if (err) {
-                        console.error(err);
-                        return reject('db write error');
-                        // return reply(Boom.badImplementation(err));
-                      }
-
-                      if (result === null) {
-                        return reject('contract not found');
-                        // return reply(Boom.badImplementation('contract cannot be saved'));
-                      }
-
-                      resolve(user);
-                    });
                   });
                 });
-              });
 
-            } else {
-              contract.users.push(user._id);
+              } else {
+                contract.users.push(user._id);
 
-              var tokenData = {
+                resolve(user);
+              }
+            });
+          }));
+        });
+
+        let response = {
+          success: function(values) {
+            let emails = [];
+
+            Contract.updateContract(contract, function(err, result) {
+              // console.log('saved');
+              if (err) {
+                console.error(err);
+                return reply(Boom.badImplementation(err));
+              }
+
+              if (result === null) {
+                return reply(Boom.badImplementation('contract cannot be saved'));
+              }
+            });
+
+            values.forEach(function(user) {
+              emails.push(user.userName);
+
+              let tokenData = {
                 userName: user.userName,
                 scope: user.scope,
+                contractid: contract._id,
                 id: user._id
               };
 
-              Common.sendMailVerificationLink(user, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
-              promises[index] = new Promise(function(resolve, reject) {
+              Common.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+            });
 
-                Contract.updateContract(contract, function(err, result) {
-                  if (err) {
-                    console.error(err);
-                    return reject('db write error');
-                    // return reply(Boom.badImplementation(err));
-                  }
+            return reply(`Invitation(s) sent to ${emails.join(', ')}.`);
+          },
+          error: function(result) {
+            console.log(result);
+            return reply(Boom.badImplementation(result));
+          }
+        };
 
-                  if (result === null) {
-                    console.log('contract not found');
-                    return reject('contract not found');
-                    // reply(Boom.badImplementation('contract cannot be saved'));
-                  }
-
-                  resolve(user);
-                });
-              });
-            }
-          });
-        });
-
-        Promise.all(promises).then(function(values) {
-          let str = '';
-
-          values.reduce(function(memo, user) {
-            return str += user.userName + ' ';
-          }, str);
-
-          str = str.trim();
-          if (str[str.length-1] === ',') str.slice(0, -1);
-
-          return reply(`Invitation(s) sent to ${str}.`);
-        }, function(error) {
-          return reply(Boom.badImplementation(error));
-        });
+        Promise.all(promises).then(response.success, response.error);
       });
-
     }
-
-
-    // let user ={};
-
-
-    // Common.hash(request.payload.password, function(error, hashedPassword) {
-    //   request.payload.password = hashedPassword;
-
-    //   User.saveUser(request.payload, function(err, user) {
-    //     console.log('returned from mongo');
-    //     // if (err) return reply(Boom.badImplementation(err));
-
-    //     if (!err) {
-    //       var tokenData = {
-    //         userName: user.userName,
-    //         scope: user.scope,
-    //         id: user._id
-    //       };
-    //       Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
-    //       return reply('Please confirm your email id by clicking on link in email');
-    //     } else {
-    //       if ( err.code === 11000 || err.code === 11001 ) {
-    //         return reply(Boom.forbidden('please provide another user email'));
-    //       } else {
-    //         return reply(Boom.forbidden(err)); // HTTP 403
-    //       }
-    //     }
-    //   });
-    // });
   }
 };
