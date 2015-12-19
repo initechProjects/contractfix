@@ -8,7 +8,7 @@ var app = angular.module('app', [
     'app.resetPassword',
     'app.verifyemail',
     'app.signup2',
-    'app.invite'
+    'app.invitation'
     ]);
 
 
@@ -56,7 +56,8 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/settings/usersetting.html'
     })
     .when('/invitation', {
-        templateUrl: 'app/auth/invitation.html'
+        templateUrl: 'app/auth/invitation.html',
+        controller: 'invitationController'
     })
 });
 

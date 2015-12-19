@@ -10,7 +10,7 @@
             <plist version="1.0">
                 <dict>
                     <key>NSPersistenceFrameworkVersion</key>
-                    <integer>640</integer>
+                    <integer>526</integer>
                     <key>NSStoreModelVersionHashes</key>
                     <dict>
                         <key>LMCookieJar</key>
@@ -69,7 +69,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\",\\"valid\\":true}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"nikos.papayiannakis@gmail.com\\",\\"password\\":\\"password\\",\\"valid\\":true}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">4</attribute>
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">Login</attribute>
@@ -209,7 +209,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"nikos.papayiannakis@gmail.com\\",\\"password\\":\\"password\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Create user</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z110"></relationship>
@@ -259,7 +259,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z121 z120"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z120">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNzg4NGZmZDAtYTA3OC0xMWU1LWE1MWItMzM4MDhkYTVhMTQ4IiwiaWF0IjoxNDUwMTM3NjEyLCJleHAiOjE0NTAxMzg1MTJ9.3fQ0d5nRDziWyd4DIstWgtqMFk5ydZoaRXeW6BZEvLM</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -315,7 +315,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z125 z123"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z125">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJwYXNzd29yZCI6IiQyYSQxMiRCbVF0d3VwM3ZBemFwSDk5bzFQQm5PdlpLVVJpa0JqMnBWdC8zekdRcENRMXZmN3hadGpleSIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiI1NjczYjNmODgxYTA0ODU5M2EyMTIxZGUiLCJpYXQiOjE0NTA0MjM0NzcsImV4cCI6MTQ1MDUwOTg3N30.jWOLGelEsgkKAKVDhIZ8R_EzDj5qA7yseVSJr2qsSuM</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im5pa29zLnBhcGF5aWFubmFraXNAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTIkcU1HTmR0QVQ5ZTRHVkxQd0ZzRnNHdTNPVmJQNzFRdU1lMXA2c0lMZUxOb29keEtHNEcxeHkiLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3NWJmZDQ2ZmIwMmZlNTQ0ZTA0ZDU0IiwiaWF0IjoxNDUwNTU3NDU3LCJleHAiOjE0NTA2NDM4NTd9.dVZamI0q4cIT7GXf2trwZfReNTa8WRARqo2fzCvceyM</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -351,7 +351,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z126"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z128">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJwYXNzd29yZCI6IiQyYSQxMiRCbVF0d3VwM3ZBemFwSDk5bzFQQm5PdlpLVVJpa0JqMnBWdC8zekdRcENRMXZmN3hadGpleSIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiI1NjczYjNmODgxYTA0ODU5M2EyMTIxZGUiLCJpYXQiOjE0NTA0MjM0NzcsImV4cCI6MTQ1MDUwOTg3N30.jWOLGelEsgkKAKVDhIZ8R_EzDj5qA7yseVSJr2qsSuM</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im5pa29zLnBhcGF5aWFubmFraXNAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTIkcU1HTmR0QVQ5ZTRHVkxQd0ZzRnNHdTNPVmJQNzFRdU1lMXA2c0lMZUxOb29keEtHNEcxeHkiLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3NWJmZDQ2ZmIwMmZlNTQ0ZTA0ZDU0IiwiaWF0IjoxNDUwNTU3NDU3LCJleHAiOjE0NTA2NDM4NTd9.dVZamI0q4cIT7GXf2trwZfReNTa8WRARqo2fzCvceyM</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -505,7 +505,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
     </object>
     <object type="LMREQUEST" id="z143">
-        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5674769842a631b3fee3bbf9\\",\\"title\\":\\"Lorem Ipsum Contract\\",\\"collaborators\\":[\\"michael@cetin.info\\",\\"nick@cetin.info\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5675c0296fb02fe544e04d55\\",\\"title\\":\\"Lorem Ipsum Contract\\",\\"collaborators\\":[\\"michael@cetin.info\\",\\"ahmet@cetin.info\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">7AF52DDC-7BC8-4299-AB5E-7AEFF4D9D8C1</attribute>
         <attribute name="url" type="string">http://127.0.0.1:8000/invite</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -518,10 +518,10 @@
         <attribute name="name" type="string">Invite to collaborate</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z145 z144"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z144 z145"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z144">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJwYXNzd29yZCI6IiQyYSQxMiRCbVF0d3VwM3ZBemFwSDk5bzFQQm5PdlpLVVJpa0JqMnBWdC8zekdRcENRMXZmN3hadGpleSIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiI1NjczYjNmODgxYTA0ODU5M2EyMTIxZGUiLCJpYXQiOjE0NTA0MjM0NzcsImV4cCI6MTQ1MDUwOTg3N30.jWOLGelEsgkKAKVDhIZ8R_EzDj5qA7yseVSJr2qsSuM</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im5pa29zLnBhcGF5aWFubmFraXNAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTIkcU1HTmR0QVQ5ZTRHVkxQd0ZzRnNHdTNPVmJQNzFRdU1lMXA2c0lMZUxOb29keEtHNEcxeHkiLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3NWJmZDQ2ZmIwMmZlNTQ0ZTA0ZDU0IiwiaWF0IjoxNDUwNTU3NDU3LCJleHAiOjE0NTA2NDM4NTd9.dVZamI0q4cIT7GXf2trwZfReNTa8WRARqo2fzCvceyM</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
