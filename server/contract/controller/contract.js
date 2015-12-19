@@ -12,6 +12,7 @@ exports.save = {
       title: Joi.string(),
       templateId: Joi.string(), //Joi.when('contractId', { is: undefined, then: Joi.string().required() }),
       text: Joi.string().required(),
+      tag: Joi.string(),
       comments: Joi.array(),
       personal: Joi.boolean()
     }
@@ -35,6 +36,8 @@ exports.save = {
                 versionDate: Date.now(),
                 text: request.payload.text
               };
+
+              if (request.payload.tag) version.tag = request.payload.tag;
 
               if (request.payload.title) contract.metadata.title = request.payload.title;
 

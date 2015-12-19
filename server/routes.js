@@ -121,6 +121,7 @@ exports.endpoints = [
       contractId: required to update, if null new contract
       text: latest text of the contract
       title: string
+      tag: string, tag of the draft/version
       comments: array of string
       templateId: if contract created based on existing template, id should be passed
       personal: boolean, if true, it will be saved as personal draft
