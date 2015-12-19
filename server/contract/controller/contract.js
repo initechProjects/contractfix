@@ -12,6 +12,7 @@ exports.save = {
       title: Joi.string(),
       templateId: Joi.string(), //Joi.when('contractId', { is: undefined, then: Joi.string().required() }),
       text: Joi.string().required(),
+      tag: Joi.string(),
       comments: Joi.array(),
       personal: Joi.boolean()
     }
@@ -35,6 +36,8 @@ exports.save = {
                 versionDate: Date.now(),
                 text: request.payload.text
               };
+
+              if (request.payload.tag) version.tag = request.payload.tag;
 
               if (request.payload.title) contract.metadata.title = request.payload.title;
 
@@ -208,17 +211,20 @@ exports.open = {
         if (contract.versions) {
           result.revisions = contract.versions.length;
 
-          result.latest = {};
-          result.latest.text = contract.versions[result.revisions - 1].text;
-          result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
-          if (contract.versions[result.revisions - 1].tag) result.latest.tag = contract.versions[result.revisions - 1].tag;
+          if (result.revisions > 0) {
+            result.latest = {};
+            result.latest.text = contract.versions[result.revisions - 1].text;
+            result.latest.versionDate = contract.versions[result.revisions - 1].versionDate;
+            if (contract.versions[result.revisions - 1].tag) result.latest.tag = contract.versions[result.revisions - 1].tag;
 
-          if (result.revisions > 1) {
-            result.previous = {};
-            result.previous.text = contract.versions[result.revisions - 2].text;
-            result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
-            if (contract.versions[result.revisions - 2].tag) result.latest.tag = contract.versions[result.revisions - 2].tag;
+            if (result.revisions > 1) {
+              result.previous = {};
+              result.previous.text = contract.versions[result.revisions - 2].text;
+              result.previous.versionDate = contract.versions[result.revisions - 2].versionDate;
+              if (contract.versions[result.revisions - 2].tag) result.latest.tag = contract.versions[result.revisions - 2].tag;
+            }
           }
+
         }
 
         return reply(result);

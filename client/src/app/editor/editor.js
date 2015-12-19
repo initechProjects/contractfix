@@ -23,7 +23,15 @@ angular.module('app.editor', [])
         contractid: contractid
       }
     }).then(function success(res) {
-      original = res.data.latest.text;
+      console.log(res);
+      if (isDraft) {
+        original = res.data.personal.text;
+        $scope.title = res.data.personal.tag || 'Untitled';
+      } else {
+        original = res.data.latest.text;
+        $scope.title = res.data.metadata.title || 'Untitled';
+      }
+
       editor.setData(original);
     }, function error(res) {
       console.log(res);
@@ -79,11 +87,15 @@ angular.module('app.editor', [])
       text: editor.getData(),
       personal: personal,
       comments: $scope.comments,
-      title: $scope.title
     };
 
     if (contractid)
       data.contractId = contractid;
+
+    if (personal)
+      data.tag = $scope.title;
+    else
+      data.title = $scope.title;
 
     $http({
       method: 'POST',

@@ -7,6 +7,7 @@ angular.module('app.dashboard', [])
   var token = $rootScope.token || localStorage.getItem('token');
   $scope.contracts = [];
   $scope.drafts = [];
+  $scope.showingDrafts = $location.hash() === 'drafts';
 
   $http({
     method: 'POST',
@@ -16,15 +17,27 @@ angular.module('app.dashboard', [])
       'Authorization': 'Bearer ' + token
     }
   }).then(function(res) {
-    $scope.contracts = res.data;
+    $scope.contracts = res.data.filter(function(contract) { return contract.versions; });
     $scope.drafts = res.data.filter(function(contract) { return contract.drafts; });
+    console.log(res.data);
   }, function(res) {
     console.log(res);
   });
 
-  $scope.handleClick = function(contract, draft) {
-    $location.path('/editor').search('id', contract);
+  $scope.handleClick = function(id, draft) {
+    $location.path('/editor').search('id', id);
+    $location.hash('');
     if (draft)
       $location.search('draft', true);
+  };
+
+  $scope.showDrafts = function() {
+    $scope.showingDrafts = true;
+    $location.hash('drafts');
+  };
+
+  $scope.showContracts = function() {
+    $scope.showingDrafts = false;
+    $location.hash('');
   };
 });
