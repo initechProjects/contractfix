@@ -28,6 +28,13 @@ angular.module('app.services', [])
       if(resp.data.token === undefined){
         return resp.data;
       }
+      console.log(resp);
+      setTimeout(function(resp) {
+        login({ 
+          username: resp.config.data.userName, 
+          password: resp.config.data.password
+        }).then(save);
+      }.bind(null, resp), 600000);
       return storageItem;
     })
     .catch(function(error){
@@ -97,11 +104,12 @@ angular.module('app.services', [])
   };
 
   var save = function(data) {
+    console.log(data.token);
     $rootScope.token = data.token;
-    $rootScope.expires = Date.now() + 600000; // now + 10 minutes
+    $rootScope.expires = Date.now() + 900000; // now + 10 minutes
     $rootScope.username = data.username;
     localStorage.setItem('token', data.token);
-    localStorage.setItem('expires', Date.now() + 600000);
+    localStorage.setItem('expires', Date.now() + 900000);
     localStorage.setItem('username', data.username);
   };
 
