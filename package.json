@@ -1,0 +1,40 @@
+{
+  "name": "contractfix",
+  "version": "1.0.0",
+  "description": "Contract Negotiation Management Made Easy",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "main": "server",
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "blipp": "^2.3.0",
+    "boom": "^3.0.0",
+    "hapi": "^11.1.2",
+    "hapi-auth-jwt": "^4.0.0",
+    "inert": "^3.2.0",
+    "joi": "^7.0.1",
+    "jsonwebtoken": "^5.4.1",
+    "kerberos": "0.0.17",
+    "lodash": "^3.10.1",
+    "mongodb": "^2.0.52",
+    "mongoose": "^4.3.1",
+    "node-uuid": "^1.4.7",
+    "sendgrid": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/initech-thesis/contractfix"
+  },
+  "keywords": [],
+  "author": "Nick Papayiannakis, Michael Kim, Hera Kim, Ahmet Cetin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/initech-thesis/contractfix"
+  }
+}
