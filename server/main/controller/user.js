@@ -326,6 +326,7 @@ exports.updateProfile = {
           }
 
           if (request.payload.contractid) {
+            //// ADD TOKEN!!!!!
             reply({ contractid: request.payload.contractid });
           } else {
             return reply('updated successfully.');
@@ -337,13 +338,12 @@ exports.updateProfile = {
   }
 };
 
-exports.invitationLogin = {
-  validate: {
-    payload: {
-      password: Joi.string().required()
-    }
-  },
+exports.invitation = {
   handler: function(request, reply) {
+    // userName: user.userName,
+    // scope: user.scope,
+    // contractid: contract._id,
+    // id: user._id
 
     Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
       if(decoded === undefined) {
@@ -366,7 +366,8 @@ exports.invitationLogin = {
 
         let res = {};
         res.newuser = user.isInvited;
-        res.contractid = request.payload.contractid;
+        res.contractid = decoded.contractid;
+        res.username = decoded.userName;
 
         reply(res);
       });
