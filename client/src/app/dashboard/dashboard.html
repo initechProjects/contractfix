@@ -55,10 +55,12 @@
       <h3>Welcome username</h3>
       <hr>
       <ul ng-if="!showingDrafts">
+      Contracts:
         <li ng-repeat="contract in contracts" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
       </ul>
       <ul ng-if="showingDrafts">
-        <li ng-repeat="draft in drafts" ng-click="handleClick(draft.id, true)"><a href="">{{ draft.title || 'Untitled' }}</a></li>
+      Drafts:
+        <li ng-repeat="draft in drafts" ng-click="handleClick(draft.id, true)"><a href="">{{ (draft.drafts === true ? draft.title : draft.drafts) || 'Untitled' }}</a></li>
       </ul>
     </div><!--/col-span-9-->
   </div><!--/row-->
