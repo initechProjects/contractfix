@@ -78,7 +78,10 @@ app.run(function ($rootScope, $location, Auth) {
       $location.path('/login');
     }
   });
-})
+
+  if (Auth.isAuth())
+    Auth.refresh();
+});
 
 // app.run(function ($http, $scope, $rootScope, $location) {
 //     $http({

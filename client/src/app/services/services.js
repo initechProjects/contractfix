@@ -93,17 +93,47 @@ angular.module('app.services', [])
       expires = parseInt(localStorage.getItem('expires'));
     }
 
+    if (token)
+      refresh(token);
+
     return !!token && !!expires && expires > Date.now();
   };
 
   var save = function(data) {
     $rootScope.token = data.token;
-    $rootScope.expires = Date.now() + 600000; // now + 10 minutes
+    $rootScope.expires = Date.now() + 900000; // now + 10 minutes
     $rootScope.username = data.username;
     localStorage.setItem('token', data.token);
-    localStorage.setItem('expires', Date.now() + 600000);
+    localStorage.setItem('expires', Date.now() + 900000);
     localStorage.setItem('username', data.username);
   };
+
+  var refresh = (function() {
+    var calledOnce = false;
+    return function refreshToken(token) {
+      console.log('refreshing');
+      token = token || $rootScope.token || localStorage.getItem('token');
+
+      $http({
+        method: 'POST',
+        url: '/refreshtoken',
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(function success(res) {
+        console.log(res);
+        save(res.data);
+        calledOnce = true;
+      }, function error(res) {
+        console.log(res);
+      });
+
+      if (!calledOnce) {
+        calledOnce = true;
+        setInterval(refreshToken.bind(null, token), 600000);
+      }
+    };
+  })();
 
   return {
     login: login,
@@ -111,7 +141,8 @@ angular.module('app.services', [])
     resendEmail: resendEmail,
     isAuth: isAuth,
     forgotPassword: forgotPassword,
-    save: save
+    save: save,
+    refresh: refresh
   };
 
 })
