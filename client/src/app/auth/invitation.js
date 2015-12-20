@@ -31,8 +31,10 @@ angular.module('app.invitation', [])
     })
     .success(function(data){
       $scope.response = data;
+      $window.localStorage.username = data.username;
+      $window.localStorage.contractid = data.contractid;
 
-      $window.location.href =  data.newuser === true  ?  '/signup2' : '/login';
+      $window.location.href =  data.newuser === true  ?  '/#/signup2' : '/#/login';
 
     })
     .catch(function(err){
