@@ -97,10 +97,9 @@ exports.endpoints = [
 
   /** Refresh token
   *   requires:
-  *     Post call including token in the header (Authorization) which was sent by email
-  *     and password in body
+  *     Old token
   *   returns:
-  *     changes password and returns confirmation message
+  *     New token
   */
   { method: 'POST', path: '/refreshtoken', config: User.refreshToken },
 

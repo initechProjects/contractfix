@@ -27,12 +27,7 @@ exports.create = {
         console.log('returned from mongo');
 
         if (!err) {
-          var tokenData = {
-            userName: user.userName,
-            scope: user.scope,
-            id: user._id
-          };
-          Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+          Common.sendMailVerificationLink(user, Config.gettoken('userops', user));
           return reply('Please confirm your email id by clicking on link in email');
         } else {
           if ( err.code === 11000 || err.code === 11001 ) {
@@ -73,25 +68,14 @@ exports.login = {
         if (!result) return reply(Boom.forbidden('invalid username or password'));
         if(!user.isVerified) return reply(Boom.forbidden('Your email address is not verified. please verify your email address to proceed'));
 
-        var tokenData = {
-          userName: user.userName,
-          password: user.password,
-          fullname: user.fullname,
-          scope: user.scope,
-          id: user._id
-        };
         var res = {};
-
         res.username = user.userName;
         if (user.fullname) res.fullname = user.fullname;
         res.scope = user.scope;
         if (request.payload.contractid) res.contractid = request.payload.contractid;
 
-        if (request.payload.valid) {
-          res.token = Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification });
-        } else {
-          res.token = Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh });
-        }
+        Config.dev = request.payload.valid ? true : false;
+        res.token = Config.gettoken('login', user);
 
         return reply(res);
 
@@ -106,18 +90,11 @@ exports.refreshToken = {
   },
   handler: function(request, reply) {
     if (request.auth.isAuthenticated) {
-      var tokenData = {
-        userName: request.auth.credentials.userName,
-        password: request.auth.credentials.password,
-        fullname: request.auth.credentials.fullname,
-        scope: request.auth.credentials.scope,
-        id: request.auth.credentials._id
-      };
       var res = {
         username: request.auth.credentials.userName,
         scope: request.auth.credentials.scope,
         fullname: request.auth.credentials.fullname,
-        token: Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh })
+        token: Config.gettoken('login', request.auth.credentials)
       };
 
       return reply(res);
@@ -194,12 +171,7 @@ exports.resendVerificationEmail = {
 
         if(user.isVerified) return reply('your email address is already verified');
 
-        var tokenData = {
-          userName: user.userName,
-          scope: user.scope,
-          id: user._id
-        };
-        Common.sendMailVerificationLink(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification }));
+        Common.sendMailVerificationLink(user, Config.gettoken('userops', user));
         return reply('account verification link is sucessfully send to your email');
       });
     });
@@ -221,13 +193,7 @@ exports.forgotPassword = {
 
       if (user === null) return reply(Boom.forbidden('invalid username'));
 
-      var tokenData = {
-        userName: user.userName,
-        scope: user.scope,
-        id: user._id
-      };
-
-      Common.sendMailForgotPassword(user, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.refresh }));
+      Common.sendMailForgotPassword(user, Config.gettoken('userops', user));
       return reply('instructions to reset password sent to your registered email.');
     });
   }
@@ -325,13 +291,7 @@ exports.updateProfile = {
             return reply(Boom.badImplementation(err));
           }
 
-          if (request.payload.contractid) {
-            //// ADD TOKEN!!!!!
-            reply({ contractid: request.payload.contractid });
-          } else {
-            return reply('updated successfully.');
-          }
-
+          reply(Config.gettoken('login', user));
         });
       });
     }
@@ -340,10 +300,6 @@ exports.updateProfile = {
 
 exports.invitation = {
   handler: function(request, reply) {
-    // userName: user.userName,
-    // scope: user.scope,
-    // contractid: contract._id,
-    // id: user._id
 
     Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
       if(decoded === undefined) {
@@ -461,15 +417,7 @@ exports.inviteCollaborators = {
 
             values.forEach(function(user) {
               emails.push(user.userName);
-
-              let tokenData = {
-                userName: user.userName,
-                scope: user.scope,
-                contractid: contract._id,
-                id: user._id
-              };
-
-              Common.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: Config.token.expiry.emailVerification } ));
+              Common.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Config.gettoken('userops', user));
             });
 
             return reply(`Invitation(s) sent to ${emails.join(', ')}.`);

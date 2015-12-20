@@ -7,10 +7,17 @@ var Schema = mongoose.Schema;
  * @description contain the details of Attribute
  */
 
-var Contract = new Schema({
+var Template = new Schema({
+  /**
+    _id: using UUID for id field
+  */
+  // _id: {
+  //   type: String,
+  //   default: uuid.v1
+  // },
 
   /**
-    metadata. Object keeps different static data about the contract
+    metadata. Object keeps different static data about the template
   */
   metadata: {
     dateCreated: Date,
@@ -19,7 +26,7 @@ var Contract = new Schema({
   },
 
   /**
-    Versions. Versions of contract draft in html format
+    Versions. Versions of template draft in html format
   */
   versions: [{
     userid: String,
@@ -49,38 +56,38 @@ var Contract = new Schema({
   }],
 
   /**
-    users. Users of the contract
+    users. Users of the template
   */
   users: { type: [String], index: true }
 
 }, { autoIndex: false });
 
-Contract.statics.newContract = function(requestData, callback) {
+Template.statics.newTemplate = function(requestData, callback) {
   this.create(requestData, callback);
 };
 
-Contract.statics.updateContract = function(contract, callback) {
-  contract.save(callback);
+Template.statics.updateTemplate = function(template, callback) {
+  template.save(callback);
 };
 
-Contract.statics.findContract = function(id, callback) {
+Template.statics.findTemplate = function(id, callback) {
   this.findOne({ _id: id }, callback);
 };
 
-Contract.statics.findContractByUserId = function(userId, callback) {
+Template.statics.findTemplateByUserId = function(userId, callback) {
   this.find({ users: userId }, callback);
 };
 
-Contract.statics.addVersion = function(id, version, callback) {
+Template.statics.addVersion = function(id, version, callback) {
   this.findOne({ _id: id }, function(item) {
     item.versions.push(version);
     item.save(callback);
   });
 };
 
-var contract = mongoose.model('contract', Contract);
+var template = mongoose.model('template', Template);
 
 /** export schema */
 module.exports = {
-  Contract: contract
+  Template: template
 };
