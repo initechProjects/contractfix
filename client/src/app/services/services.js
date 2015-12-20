@@ -101,7 +101,7 @@ angular.module('app.services', [])
 
   var save = function(data) {
     $rootScope.token = data.token;
-    $rootScope.expires = Date.now() + 900000; // now + 10 minutes
+    $rootScope.expires = Date.now() + 900000; // now + 15 minutes
     $rootScope.username = data.username;
     localStorage.setItem('token', data.token);
     localStorage.setItem('expires', Date.now() + 900000);
@@ -123,15 +123,13 @@ angular.module('app.services', [])
       }).then(function success(res) {
         console.log(res);
         save(res.data);
-        calledOnce = true;
+        if (!calledOnce) {
+          calledOnce = true;
+          setInterval(refreshToken, 600000);
+        }
       }, function error(res) {
         console.log(res);
       });
-
-      if (!calledOnce) {
-        calledOnce = true;
-        setInterval(refreshToken.bind(null, token), 600000);
-      }
     };
   })();
 
