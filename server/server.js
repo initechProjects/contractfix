@@ -12,8 +12,6 @@ var app = {};
 app.config = Config;
 
 var privateKey = app.config.token.key;
-console.log(privateKey);
-console.log(Config);
 
 var server = new Hapi.Server();
 server.connection({ port: app.config.server.port });
