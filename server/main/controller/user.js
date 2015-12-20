@@ -24,7 +24,6 @@ exports.create = {
       request.payload.password = hashedPassword;
 
       User.saveUser(request.payload, function(err, user) {
-        console.log('returned from mongo');
 
         if (!err) {
           Common.sendMailVerificationLink(user, Config.gettoken('userops', user));
@@ -109,24 +108,10 @@ exports.resetPassword = {
     }
   },
   handler: function(request, reply) {
-    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
-      if(decoded === undefined) {
-        console.log('decoded undefined', request.headers.authorization);
-        return reply(Boom.forbidden('invalid verification link'));
-      }
-      if(decoded.scope[0] !== 'registered') {
-        console.log('not registered', decoded.scope[0]);
-        return reply(Boom.forbidden('invalid verification link'));
-      }
-      User.findUserByIdAndUserName(decoded.id, decoded.userName, function(err, user){
-        if (err) {
-          console.error(err);
-          return reply(Boom.badImplementation(err));
-        }
-        if (user === null) {
-          console.log('user not found', decoded.userName);
-          return reply(Boom.forbidden('invalid verification link'));
-        }
+
+    let callback = {
+      success: function(user) {
+
         if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
 
         Common.hash(request.payload.password, function(error, hashedPassword) {
@@ -135,14 +120,21 @@ exports.resetPassword = {
           User.updateUser(user, function(err, user) {
             if (err) {
               console.error(err);
-              return reply(Boom.badImplementation(err));
+              return reject({ boom: 'badImplementation', message: err });
             }
 
             return reply('password changed successfully.');
           });
         });
-      });
-    });
+      },
+      error: function(data) {
+        if (data.boom === void 0) data.boom = 'badImplementation';
+        reply(Boom[data.boom](data.message));
+      }
+    }
+
+    Config.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
+
   }
 },
 
@@ -201,35 +193,30 @@ exports.forgotPassword = {
 
 exports.verifyEmail = {
   handler: function(request, reply) {
-    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
-      if(decoded === undefined) {
-        console.log('decoded undefined', request.headers.authorization);
-        return reply(Boom.forbidden('invalid verification link'));
-      }
-      if(decoded.scope[0] !== 'registered') {
-        console.log('not registered', decoded.scope[0]);
-        return reply(Boom.forbidden('invalid verification link'));
-      }
-      User.findUserByIdAndUserName(decoded.id, decoded.userName, function(err, user){
-        if (err) {
-          console.error(err);
-          return reply(Boom.badImplementation(err));
-        }
-        if (user === null) {
-          console.log('user not found', decoded.userName);
-          return reply(Boom.forbidden('invalid verification link'));
-        }
+
+    let callback = {
+      success: function(user) {
         if (user.isVerified === true) return reply(Boom.forbidden('account is already verified'));
+
         user.isVerified = true;
-        User.updateUser(user, function(err, user){
+
+        User.updateUser(user, function(err, user) {
           if (err) {
             console.error(err);
-            return reply(Boom.badImplementation(err));
+            return reject({ boom: 'badImplementation', message: err });
           }
-          return reply('account sucessfully verified');
+
+          reply('password changed successfully.');
         });
-      });
-    });
+      },
+      error: function(data) {
+        if (data.boom === void 0) data.boom = 'badImplementation';
+        reply(Boom[data.boom](data.message));
+      }
+    }
+
+    Config.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
+
   }
 };
 
@@ -301,33 +288,23 @@ exports.updateProfile = {
 exports.invitation = {
   handler: function(request, reply) {
 
-    Jwt.verify(request.headers.authorization, privateKey, { algorithm: 'HS256' }, function(err, decoded) {
-      if(decoded === undefined) {
-        console.log('decoded undefined', request.headers.authorization);
-        return reply(Boom.forbidden('invalid verification link'));
-      }
-      if(decoded.scope[0] !== 'registered') {
-        console.log('not registered', decoded.scope[0]);
-        return reply(Boom.forbidden('invalid verification link'));
-      }
-      User.findUserByIdAndUserName(decoded.id, decoded.userName, function(err, user){
-        if (err) {
-          console.error(err);
-          return reply(Boom.badImplementation(err));
-        }
-        if (user === null) {
-          console.log('user not found', decoded.userName);
-          return reply(Boom.forbidden('invalid verification link'));
-        }
+    let callback = {
+      success: function(user) {
 
         let res = {};
         res.newuser = user.isInvited;
-        res.contractid = decoded.contractid;
-        res.username = decoded.userName;
-
+        res.contractid = user.contractid;
+        res.username = user.userName;
+        console.log('success');
         reply(res);
-      });
-    });
+      },
+      error: function(data) {
+        if (data.boom === void 0) data.boom = 'badImplementation';
+        reply(Boom[data.boom](data.message));
+      }
+    }
+
+    Config.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
   }
 };
 

@@ -186,7 +186,7 @@
         <relationship name="variablesvalues" type="0/0" destination="LMENVIRONMENTVARIABLEVALUE" idrefs="z104"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z114">
-        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOltbInJlZ2lzdGVyZWQiXV0sImlkIjoiN2VjMTkxMDAtYTQ0ZC0xMWU1LTk4OGEtZWQ1NGY0YzRmNWRjIiwiaWF0IjoxNDUwMzA4ODQ4LCJleHAiOjE0NTAzOTUyNDh9.oVSwIOs5mcU77BD0VH_6Q9AFBr6dz6HewMJRbC5X9Q4</attribute>
+        <attribute name="value" type="string">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3M2IzZjg4MWEwNDg1OTNhMjEyMWRlIiwiaWF0IjoxNDUwNTg1NDI5LCJleHAiOjE0NTMxNzc0Mjl9.9hrqb9nbtdLqn9L7EacXTvqn8KidfTlOHFcjBhxIJ4k</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -351,7 +351,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z126"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z128">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3M2IzZjg4MWEwNDg1OTNhMjEyMWRlIiwicGFzc3dvcmQiOiIkMmEkMTIkQm1RdHd1cDN2QXphcEg5OW8xUEJuT3ZaS1VSaWtCajJwVnQvM3pHUXBDUTF2Zjd4WnRqZXkiLCJpYXQiOjE0NTA1NzI2MDEsImV4cCI6MTQ1MzE2NDYwMX0.5lJFX-Ma3gkQRzHYU1dWbHpgREBx4RkzmFyHt_r_bJA</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3M2IzZjg4MWEwNDg1OTNhMjEyMWRlIiwicGFzc3dvcmQiOiIkMmEkMTIkQm1RdHd1cDN2QXphcEg5OW8xUEJuT3ZaS1VSaWtCajJwVnQvM3pHUXBDUTF2Zjd4WnRqZXkiLCJpYXQiOjE0NTA1ODUwOTQsImV4cCI6MTQ1MzE3NzA5NH0.LOOq7la5zGL9N5Vons3I0Mnx9BfRPQVLJP4Y84JRT7g</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -521,7 +521,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z145 z144"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z144">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJwYXNzd29yZCI6IiQyYSQxMiRCbVF0d3VwM3ZBemFwSDk5bzFQQm5PdlpLVVJpa0JqMnBWdC8zekdRcENRMXZmN3hadGpleSIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiI1NjczYjNmODgxYTA0ODU5M2EyMTIxZGUiLCJpYXQiOjE0NTA0MjM0NzcsImV4cCI6MTQ1MDUwOTg3N30.jWOLGelEsgkKAKVDhIZ8R_EzDj5qA7yseVSJr2qsSuM</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3M2IzZjg4MWEwNDg1OTNhMjEyMWRlIiwicGFzc3dvcmQiOiIkMmEkMTIkWkZVem1jN0syWm0zZm1IeDhrZkJUZTlzdUh6eHdvano5aDhhNnhuaW9HNGtLei5HTjljV0ciLCJpYXQiOjE0NTA1ODgzNDAsImV4cCI6MTQ1MzE4MDM0MH0.eH7BRtc5MSB4XHDbQBKlgDGtxckjAab1Ge3_kz--3nk</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>

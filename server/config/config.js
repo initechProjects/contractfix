@@ -22,11 +22,11 @@ var config = {
     password: ''
   },
   token: {
-    key: 'f16fc55d48f2494d',
-    expiry: {
-      emailVerification: 24 * 60 * 60, //1 day
-      refresh: 15 * 60 //15 minutes
-    }
+    key: 'f16fc55d48f2494d'
+    // expiry: {
+    //   emailVerification: 24 * 60 * 60, //1 day
+    //   refresh: 15 * 60 //15 minutes
+    // }
   },
   email: {
     username: 'team@contractfix.com',
@@ -81,7 +81,6 @@ var config = {
     });
   },
   gettoken: function(operation, user, contract) {
-    let privateKey = config.token.key;
     let tokenData = {};
 
     let types = {
@@ -120,7 +119,42 @@ var config = {
 
     var expiration = config.dev ? 24*30*3600 : types[operation].expires
 
-    return Jwt.sign(tokenData, privateKey, { algorithm: 'HS256', expiresIn: expiration });
+    return Jwt.sign(tokenData, config.token.key, { algorithm: 'HS256', expiresIn: expiration });
+  },
+  checkUserOpsToken: function(token) {
+    var promise = new Promise(function(resolve, reject) {
+      Jwt.verify(token, config.token.key, { algorithm: 'HS256' }, function(err, decoded) {
+
+        if (err) {
+          console.error(err);
+          return reject({ boom: 'badImplementation', message: err });
+        }
+        if(decoded === undefined) {
+          console.log('decoded undefined', request.headers.authorization);
+          return reject({ boom: 'forbidden', message: 'invalid verification link' });
+        }
+        if(decoded.scope[0] !== 'registered') {
+          console.log('not registered', decoded.scope[0]);
+          return reject({ boom: 'forbidden', message: 'invalid verification link' });
+        }
+        User.findUserByIdAndUserName(decoded.id, decoded.username, function(err, user){
+          if (err) {
+            console.error(err);
+            return reject({ boom: 'badImplementation', message: err });
+          }
+          if (user === null) {
+            console.log('user not found', decoded.username);
+            return reject({ boom: 'forbidden', message: 'invalid verification link' });
+          }
+
+          if (decoded.contractid) user.contractid = decoded.contractid;
+
+          return resolve(user);
+        });
+      });
+    });
+
+    return promise;
   }
 };
 
