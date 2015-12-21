@@ -1,8 +1,6 @@
 'use strict';
 
-var Boom   = require('boom');
-var User   = require('../main/model/user').User;
-var Jwt    = require('jsonwebtoken');
+// var Confidence   = require('confidence');
 
 var config = {
   dev: true,

@@ -197,6 +197,9 @@ exports.open = {
   description: 'open requested contracts',
   tags:['api', 'Contract'],
   validate: {
+    payload: {
+      contractId: Joi.string().required().description('contractid to be opened'),
+    },
     headers: Joi.object({
       'authorization': Joi.string().required()
     }).options({ allowUnknown: true })
