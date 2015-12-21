@@ -2,8 +2,8 @@
 
 var sendgrid  = require('sendgrid')('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');
 var Config    = require('../../config/config');
-var Welcome   = require('./email_welcome_email.js');
-var Reset   = require('./email_reset_password_email.js');
+var Welcome   = require('./emailtemplates/email_welcome_email.js');
+var Reset   = require('./emailtemplates/email_reset_password_email.js');
 
 
 var mail = function(from, fromname, email, subject, mailbody){

@@ -1,4 +1,4 @@
-var Config    = require('../../config/config');
+var Config    = require('../../../config/config');
 
 exports.email = function(user, token) {
   var Company = Config.email.companyName;
