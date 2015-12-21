@@ -1,21 +1,27 @@
 'use strict';
 
 var Joi    = require('joi');
+// Joi.objectId = require('joi-objectid')(Joi);
 var Boom   = require('boom');
 var Contract   = require('../model/contract').Contract;
 var _ = require('lodash');
 
 exports.save = {
+  description: 'create a new contract',
+  tags:['api', 'Contract'],
   validate: {
     payload: {
-      contractId: Joi.string(),
-      title: Joi.string(),
-      templateId: Joi.string(), //Joi.when('contractId', { is: undefined, then: Joi.string().required() }),
-      text: Joi.string().required(),
-      tag: Joi.string(),
-      comments: Joi.array(),
-      personal: Joi.boolean()
-    }
+      contractId: Joi.string().required().description('contractid to be saved'),
+      title: Joi.string().description('title of the contract'),
+      templateid: Joi.string().description('tempplateid, if contract created using a template'),
+      text: Joi.string().required().description('latest text to be saved'),
+      tag: Joi.string().description('tag of the draft/version'),
+      comments: Joi.array().description('newly added comments'),
+      personal: Joi.boolean().description('is it personal draft?')
+    },
+    headers: Joi.object({
+      'authorization': Joi.string().regex(/^Bearer\s/).required()
+    }).options({ allowUnknown: true })
   },
   auth: {
     strategy: 'token'
@@ -83,7 +89,7 @@ exports.save = {
 
         contract.metadata = {};
         contract.metadata.dateCreated = Date.now();
-        if (request.payload.templateId) contract.metadata.templateId = request.payload.templateId;
+        if (request.payload.templateid) contract.metadata.templateId = request.payload.templateid;
         if (request.payload.title) contract.metadata.title = request.payload.title;
 
 
@@ -134,8 +140,23 @@ exports.save = {
 };
 
 exports.findContractByUserId = {
+  description: 'list contracts that user has access to',
+  tags:['api', 'Contract'],
+  validate: {
+    headers: Joi.object({
+      'authorization': Joi.string().required().description('Starts with "Bearer ", old token')
+    }).options({ allowUnknown: true })
+  },
   auth: {
     strategy: 'token'
+  },
+  response: {
+    schema: Joi.array().items(Joi.object({
+      id: Joi.any().required().description('contractid'),
+      title: Joi.string().description('title of contract'),
+      drafts: Joi.any().description('tag of latest draft, if exists, or true'),
+      versions: Joi.any().description('tag of latest version, if exists, or true')
+    }))
   },
   handler: function(request, reply) {
     if (request.auth.isAuthenticated) {
@@ -173,8 +194,27 @@ exports.findContractByUserId = {
 };
 
 exports.open = {
+  description: 'open requested contracts',
+  tags:['api', 'Contract'],
+  validate: {
+    headers: Joi.object({
+      'authorization': Joi.string().required()
+    }).options({ allowUnknown: true })
+  },
   auth: {
     strategy: 'token'
+  },
+  response: {
+    schema: Joi.object({
+      contractId: Joi.any().required().description('contractId'),
+      metadata: Joi.object().description('metadata of contract'),
+      comments: Joi.array().description('array of comments'),
+      users: Joi.array().description('userid of user who can access'),
+      revisions: Joi.number().integer().description('number of revisions published'),
+      personal: Joi.object().description('personal draft'),
+      latest: Joi.object().description('latest published version'),
+      previous: Joi.object().description('previous version of published contract')
+    })
   },
   handler: function(request, reply) {
     if (request.auth.isAuthenticated) {

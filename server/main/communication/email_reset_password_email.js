@@ -1,12 +1,15 @@
 var Config    = require('../../config/config');
 
 exports.email = function(user, token) {
+  var Company = Config.email.companyName;
+  var Url = `http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}`;
+
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Choose a new password for ${Config.email.accountName}</title>
+  <title>Choose a new password for ${Company}</title>
   <style type="text/css" rel="stylesheet" media="all">
     /* Base ------------------------------ */
     *:not(br):not(tr):not(html) {
@@ -180,7 +183,7 @@ exports.email = function(user, token) {
           <!-- Logo -->
           <tr>
             <td class="email-masthead">
-              <a class="email-masthead_name">${Config.email.accountName}</a>
+              <a class="email-masthead_name">${Company}</a>
             </td>
           </tr>
           <!-- Email Body -->
@@ -191,31 +194,31 @@ exports.email = function(user, token) {
                 <tr>
                   <td class="content-cell">
                     <h1>Hi,</h1>
-                    <p>You recently requested to reset your password for your ${Config.email.accountName} account. Click the button below to reset it.</p>
+                    <p>You recently requested to reset your password for your ${Company} account. Click the button below to reset it.</p>
                     <!-- Action -->
                     <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center">
                           <div>
-                            <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}" style="height:45px;v-text-anchor:middle;width:200px;" arcsize="7%" stroke="f" fill="t">
+                            <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${Url}" style="height:45px;v-text-anchor:middle;width:200px;" arcsize="7%" stroke="f" fill="t">
                               <v:fill type="tile" color="#dc4d2f" />
                               <w:anchorlock/>
                               <center style="color:#ffffff;font-family:sans-serif;font-size:15px;">Reset your password</center>
                             </v:roundrect><![endif]-->
-                            <a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}" class="button button--red">Reset your password</a>
+                            <a href="${Url}" class="button button--red">Reset your password</a>
                           </div>
                         </td>
                       </tr>
                     </table>
                     <p>If you did not request a password reset, please ignore this email or reply to let us know. This password reset is only valid for the next 15 minutes.</p>
-                    <p>Thanks,<br>${Config.email.accountName} Team</p>
+                    <p>Thanks,<br>${Company} Team</p>
                     <p><strong>P.S.</strong> We also love hearing from you and helping you with any issues you have. Please reply to this email if you want to ask a question or just say hi.</p>
                     <!-- Sub copy -->
                     <table class="body-sub">
                       <tr>
                         <td>
                           <p class="sub">If you’re having trouble clicking the password reset button, copy and paste the URL below into your web browser.</p>
-                          <p class="sub"><a href="http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}">http://${Config.server.host}:${Config.server.port}/#/${Config.email.resetPasswordUrl}?q=${token}</a></p>
+                          <p class="sub"><a href="${Url}">${Url}</a></p>
                         </td>
                       </tr>
                     </table>
@@ -229,9 +232,9 @@ exports.email = function(user, token) {
               <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-cell">
-                    <p class="sub center">&copy; 2015 ${Config.email.accountName}. All rights reserved.</p>
+                    <p class="sub center">&copy; 2015 ${Company}. All rights reserved.</p>
                     <p class="sub center">
-                      ${Config.email.accountName}
+                      ${Company}
                     </p>
                   </td>
                 </tr>
