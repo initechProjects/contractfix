@@ -31,9 +31,9 @@ server.register([
   {
     register: require('hapi-swagger'),
     options: {
+      apiVersion: require('../package.json').version,
       info: {
-        title: 'ContractFix API',
-        version: require('../package.json').version
+        title: 'ContractFix API'
       }
     }
   },
