@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-// var uuid = require('node-uuid');
 
 /**
  * @module  Contract

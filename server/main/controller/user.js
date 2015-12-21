@@ -2,31 +2,31 @@
 
 var Joi    = require('joi');
 var Boom   = require('boom');
-var Common = require('./common');
 var Config = require('../../config/config');
-var Jwt    = require('jsonwebtoken');
 var User   = require('../model/user').User;
 var Contract   = require('../../contract/model/contract').Contract;
-
-var privateKey = Config.token.key;
+var Auth = require('../auth');
+var Email = require('../communication/email');
 
 exports.create = {
+  description: 'Signup user',
+  tags:['api', 'User'],
   validate: {
     payload: {
-      userName: Joi.string().email().required(),
-      password: Joi.string().required()
+      userName: Joi.string().email().required().description('email of user'),
+      password: Joi.string().required().description('password of user')
     }
   },
   handler: function(request, reply) {
     request.payload.scope = ['registered'];
 
-    Common.hash(request.payload.password, function(error, hashedPassword) {
+    Auth.hash(request.payload.password, function(error, hashedPassword) {
       request.payload.password = hashedPassword;
 
       User.saveUser(request.payload, function(err, user) {
 
         if (!err) {
-          Common.sendMailVerificationLink(user, Config.gettoken('userops', user));
+          Email.sendMailVerificationLink(user, Auth.gettoken('userops', user));
           return reply('Please confirm your email id by clicking on link in email');
         } else {
           if ( err.code === 11000 || err.code === 11001 ) {
@@ -41,13 +41,24 @@ exports.create = {
 };
 
 exports.login = {
+  description:'user login',
+  tags:['api', 'User'],
   validate: {
     payload: {
-      userName: Joi.string().email().required(),
-      password: Joi.string().required(),
-      contractid: Joi.string(),
-      valid: Joi.boolean() // ONLY FOR DEVELOPMENT!!!!!
+      userName   : Joi.string().email().required().description('email of user'),
+      password   : Joi.string().required().description('password of user'),
+      contractid : Joi.string().description('contractid that user invited to'),
+      valid      : Joi.boolean().description('only for development use') // ONLY FOR DEVELOPMENT!!!!!
     }
+  },
+  response: {
+    schema: Joi.object({
+      username: Joi.string().required().description('email address of user'),
+      fullname: Joi.string().description('full name of user, if exist'),
+      scope: Joi.array().required().description('array of roles of user'),
+      contractid: Joi.string().description('contractid that user will open, if logged in with contractid'),
+      token: Joi.string().required().description('login token valid for 15 mins')
+    })
   },
   handler: function(request, reply) {
     User.findUser(request.payload.userName, function(err, user) {
@@ -59,7 +70,7 @@ exports.login = {
       if (user === null) return reply(Boom.forbidden('invalid username or password'));
       if (user.isRevoked) return reply(Boom.forbidden('your account has been suspended'));
 
-      Common.checkPassword(request.payload.password, user.password, function(err, result) {
+      Auth.checkPassword(request.payload.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
           return reply(Boom.badImplementation(err));
@@ -74,18 +85,32 @@ exports.login = {
         if (request.payload.contractid) res.contractid = request.payload.contractid;
 
         Config.dev = request.payload.valid ? true : false;
-        res.token = Config.gettoken('login', user);
+        res.token = Auth.gettoken('login', user);
 
         return reply(res);
-
       });
     });
   }
 };
 
 exports.refreshToken = {
+  description: 'refresh existing token, login tokens are valid for 15 mins',
+  tags:['api', 'User'],
+  validate: {
+    headers: Joi.object({
+      'authorization': Joi.string().required().description('Starts with "Bearer ", old token')
+    }).options({ allowUnknown: true })
+  },
   auth: {
     strategy: 'token'
+  },
+  response: {
+    schema: Joi.object({
+      username: Joi.string().required().description('email of user'),
+      scope: Joi.array().required().description('array of roles of user'),
+      fullname: Joi.string().description('full name of user, if exist'),
+      token: Joi.string().required().description('refreshed token')
+    })
   },
   handler: function(request, reply) {
     if (request.auth.isAuthenticated) {
@@ -93,7 +118,7 @@ exports.refreshToken = {
         username: request.auth.credentials.userName,
         scope: request.auth.credentials.scope,
         fullname: request.auth.credentials.fullname,
-        token: Config.gettoken('login', request.auth.credentials)
+        token: Auth.gettoken('login', request.auth.credentials)
       };
 
       return reply(res);
@@ -102,9 +127,11 @@ exports.refreshToken = {
 };
 
 exports.resetPassword = {
+  description: 'reset forgotten password using email token',
+  tags:['api', 'User'],
   validate: {
     payload: {
-      password: Joi.string().required()
+      password: Joi.string().required().description('new password')
     }
   },
   handler: function(request, reply) {
@@ -114,7 +141,7 @@ exports.resetPassword = {
 
         if (user.isVerified === false) return reply(Boom.forbidden('email is not verified'));
 
-        Common.hash(request.payload.password, function(error, hashedPassword) {
+        Auth.hash(request.payload.password, function(error, hashedPassword) {
           user.password = hashedPassword;
 
           User.updateUser(user, function(err, user) {
@@ -131,18 +158,20 @@ exports.resetPassword = {
         if (data.boom === void 0) data.boom = 'badImplementation';
         reply(Boom[data.boom](data.message));
       }
-    }
+    };
 
-    Config.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
+    Auth.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
 
   }
 },
 
 exports.resendVerificationEmail = {
+  description: 'resend verification email',
+  tags:['api', 'User'],
   validate: {
     payload: {
-      userName: Joi.string().email().required(),
-      password: Joi.string().required()
+      userName: Joi.string().email().required().description('email of user'),
+      password: Joi.string().required().description('password of user')
     }
   },
   handler: function(request, reply) {
@@ -154,7 +183,7 @@ exports.resendVerificationEmail = {
 
       if (user === null) return reply(Boom.forbidden('invalid username or password'));
 
-      Common.checkPassword(request.payload.password, user.password, function(err, result) {
+      Auth.checkPassword(request.payload.password, user.password, function(err, result) {
         if (err) {
           console.error(err);
           return reply(Boom.badImplementation(err));
@@ -163,7 +192,7 @@ exports.resendVerificationEmail = {
 
         if(user.isVerified) return reply('your email address is already verified');
 
-        Common.sendMailVerificationLink(user, Config.gettoken('userops', user));
+        Email.sendMailVerificationLink(user, Auth.gettoken('userops', user));
         return reply('account verification link is sucessfully send to your email');
       });
     });
@@ -171,9 +200,11 @@ exports.resendVerificationEmail = {
 };
 
 exports.forgotPassword = {
+  description: 'request password reset email',
+  tags:['api', 'User'],
   validate: {
     payload: {
-      userName: Joi.string().email().required()
+      userName: Joi.string().email().required().description('email of user')
     }
   },
   handler: function(request, reply) {
@@ -185,13 +216,20 @@ exports.forgotPassword = {
 
       if (user === null) return reply(Boom.forbidden('invalid username'));
 
-      Common.sendMailForgotPassword(user, Config.gettoken('userops', user));
+      Email.sendMailForgotPassword(user, Auth.gettoken('userops', user));
       return reply('instructions to reset password sent to your registered email.');
     });
   }
 };
 
 exports.verifyEmail = {
+  description: 'verify user email using token',
+  tags:['api', 'User'],
+  validate: {
+    headers: Joi.object({
+      'authorization': Joi.string().required().description('token from email link')
+    }).options({ allowUnknown: true })
+  },
   handler: function(request, reply) {
 
     let callback = {
@@ -213,24 +251,30 @@ exports.verifyEmail = {
         if (data.boom === void 0) data.boom = 'badImplementation';
         reply(Boom[data.boom](data.message));
       }
-    }
+    };
 
-    Config.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
-
+    Auth.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
   }
 };
 
 exports.updateProfile = {
+  description: 'update user profile',
+  tags:['api', 'User'],
   validate: {
     payload: {
-      username: Joi.string().email(),
-      password: Joi.string(),
-      fullname: Joi.string(),
-      contractid: Joi.string()
+      username: Joi.string().email().description('email of user'),
+      password: Joi.string().description('password of user'),
+      fullname: Joi.string().description('full name of user'),
+      contractid: Joi.string().description('contractid that user logged in with')
     }
   },
   auth: {
     strategy: 'token'
+  },
+  response: {
+    schema: Joi.object({
+      token: Joi.string().required().description('refreshed token')
+    })
   },
   handler: function(request, reply) {
 
@@ -251,7 +295,7 @@ exports.updateProfile = {
         }
 
         if (request.payload.password) {
-          Common.hash(request.payload.password, function(error, hashedPassword) {
+          Auth.hash(request.payload.password, function(error, hashedPassword) {
             user.password = hashedPassword;
             changed = true;
           });
@@ -268,7 +312,6 @@ exports.updateProfile = {
 
             user.userName = request.payload.username;
             changed = true;
-
           });
         }
 
@@ -278,7 +321,7 @@ exports.updateProfile = {
             return reply(Boom.badImplementation(err));
           }
 
-          reply(Config.gettoken('login', user));
+          reply(Auth.gettoken('login', user));
         });
       });
     }
@@ -286,6 +329,20 @@ exports.updateProfile = {
 };
 
 exports.invitation = {
+  description: 'validate the invitation token sent by email',
+  tags:['api', 'User'],
+  validate: {
+    headers: Joi.object({
+      'authorization': Joi.string().required().description('token from email link')
+    }).options({ allowUnknown: true })
+  },
+  response: {
+    schema: Joi.object({
+      newuser: Joi.boolean().required().description('if user is new user'),
+      contractid: Joi.string().required().description('contractid that user will open'),
+      username: Joi.string().required().description('email of user'),
+    })
+  },
   handler: function(request, reply) {
 
     let callback = {
@@ -302,19 +359,24 @@ exports.invitation = {
         if (data.boom === void 0) data.boom = 'badImplementation';
         reply(Boom[data.boom](data.message));
       }
-    }
+    };
 
-    Config.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
+    Auth.checkUserOpsToken(request.headers.authorization).then(callback.success, callback.error);
   }
 };
 
 exports.inviteCollaborators = {
+  description: 'send invitation to other users by email',
+  tags:['api', 'User'],
   validate: {
     payload: {
-      contractid: Joi.string().required(),
-      title: Joi.string().required(),
-      collaborators: Joi.array().required()
-    }
+      contractid: Joi.string().required().description('contractid for invited users'),
+      title: Joi.string().required().description('contract title to be used in email'),
+      collaborators: Joi.array().required().description('array of emails to send invitation')
+    },
+    headers: Joi.object({
+      'authorization': Joi.string().required()
+    }).options({ allowUnknown: true })
   },
   auth: {
     strategy: 'token'
@@ -337,16 +399,12 @@ exports.inviteCollaborators = {
           promises.push(new Promise(function(resolve, reject){
 
             User.findUser(email, function(err, user) {
-
               if (err) {
                 console.error(err);
                 return reject('db read error');
               }
-
               if (user === null) {
-
-                Common.hash('temporary_pass', function(error, hashedPassword) {
-
+                Auth.hash('temporary_pass', function(error, hashedPassword) {
                   user = {};
                   user.userName = email;
                   user.scope = ['registered'];
@@ -358,19 +416,13 @@ exports.inviteCollaborators = {
                       console.error(err);
                       return reject('db write error');
                     }
-
                     user._id = result._id;
-
                     contract.users.push(user._id);
-
                     resolve(user);
-
                   });
                 });
-
               } else {
                 contract.users.push(user._id);
-
                 resolve(user);
               }
             });
@@ -394,7 +446,7 @@ exports.inviteCollaborators = {
 
             values.forEach(function(user) {
               emails.push(user.userName);
-              Common.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Config.gettoken('userops', user));
+              Email.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Auth.gettoken('userops', user));
             });
 
             return reply(`Invitation(s) sent to ${emails.join(', ')}.`);
