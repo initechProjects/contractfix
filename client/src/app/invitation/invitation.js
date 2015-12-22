@@ -10,13 +10,11 @@
 
 angular.module('app.invitation', [])
 
-
 .controller('invitationController', function ($scope, $rootScope, $window, $location, $http) {
-
+  console.log("I am inside invitationCtrl");
   var url = $location.url();
   var token = url.slice(url.indexOf("=")).slice(1);
-
-  $scope.invitation = function(){
+  console.log(token);
 
     $http({
       method: 'POST',
@@ -24,16 +22,17 @@ angular.module('app.invitation', [])
       headers: {
         'Authorization': token,
         'Content-Type' : 'application/json'
-      }
+      },
+      data: {}
     })
     .success(function(data){
       $scope.response = data;
+      console.log(data);
     
-
     })
     .catch(function(err){
       console.log(err);
     })
-  };
+ 
 
 });

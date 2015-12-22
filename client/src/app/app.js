@@ -58,7 +58,7 @@ app.config(function($routeProvider, $httpProvider) {
         controller: 'usersettingController'
     })
     .when('/invitation', {
-        templateUrl: 'app/auth/invitation.html',
+        templateUrl: 'app/invitation/invitation.html',
         controller: 'invitationController'
     })
 });

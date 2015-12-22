@@ -5,12 +5,12 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>EAE7E553-1DFC-4C9E-A454-E0AD2AF3DA48</UUID>
-        <nextObjectID>145</nextObjectID>
+        <nextObjectID>148</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
                     <key>NSPersistenceFrameworkVersion</key>
-                    <integer>641</integer>
+                    <integer>640</integer>
                     <key>NSStoreModelVersionHashes</key>
                     <dict>
                         <key>LMCookieJar</key>
@@ -69,7 +69,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"ahmet@cetin.info\\",\\"password\\":\\"password\\",\\"valid\\":true}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"userName\\":\\"herashk@gmail.com\\",\\"password\\":\\"test\\",\\"valid\\":true}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">3</attribute>
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">Login</attribute>
@@ -283,7 +283,7 @@
         <attribute name="order" type="int64">1</attribute>
         <attribute name="name" type="string">Contract</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z124 z131 z140 z143 z132 z126"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z140 z132 z147 z131 z124 z126 z143"></relationship>
         <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
@@ -315,7 +315,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z125 z123"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z125">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJwYXNzd29yZCI6IiQyYSQxMiRCbVF0d3VwM3ZBemFwSDk5bzFQQm5PdlpLVVJpa0JqMnBWdC8zekdRcENRMXZmN3hadGpleSIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiI1NjczYjNmODgxYTA0ODU5M2EyMTIxZGUiLCJpYXQiOjE0NTA0MjM0NzcsImV4cCI6MTQ1MDUwOTg3N30.jWOLGelEsgkKAKVDhIZ8R_EzDj5qA7yseVSJr2qsSuM</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6IjU2NzhlZTcwZWJlY2YwMjcxMzE2ZTI3MSIsInBhc3N3b3JkIjoiJDJhJDEyJHpCZnBpaFlnL2RYby52MGVZVlFrV3ViQ25OOGc4UklueG94bWhKNlhGU2JWWUNtQkZUVDAyIiwiaWF0IjoxNDUwNzY2Mjg4LCJleHAiOjE0NTMzNTgyODh9.am5UOvOexYR2bRHGDi3-8RarS2cb99qUQ0VEQ7IMIB8</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -351,7 +351,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z126"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z128">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3M2IzZjg4MWEwNDg1OTNhMjEyMWRlIiwicGFzc3dvcmQiOiIkMmEkMTIkQm1RdHd1cDN2QXphcEg5OW8xUEJuT3ZaS1VSaWtCajJwVnQvM3pHUXBDUTF2Zjd4WnRqZXkiLCJpYXQiOjE0NTA1ODUwOTQsImV4cCI6MTQ1MzE3NzA5NH0.LOOq7la5zGL9N5Vons3I0Mnx9BfRPQVLJP4Y84JRT7g</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6IjU2NzhlZTcwZWJlY2YwMjcxMzE2ZTI3MSIsInBhc3N3b3JkIjoiJDJhJDEyJHpCZnBpaFlnL2RYby52MGVZVlFrV3ViQ25OOGc4UklueG94bWhKNlhGU2JWWUNtQkZUVDAyIiwiaWF0IjoxNDUwNzY2Mjg4LCJleHAiOjE0NTMzNTgyODh9.am5UOvOexYR2bRHGDi3-8RarS2cb99qUQ0VEQ7IMIB8</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -505,7 +505,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
     </object>
     <object type="LMREQUEST" id="z143">
-        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5674769842a631b3fee3bbf9\\",\\"title\\":\\"Lorem Ipsum Contract\\",\\"collaborators\\":[\\"michael@cetin.info\\",\\"nick@cetin.info\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5678eff53aa3d24e131b501a\\",\\"title\\":\\"Lorem Ipsum Contract\\",\\"collaborators\\":[\\"herashk@gmail.com\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">7AF52DDC-7BC8-4299-AB5E-7AEFF4D9D8C1</attribute>
         <attribute name="url" type="string">http://127.0.0.1:8000/invite</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -518,10 +518,10 @@
         <attribute name="name" type="string">Invite to collaborate</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z145 z144"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z144 z145"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z144">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3M2IzZjg4MWEwNDg1OTNhMjEyMWRlIiwicGFzc3dvcmQiOiIkMmEkMTIkWkZVem1jN0syWm0zZm1IeDhrZkJUZTlzdUh6eHdvano5aDhhNnhuaW9HNGtLei5HTjljV0ciLCJpYXQiOjE0NTA1ODgzNDAsImV4cCI6MTQ1MzE4MDM0MH0.eH7BRtc5MSB4XHDbQBKlgDGtxckjAab1Ge3_kz--3nk</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6IjU2NzhlZTcwZWJlY2YwMjcxMzE2ZTI3MSIsInBhc3N3b3JkIjoiJDJhJDEyJHpCZnBpaFlnL2RYby52MGVZVlFrV3ViQ25OOGc4UklueG94bWhKNlhGU2JWWUNtQkZUVDAyIiwiaWF0IjoxNDUwODA4MzU5LCJleHAiOjE0NTM0MDAzNTl9.4_6WlkyCZzAiBAkulrxh03HWsuJi9vw2pUuneTcKVL8</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -539,5 +539,40 @@
         <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z143"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z146">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z147"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z147">
+        <attribute name="uuid" type="string">2B77D902-B953-4D67-984E-A8D6DED8B20D</attribute>
+        <attribute name="url" type="string">http://127.0.0.1:8000/invitation</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">POST</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">6</attribute>
+        <attribute name="name" type="string">Send invitation</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z146 z148"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z148">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">Authorization</attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z147"></relationship>
     </object>
 </database>
