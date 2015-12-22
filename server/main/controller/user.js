@@ -244,7 +244,7 @@ exports.verifyEmail = {
             return reject({ boom: 'badImplementation', message: err });
           }
 
-          reply('password changed successfully.');
+          reply('your email verified successfully.');
         });
       },
       error: function(data) {
@@ -446,7 +446,7 @@ exports.inviteCollaborators = {
 
             values.forEach(function(user) {
               emails.push(user.userName);
-              Email.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Auth.gettoken('userops', user));
+              Email.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Auth.gettoken('userops', user, contract));
             });
 
             return reply(`Invitation(s) sent to ${emails.join(', ')}.`);
