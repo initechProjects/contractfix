@@ -47,7 +47,6 @@ exports.login = {
     payload: {
       userName   : Joi.string().email().required().description('email of user'),
       password   : Joi.string().required().description('password of user'),
-      contractid : Joi.string().description('contractid that user invited to'),
       valid      : Joi.boolean().description('only for development use') // ONLY FOR DEVELOPMENT!!!!!
     }
   },
@@ -56,7 +55,6 @@ exports.login = {
       username: Joi.string().required().description('email address of user'),
       fullname: Joi.string().description('full name of user, if exist'),
       scope: Joi.array().required().description('array of roles of user'),
-      contractid: Joi.string().description('contractid that user will open, if logged in with contractid'),
       token: Joi.string().required().description('login token valid for 15 mins')
     })
   },
@@ -82,7 +80,6 @@ exports.login = {
         res.username = user.userName;
         if (user.fullname) res.fullname = user.fullname;
         res.scope = user.scope;
-        if (request.payload.contractid) res.contractid = request.payload.contractid;
 
         Config.dev = request.payload.valid ? true : false;
         res.token = Auth.gettoken('login', user);
