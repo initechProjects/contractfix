@@ -42,6 +42,11 @@ var Template = new Schema({
   },
 
   /**
+    Description. description of the template
+  */
+  description: String,
+
+  /**
     Published. If the template is accessable by users
   */
   published: {
