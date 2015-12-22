@@ -505,7 +505,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
     </object>
     <object type="LMREQUEST" id="z143">
-        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5674769842a631b3fee3bbf9\\",\\"title\\":\\"Lorem Ipsum Contract\\",\\"collaborators\\":[\\"michael@cetin.info\\",\\"nick@cetin.info\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5674769842a631b3fee3bbf9\\",\\"collaborators\\":[\\"michael@cetin.info\\",\\"nick@cetin.info\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">7AF52DDC-7BC8-4299-AB5E-7AEFF4D9D8C1</attribute>
         <attribute name="url" type="string">http://127.0.0.1:8000/invite</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -518,7 +518,7 @@
         <attribute name="name" type="string">Invite to collaborate</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z145 z144"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z144 z145"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z144">
         <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJzY29wZSI6WyJyZWdpc3RlcmVkIl0sImlkIjoiNTY3M2IzZjg4MWEwNDg1OTNhMjEyMWRlIiwicGFzc3dvcmQiOiIkMmEkMTIkWkZVem1jN0syWm0zZm1IeDhrZkJUZTlzdUh6eHdvano5aDhhNnhuaW9HNGtLei5HTjljV0ciLCJpYXQiOjE0NTA1ODgzNDAsImV4cCI6MTQ1MzE4MDM0MH0.eH7BRtc5MSB4XHDbQBKlgDGtxckjAab1Ge3_kz--3nk</attribute>

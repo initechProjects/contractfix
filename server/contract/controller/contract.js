@@ -54,17 +54,8 @@ exports.save = {
               }
 
               if (request.payload.comments && Array.isArray(request.payload.comments)) {
-                request.payload.comments.forEach(function(item) {
-                  let comment = {
-                    userid: request.auth.credentials._id,
-                    commentDate: Date.now(),
-                    text: item.comment,
-                    selection: item.selection
-                  };
-
-                  if (!contract.comments) contract.comments = [];
-                  contract.comments.push(comment);
-                });
+                if (!contract.comments) contract.comments = [];
+                contract.comments = request.payload.comments;
               }
 
               Contract.updateContract(contract, function(err) {
