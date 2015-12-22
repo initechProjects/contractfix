@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-// var uuid = require('node-uuid');
 
 /**
  * @module  Contract
@@ -8,57 +7,57 @@ var Schema = mongoose.Schema;
  */
 
 var Template = new Schema({
-  /**
-    _id: using UUID for id field
-  */
-  // _id: {
-  //   type: String,
-  //   default: uuid.v1
-  // },
 
   /**
-    metadata. Object keeps different static data about the template
+    name. Name of the template
   */
-  metadata: {
-    dateCreated: Date,
-    templateId: String,
-    title: String
+  name: String,
+
+  /**
+    Group. Group of the template
+  */
+  group: {
+    type: String,
+    index: true,
+    enum: [
+      'warranties',
+      'event contracts',
+      'health and medical directives',
+      'household services contracts',
+      'job contracts',
+      'professional services contracts',
+      'real estate contracts',
+      'rental contracts',
+      'sales contracts',
+      'employee agreements',
+      'debt and loans',
+      'business partnership contracts',
+      'personal relationship agreements',
+      'child care contracts',
+      'contracts for children',
+      'liability releases',
+      'will',
+      'miscellaneous contracts'
+    ],
   },
 
   /**
-    Versions. Versions of template draft in html format
+    Published. If the template is accessable by users
   */
-  versions: [{
-    userid: String,
-    versionDate: Date,
-    text: String,
-    tag: String
-  }],
+  published: {
+    type: Boolean,
+    default: false
+  },
 
   /**
-    Drafts. Personal drafts of users in html format
+    Editors. Users who can edit the template
   */
-  drafts: [{
-    userid: String,
-    versionDate: Date,
-    text: String,
-    tag: String
-  }],
+  editors: { type: [String], index: true, default:['host'] },
 
   /**
-    Comments.
+    text. Text of contract in html format
   */
-  comments: [{
-    userid: String,
-    commentDate: Date,
-    text: String,
-    selection: String
-  }],
-
-  /**
-    users. Users of the template
-  */
-  users: { type: [String], index: true }
+  text: String
 
 }, { autoIndex: false });
 
@@ -74,15 +73,8 @@ Template.statics.findTemplate = function(id, callback) {
   this.findOne({ _id: id }, callback);
 };
 
-Template.statics.findTemplateByUserId = function(userId, callback) {
-  this.find({ users: userId }, callback);
-};
-
-Template.statics.addVersion = function(id, version, callback) {
-  this.findOne({ _id: id }, function(item) {
-    item.versions.push(version);
-    item.save(callback);
-  });
+Template.statics.findTemplateByGroup = function(group, published, callback) {
+  this.find({ group: group, published: published }, callback);
 };
 
 var template = mongoose.model('template', Template);
