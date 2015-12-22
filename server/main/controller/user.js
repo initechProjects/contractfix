@@ -328,7 +328,7 @@ exports.updateProfile = {
   }
 };
 
-exports.invitation = {
+exports.invitationVerify = {
   description: 'validate the invitation token sent by email',
   tags:['api', 'User'],
   validate: {
@@ -371,7 +371,6 @@ exports.inviteCollaborators = {
   validate: {
     payload: {
       contractid: Joi.string().required().description('contractid for invited users'),
-      title: Joi.string().required().description('contract title to be used in email'),
       collaborators: Joi.array().required().description('array of emails to send invitation')
     },
     headers: Joi.object({
@@ -382,6 +381,7 @@ exports.inviteCollaborators = {
     strategy: 'token'
   },
   handler: function(request, reply) {
+    console.log(request.payload);
 
     if (request.auth.isAuthenticated) {
 
@@ -446,7 +446,7 @@ exports.inviteCollaborators = {
 
             values.forEach(function(user) {
               emails.push(user.userName);
-              Email.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, request.payload.title, Auth.gettoken('userops', user, contract));
+              Email.sendMailInvitation(user, request.auth.credentials.userName, request.auth.credentials.fullname, contract.metadata.title, Auth.gettoken('invite', user, contract));
             });
 
             return reply(`Invitation(s) sent to ${emails.join(', ')}.`);
