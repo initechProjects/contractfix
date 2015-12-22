@@ -3,6 +3,7 @@
 var Static = require('./main/controller/static');
 var User   = require('./main/controller/user');
 var Contract   = require('./contract/controller/contract');
+var Template   = require('./contract/controller/template');
 
 // API Server Endpoints
 exports.endpoints = [
@@ -147,23 +148,8 @@ exports.endpoints = [
   */
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 
-  // // Auth test route
-  // { method: 'GET', path: '/test', config:
-  //   {
-  //     auth: {
-  //       strategy: 'token',
-  //       scope: ['admin', '7884ffd0-a078-11e5-a51b-33808da5a148']
-  //     },
-
-  //     handler: function(request, reply) {
-  //       if (request.auth.isAuthenticated) {
-  //         console.log(request.auth.credentials._id);
-  //         console.log(request.auth.credentials.userName);
-  //         console.log(request.auth.credentials.scope);
-  //         return reply('success');
-  //       }
-  //     }
-  //   }
-  // }
+  { method: 'POST', path: '/template/get', config: Template.open },
+  { method: 'POST', path: '/template/list', config: Template.findTemplateByGroup },
+  { method: 'POST', path: '/template/save', config: Template.save },
 
 ];
