@@ -11,7 +11,7 @@ exports.save = {
   tags:['api', 'Contract'],
   validate: {
     payload: {
-      contractId: Joi.string().required().description('contractid to be saved'),
+      contractId: Joi.string().description('contractid to be saved'),
       title: Joi.string().description('title of the contract'),
       templateid: Joi.string().description('tempplateid, if contract created using a template'),
       text: Joi.string().required().description('latest text to be saved'),
@@ -20,7 +20,7 @@ exports.save = {
       personal: Joi.boolean().description('is it personal draft?')
     },
     headers: Joi.object({
-      'authorization': Joi.string().regex(/^Bearer\s/).required()
+      'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
     }).options({ allowUnknown: true })
   },
   auth: {
@@ -144,7 +144,7 @@ exports.findContractByUserId = {
   tags:['api', 'Contract'],
   validate: {
     headers: Joi.object({
-      'authorization': Joi.string().required().description('Starts with "Bearer ", old token')
+      'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
     }).options({ allowUnknown: true })
   },
   auth: {
@@ -201,7 +201,7 @@ exports.open = {
       contractId: Joi.string().required().description('contractid to be opened'),
     },
     headers: Joi.object({
-      'authorization': Joi.string().required()
+      'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
     }).options({ allowUnknown: true })
   },
   auth: {
