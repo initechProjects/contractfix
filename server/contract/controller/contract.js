@@ -213,7 +213,7 @@ exports.open = {
   handler: function(request, reply) {
     if (request.auth.isAuthenticated) {
 
-      let contractId = request.payload.contractid;
+      let contractId = request.payload.contractId;
       if (!contractId) return reply(Boom.badImplementation('No contract id'));
 
       Contract.findContract(contractId, function(err, contract) {
