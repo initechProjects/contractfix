@@ -34,7 +34,7 @@ angular.module('app.auth', [])
               'Content-Type': 'application/json'
             },
             data: {
-              'contractid': contractid
+              'contractId': contractid
             }
           })
           .success(function(data){
