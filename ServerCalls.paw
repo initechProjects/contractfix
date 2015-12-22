@@ -505,7 +505,9 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
     </object>
     <object type="LMREQUEST" id="z143">
+
         <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5678eff53aa3d24e131b501a\\",\\"title\\":\\"Lorem Ipsum Contract\\",\\"collaborators\\":[\\"herashk@gmail.com\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+
         <attribute name="uuid" type="string">7AF52DDC-7BC8-4299-AB5E-7AEFF4D9D8C1</attribute>
         <attribute name="url" type="string">http://127.0.0.1:8000/invite</attribute>
         <attribute name="storecookies" type="bool">1</attribute>

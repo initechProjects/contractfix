@@ -44,7 +44,7 @@ exports.endpoints = [
   *     scope (user's role)
   *     token (valid for 48 hours)
   */
-  { method: 'POST', path: '/invitation', config: User.invitation },
+  { method: 'POST', path: '/invitation', config: User.invitationVerify },
 
   /** Invite Collaborators
   *   requires:
