@@ -473,3 +473,13 @@ text-align: center;
     font-size: 13px;
     font-weight: normal;
 }
+
+/*    --------------------------------------------------
+    :: Invitation Section
+    -------------------------------------------------- */
+
+#spinner {
+    padding-top: 160px;
+    text-align: center;
+
+}

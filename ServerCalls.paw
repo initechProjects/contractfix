@@ -405,7 +405,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5674769842a631b3fee3bbf9\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5678eff53aa3d24e131b501a\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">Open contract</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z122"></relationship>
@@ -413,7 +413,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z134 z136"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z134">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6ImFobWV0QGNldGluLmluZm8iLCJwYXNzd29yZCI6IiQyYSQxMiRCbVF0d3VwM3ZBemFwSDk5bzFQQm5PdlpLVVJpa0JqMnBWdC8zekdRcENRMXZmN3hadGpleSIsInNjb3BlIjpbInJlZ2lzdGVyZWQiXSwiaWQiOiI1NjczYjNmODgxYTA0ODU5M2EyMTIxZGUiLCJpYXQiOjE0NTA0MjM0NzcsImV4cCI6MTQ1MDUwOTg3N30.jWOLGelEsgkKAKVDhIZ8R_EzDj5qA7yseVSJr2qsSuM</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6IjU2NzhlZTcwZWJlY2YwMjcxMzE2ZTI3MSIsInBhc3N3b3JkIjoiJDJhJDEyJDFHQmhtY1g1ZVJoRVFvR0Iwcll0ek84QW1BaTloLjdCMHlvTGFNMzRqWlZhQkEzVzMxMWxtIiwiaWF0IjoxNDUwODIyOTgwLCJleHAiOjE0NTM0MTQ5ODB9.3-7tY55DowGl6H6zX8rTADirvgg4I6lNQ3zNWWfYAho</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>
@@ -505,9 +505,7 @@
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
     </object>
     <object type="LMREQUEST" id="z143">
-
-        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5678eff53aa3d24e131b501a\\",\\"title\\":\\"Lorem Ipsum Contract\\",\\"collaborators\\":[\\"herashk@gmail.com\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
-
+        <attribute name="body" type="string">[{"data":{"json":"{\\"contractid\\":\\"5678eff53aa3d24e131b501a\\",\\"collaborators\\":[\\"herashk@gmail.com\\"]}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">7AF52DDC-7BC8-4299-AB5E-7AEFF4D9D8C1</attribute>
         <attribute name="url" type="string">http://127.0.0.1:8000/invite</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -523,7 +521,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z144 z145"></relationship>
     </object>
     <object type="LMKEYVALUE" id="z144">
-        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6IjU2NzhlZTcwZWJlY2YwMjcxMzE2ZTI3MSIsInBhc3N3b3JkIjoiJDJhJDEyJDFHQmhtY1g1ZVJoRVFvR0Iwcll0ek84QW1BaTloLjdCMHlvTGFNMzRqWlZhQkEzVzMxMWxtIiwiaWF0IjoxNDUwODExMzU1LCJleHAiOjE0NTM0MDMzNTV9.lNCuW0BqvHkWvE3oM7IYBaiKJYcHB_redVXMJfog_Sw</attribute>
+        <attribute name="value" type="string">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImhlcmFzaGtAZ21haWwuY29tIiwic2NvcGUiOlsicmVnaXN0ZXJlZCJdLCJpZCI6IjU2NzhlZTcwZWJlY2YwMjcxMzE2ZTI3MSIsInBhc3N3b3JkIjoiJDJhJDEyJDFHQmhtY1g1ZVJoRVFvR0Iwcll0ek84QW1BaTloLjdCMHlvTGFNMzRqWlZhQkEzVzMxMWxtIiwiaWF0IjoxNDUwODIyNzM4LCJleHAiOjE0NTM0MTQ3Mzh9.WPyhICEa798JMWbvGddLSBf6TZewZ_H2saGyTe3f2wc</attribute>
         <attribute name="order" type="int64">0</attribute>
         <attribute name="name" type="string">Authorization</attribute>
         <attribute name="enabled" type="bool">1</attribute>

@@ -10,7 +10,7 @@
 
 angular.module('app.invitation', [])
 
-.controller('invitationController', function ($scope, $rootScope, $window, $location, $http) {
+.controller('invitationController', function ($scope, $rootScope, $window, $location, $http, $timeout) {
   console.log("I am inside invitationCtrl");
   var url = $location.url();
   var token = url.slice(url.indexOf("=")).slice(1);
@@ -26,13 +26,24 @@ angular.module('app.invitation', [])
       data: {}
     })
     .success(function(data){
+      //returns newuser(Boolean), contractid, and username
       $scope.response = data;
-      console.log(data);
-    
+      $rootScope.contractid = data.contractid;
+      localStorage.setItem('contractid', data.contractid);
+ 
+      if(data.newuser === true){
+        $timeout(function(){ $location.path("/signup2")}, 3000);
+      } else {
+        $timeout(function(){ $location.path("/login")}, 3000);
+      }
     })
     .catch(function(err){
       console.log(err);
     })
+
+
+
+
  
 
 });
