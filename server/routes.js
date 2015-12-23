@@ -151,5 +151,6 @@ exports.endpoints = [
   { method: 'POST', path: '/template/get', config: Template.open },
   { method: 'POST', path: '/template/list', config: Template.findTemplateByGroup },
   { method: 'POST', path: '/template/save', config: Template.save },
+  { method: 'POST', path: '/template/__', config: Template.__internalTemplates },
 
 ];
