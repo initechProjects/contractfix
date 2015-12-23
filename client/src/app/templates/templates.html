@@ -60,12 +60,17 @@
       <!-- column 2 -->
       <h3>Welcome {{user}}!</h3>
       <hr>
-      <ul>
       Templates:
-        <li ng-repeat="template in templates" ng-click="handleClick(template.templateid)"><a href="">{{ template.name || 'Untitled' }}</a><img ng-src="{{ template.snapshot }}" style="width:50px;"/></li>
-      </ul>
+      <div class="templates">
+        <div class="template" ng-repeat="template in templates" ng-click="handleClick(template.templateid)">
+          <img ng-src ="{{ template.snapshot || '/assets/no_preview.png' }}" style="width:210px; height:297px;" />
+          <div class="info">
+            <div class="title">{{ template.name || 'Untitled' }}</div>
+          </div>
+        </div>
+      </div>
 
-      <div id="templatetext" style="width:600px;">temporary</div>
+      <div id="templatetext" style="width:630px; height:891px"></div>
     </div><!--/col-span-9-->
   </div><!--/row-->
 <!-- /upper section -->
