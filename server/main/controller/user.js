@@ -367,7 +367,7 @@ exports.inviteCollaborators = {
   tags:['api', 'User'],
   validate: {
     payload: {
-      contractid: Joi.string().required().description('contractid for invited users'),
+      contractId: Joi.string().required().description('contractid for invited users'),
       collaborators: Joi.array().required().description('array of emails to send invitation')
     },
     headers: Joi.object({
