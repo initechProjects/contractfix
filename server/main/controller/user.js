@@ -382,7 +382,7 @@ exports.inviteCollaborators = {
 
     if (request.auth.isAuthenticated) {
 
-      Contract.findContract(request.payload.contractid, function(err, contract){
+      Contract.findContract(request.payload.contractId, function(err, contract){
         if (err) {
           console.error(err);
           return reply(Boom.badImplementation(err));
