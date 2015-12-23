@@ -66,6 +66,7 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/templates/templates.html',
         controller: 'TemplatesController'
     })
+    
 });
 
 
