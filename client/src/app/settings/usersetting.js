@@ -69,26 +69,39 @@ angular.module('app.usersetting', [])
   };
 
    $scope.resetPassword = function(newPassword){
-   	 console.log(newPassword);
-	   $http({
-	    method: 'POST',
-	    url: '/resetpassword',
-	    headers: {
-	      'Authorization': token,
-	      'Content-Type': 'application/json'
-	    },
-	    data: {
-	    	'password': newPassword
-	    }
-	    })
-	   .success(function(data){
-	   	$scope.flag = true;
-	   	$scope.response = data;
-	   })
-	   .catch(function(err){
+     console.log(newPassword);
+     $http({
+      method: 'POST',
+      url: '/resetpassword',
+      headers: {
+        'Authorization': token,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        'password': newPassword
+      }
+      })
+     .success(function(data){
+      $scope.flag = true;
+      $scope.response = data;
+      $scope.counter = 5;
 
-	    console.log(err);
-	   })
+      $scope.onTimeout = function(){
+      if($scope.counter > 0){
+        $scope.counter--;
+        mytimeout = $timeout($scope.onTimeout, 1000);
+       } else {
+        $scope.counter = 0;
+       }
+      }
+      var mytimeout = $timeout($scope.onTimeout, 1000);
+      $timeout(function(){ $location.path("/login")}, 5000);
+
+     })
+     .catch(function(err){
+
+      console.log(err);
+     })
    };
 
    

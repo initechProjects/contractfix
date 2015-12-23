@@ -18,6 +18,7 @@ angular.module('app.verifyemail', [])
     data: {}
     })
    .success(function(data){
+    //tell Ahmet about the response: 'Password changed successfully'
     $scope.response = data;
     $timeout(function(){ $location.path("/login")}, 5000);
    })
