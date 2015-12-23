@@ -3,7 +3,7 @@ angular.module('app.templates', [])
 
 .controller('TemplatesController', function ($scope, $rootScope, $window, $location, Dashboard, $http) {
 
-  $scope.user = $rootScope.authResult.fullname;
+  $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   var token = $rootScope.token || localStorage.getItem('token');
   $scope.templates = [];
   $scope.currentTemplate = '';
@@ -19,7 +19,7 @@ angular.module('app.templates', [])
       group: 'event contracts'
     }
   }).then(function(res) {
-    // console.log(res.data);
+    console.log(res.data);
     $scope.templates = res.data;
   }, function(res) {
     console.log(res);
