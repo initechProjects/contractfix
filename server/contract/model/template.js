@@ -60,9 +60,14 @@ var Template = new Schema({
   editors: { type: [String], index: true, default:['host'] },
 
   /**
-    text. Text of contract in html format
+    text. Text of template in html format
   */
-  text: String
+  text: String,
+
+  /**
+    snapshot. Snapshot of template in Base64 format
+  */
+  snapshot: String
 
 }, { autoIndex: false });
 
