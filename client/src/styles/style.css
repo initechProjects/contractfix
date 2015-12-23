@@ -23,11 +23,11 @@ h2,
 h3,
 h4,
 h5,
-h6 {  
+h6 {
     font-weight: 700;
 }
 .topnav {
-    font-size: 17px;    
+    font-size: 17px;
 }
 .lead {
     font-size: 18px;
@@ -96,7 +96,7 @@ h6 {
 
 .content-section-a {
     padding: 50px 0;
-    
+
 }
 
 .content-section-b {
@@ -476,4 +476,51 @@ text-align: center;
     padding-top: 160px;
     text-align: center;
 
+}
+
+
+/*    --------------------------------------------------
+    :: Templates Section
+    -------------------------------------------------- */
+.templates {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.template {
+  /*clear: both;*/
+  flex-basis: auto;
+  border-width: 2px;
+  border-style: groove;
+  border-radius: 8px;
+  border-color: lightgrey;
+  margin-bottom: 5px;
+  padding: 5px;
+  min-height: 50px;
+  cursor: pointer;
+}
+
+.template:hover {
+  background-color: #efe;
+}
+
+.template img {
+  width: 210px;
+  height: 297px;
+  /*float: left;*/
+  margin: 0 5px;
+}
+
+.template .title {
+  font-weight: 600;
+}
+/*
+.template .original {
+  color: #aaa;
+  font-size: 12px;
+}
+*/
+.template .info {
+  margin-left: 0 5px;
 }
