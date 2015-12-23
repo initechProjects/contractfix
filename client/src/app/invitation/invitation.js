@@ -29,7 +29,6 @@ angular.module('app.invitation', [])
       //returns newuser(Boolean), contractid, and username
       $scope.response = data;
       $rootScope.contractid = data.contractid;
-      localStorage.setItem('contractid', data.contractid);
  
       if(data.newuser === true){
         $timeout(function(){ $location.path("/signup2")}, 3000);

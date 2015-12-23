@@ -411,23 +411,18 @@ text-align: center;
     padding-left: 20px;
     padding-right: 20px;
 }
-
-#placeholdernav {
-  height: 60px;
+#editorTitle {
+    padding-top: 25px;
+    text-align: center;
 }
-
-#top-bar, #top-bar a {
-  color:#A7FAE6;
+#commentBox {
+    padding-right: 20px;
+    padding-top: 20px;
 }
-
-#top-bar a:hover {
-  color: #fff;
-}
-
 #contractEditor {
-  font: 20px/1.5 'Source Code Pro';
+  font: 18px/1.5 'Source Code Pro';
   color: #323232;
-  outline: none;
+  outline: black;
 }
 
 /*    --------------------------------------------------
@@ -441,7 +436,6 @@ text-align: center;
 /*    --------------------------------------------------
     :: User Settings Section
     -------------------------------------------------- */
-
 #passwordmodal .checkbox {
     margin-bottom: 20px;
     position: relative;

@@ -17,15 +17,9 @@ angular.module('app.auth', [])
       .then(function (authResult) {
         $rootScope.authResult = authResult;
         token = authResult.token;
+        console.log(authResult);
        
-        if(authResult.fullname === undefined){
-          $location.path('/signup2');
-        } else if(authResult.token === undefined){
-          $scope.flag = true;
-          $scope.authResult = authResult.data.message;
-          $location.path('/login');
-        } else if(contractid){
-      
+        if(contractid){  
           $http({
             method: 'POST',
             url: '/opencontract',
@@ -38,12 +32,21 @@ angular.module('app.auth', [])
             }
           })
           .success(function(data){
-            console.log("CONTRACTDATA", data);
+            console.log("CONTRACTDATA", data, data.contractid);
+            $location.path('/editor').search({'id': data.contractid});
+            
           })
           .catch(function(err){
             console.log(err);
-          })
-          
+          })         
+        } 
+         if(authResult.fullname === undefined && authResult.scope !== "registered"){
+          $location.path('/signup2');
+        } 
+        if(authResult.token === undefined){
+          $scope.flag = true;
+          $scope.authResult = authResult.data.message;
+          $location.path('/login');
         } else {
           Auth.save(authResult);
           console.log(authResult);
