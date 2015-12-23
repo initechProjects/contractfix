@@ -39,6 +39,7 @@ angular.module('app.templates', [])
     }).then(function(res) {
       // console.log(res.data);
       $scope.templates = res.data;
+      jQuery('#templatetext').html('');
       console.log($scope.templates);
     }, function(res) {
       console.log(res);
@@ -58,7 +59,7 @@ angular.module('app.templates', [])
   };
 
   $scope.takeSnapshot = function() {
-    html2canvas($('#templatetext'), {
+    html2canvas($('#templatetext'), { letterRendering: true, width: 630, height: 891,
       onrendered: function(canvas) {
         var img = canvas.toDataURL('base64');
         // console.log(img);
