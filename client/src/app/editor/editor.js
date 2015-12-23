@@ -10,7 +10,6 @@ angular.module('app.editor', [])
   var user = $rootScope.username || localStorage.getItem('username');
   var token = $rootScope.token || localStorage.getItem('token');
   var original = '';
-  console.log(contractid);
 
   if (contractId) {
     $http({
