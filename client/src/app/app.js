@@ -9,7 +9,8 @@ var app = angular.module('app', [
     'app.verifyemail',
     'app.signup2',
     'app.usersetting',
-    'app.invitation'
+    'app.invitation',
+    'app.templates'
     ]);
 
 
@@ -58,8 +59,12 @@ app.config(function($routeProvider, $httpProvider) {
         controller: 'usersettingController'
     })
     .when('/invitation', {
-        templateUrl: 'app/auth/invitation.html',
+        templateUrl: 'app/invitation/invitation.html',
         controller: 'invitationController'
+    })
+    .when('/templates', {
+        templateUrl: 'app/templates/templates.html',
+        controller: 'TemplatesController'
     })
 });
 
@@ -95,7 +100,7 @@ app.run(function ($rootScope, $location, Auth) {
 //     data: {}
 //     })
 //    .success(function(data){
-    
+
 //    })
 //    .catch(function(err){
 //     console.log(err);

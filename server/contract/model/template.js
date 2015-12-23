@@ -42,6 +42,11 @@ var Template = new Schema({
   },
 
   /**
+    Description. description of the template
+  */
+  description: String,
+
+  /**
     Published. If the template is accessable by users
   */
   published: {
@@ -55,9 +60,14 @@ var Template = new Schema({
   editors: { type: [String], index: true, default:['host'] },
 
   /**
-    text. Text of contract in html format
+    text. Text of template in html format
   */
-  text: String
+  text: String,
+
+  /**
+    snapshot. Snapshot of template in Base64 format
+  */
+  snapshot: String
 
 }, { autoIndex: false });
 

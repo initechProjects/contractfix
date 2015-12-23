@@ -2,27 +2,54 @@ angular.module('app.auth', [])
 
 //todo: username if it is an email address or not
 .controller('AuthController', function($scope, $rootScope, $window, $location, Auth, $http){
+
   $scope.user = {};
   var token;
   $scope.flag = false;
+  
+  var contractid = $rootScope.contractid;
+  console.log(contractid);
+  
+
 
   $scope.login = function () {
     Auth.login($scope.user)
       .then(function (authResult) {
         $rootScope.authResult = authResult;
-        
-        console.log(authResult);
         token = authResult.token;
-        console.log("I am token", token);
+        console.log(authResult);
        
-        if(authResult.fullname === undefined){
+        if(contractid){  
+          $http({
+            method: 'POST',
+            url: '/opencontract',
+            headers: {
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/json'
+            },
+            data: {
+              'contractId': contractid
+            }
+          })
+          .success(function(data){
+            console.log("CONTRACTDATA", data, data.contractid);
+            $location.path('/editor').search({'id': data.contractid});
+            
+          })
+          .catch(function(err){
+            console.log(err);
+          })         
+        } 
+         if(authResult.fullname === undefined && authResult.scope !== "registered"){
           $location.path('/signup2');
-        } else if(authResult.token === undefined){
+        } 
+        if(authResult.token === undefined){
           $scope.flag = true;
           $scope.authResult = authResult.data.message;
           $location.path('/login');
         } else {
           Auth.save(authResult);
+          console.log(authResult);
           $location.path('/dashboard');
         }
       })

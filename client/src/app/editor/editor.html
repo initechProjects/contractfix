@@ -31,54 +31,56 @@
 <br>
 <br>
 
-<section id="editor">
+<section id="editorPage">
 <!-- ckEditor content area -->
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-2" id="left-panel">
         <div class="fade-object">
-        <h3><span class="glyphicon glyphicon-pencil"></span> Editor</h3>
-      <hr>
+          <h3><span class="glyphicon glyphicon-pencil"></span> Editor</h3>
+           <hr>
 
-      <ul class="nav nav-stacked">
-        <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
-        <li id="show-edit-changes"><a href="" target="ext" ng-click="ckEditor.showChanges()"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show Changes</a></li>
-        <li id="reject-changes"><a href="" target="ext" ng-click="ckEditor.rejectChanges()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Changes</a></li>
-        <li id="accept-changes"><a href="" target="ext" ng-click="ckEditor.acceptChanges()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept Changes</a></li>
-        <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
-        <li><a href="" target="ext" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
-      </ul>
+          <ul class="nav nav-stacked">
+            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
+            <li id="show-edit-changes"><a href="" target="ext" ng-click="ckEditor.showChanges()"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show Changes</a></li>
+            <li id="reject-changes"><a href="" target="ext" ng-click="ckEditor.rejectChanges()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Changes</a></li>
+            <li id="accept-changes"><a href="" target="ext" ng-click="ckEditor.acceptChanges()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept Changes</a></li>
+            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Contract</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
+          </ul>
 
-      <hr>
-</div>
+          <hr>
       </div>
-      <div class="col-md-8">
-            <form method="post">
-        <p>
-            <input style="outline:none" ng-model="title"></input> <!-- placeholder: interpolate contract name --><br>
-            <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor"></div>
-            <!-- Initialize editor by replacing textarea element-->
-        </p>
-    </form>
-
-      </div>
-      <div class="col-md-2" id="left-menu">
-        <pre ng-if="selection">{{ selection }}</pre>
-        <textarea ng-model="comment" id="comment-box" placeholder="Enter a comment..." style="width:100%"></textarea>
+    </div>
+    <div class="col-md-8">
+          <form method="post" >
+          <p>
+          <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title"></input></div>
+          <br>
+          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
+          </div>
+          </p>
+          <!-- Initialize editor by replacing textarea element-->
+          </form>
+    </div>
+    <div class="col-md-2" id="commentBox">
+      <pre ng-if="selection">{{ selection }}</pre>
+        <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
         <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
         <div class="comment-card" ng-repeat="comment in comments">
           <pre ng-if="comment.selection">{{ comment.selection }}</pre>
           <p>{{ comment.comment }}</p>
           <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
-        </div>
       </div>
+    </div>
    </div>
   </div>
   </div>
 </section>
 
 <!-- Signature modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
+<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,9 +98,33 @@
   </div>
 </div>
 
-<script>
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').focus()
-});
-</script>
+  <!-- Invitation Email Modal -->
+  <div class="modal fade" id="emailmodal" role="dialog">
+    <div class="modal-dialog">   
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Enter the email of a party receiving invitation to this contract.</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='ckEditor.inviteEmail(collabEmail)'>
+            <div class="form-group">
+                <input type="text" ng-model='collabEmail' id="key" class="form-control" placeholder="Collaborator's email">
+            </div>
+            <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
+          <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">       
+          </form>
+        </div>
+      </div>    
+    </div>
+  </div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 

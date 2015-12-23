@@ -19,6 +19,7 @@ angular.module('app.signup2', [])
       }
     })
     .success(function(data){
+      //internal server error?
       $scope.flag = true;
       $scope.response = data;
       $timeout(function(){ $location.path("/dashboard")}, 3000);
