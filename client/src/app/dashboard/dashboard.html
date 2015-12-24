@@ -38,7 +38,7 @@
                 <a href="" target="ext"><i class="fa fa-inbox"></i></i> My Drafts</a>
             </li><br>
             <li>
-                <a href="#/editor"><i class="fa fa-pencil-square-o"></i> New Contract</a>
+                <a href="" data-toggle="modal" data-target="#templateModal"><i class="fa fa-pencil-square-o"></i> New Contract</a>
             </li><br>
             <li>
                 <a href="#/usersetting"><i class="fa fa-user"></i> Settings</a>
@@ -70,4 +70,33 @@
 
     </div>
     <!-- /#wrapper -->
+
+<!-- Template Modal -->
+  <div class="modal modal-wide fade" id="templateModal" role="dialog" ng-controller="TemplatesController">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Select a contract template.</h4>
+        </div>
+        <div class="modal-body">
+            <div class="templates">
+              <div class="template" ng-repeat="template in templates" ng-click="handleClick(template.templateid)">
+                <img ng-src ="{{ template.snapshot || '/assets/no_preview.png' }}" style="width:210px; height:297px;" />
+                <div class="info">
+                  <div class="title">{{ template.name || 'Untitled' }}</div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#/editor"><button type="button" class="btn btn-default">I just want to use an empty editor!</button></a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 

@@ -677,6 +677,13 @@ csmall2 {
     }
 }
 
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
 
 /*    --------------------------------------------------
     :: User Settings Section
@@ -771,3 +778,4 @@ csmall2 {
     padding-right: 15px;
     padding-top: 15px;
 }
+
