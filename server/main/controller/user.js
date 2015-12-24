@@ -299,7 +299,7 @@ exports.updateProfile = {
         }
 
         if (request.payload.username) {
-          User.findUser(request.payload.userName, function(err, user) {
+          User.findUser(request.payload.username, function(err, user) {
             if (err) {
               console.error(err);
               return reply(Boom.badImplementation(err));
