@@ -15,6 +15,7 @@
     "blipp": "^2.3.0",
     "boom": "^3.0.0",
     "confidence": "^1.4.2",
+    "docusign-node": "^7.1.0",
     "hapi": "^11.1.2",
     "hapi-auth-jwt": "^4.0.0",
     "hapi-swagger": "^2.2.4",
