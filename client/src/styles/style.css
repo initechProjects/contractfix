@@ -86,12 +86,14 @@ a:focus {
 
 .navbar-header .navbar-brand {
     color: white;
+    font-size: 25px;
+    font-style: italic;
 }
 
 .navbar-default .navbar-nav > li > a {
     color: white;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .navbar-default .navbar-nav > li > a:hover {
@@ -226,100 +228,6 @@ a:focus {
     padding: 15px;
 }
 
-/* Portfolio Wrap */
-#portfoliowrap {
-    padding-top: 60px;
-    margin-bottom: 60px;
-    display: block;
-    text-align: center
-}
-
-#portfoliowrap h3 {
-    margin-bottom: 25px;
-}
-
-.portfolio {
-    padding:0 !important;
-    margin:0 !important;
-    display:block;
-}
-
-
-.portfolio-item .title:before {border-radius:0; display:none}
-.portfolio-item p {margin:0px 0 30px;}
-.portfolio-item h3 {margin:-10px 0 10px; font-size:16px; text-transform:uppercase;}
-
-
-.tpl6 h3
-{
-    color:#fff;
-    margin:0;
-    padding:40px 5px 0;
-    font-size:16px;
-    text-transform:uppercase;
-}
-.tpl6 .dmbutton
-{
-    display:inline-block;
-    margin:30px 5px 20px 5px;
-    font-size:13px;
-}
-
-.tpl6 .bg
-{
-    height:100%;
-    width:100%;
-    background-color:#00b3fe;
-    background-color:rgba(0,179,254,.9);
-    text-align:center;
-}
-
-/* Testimonials Wrap */
-#twrap {
-    background: url(../img/t-back.jpg) no-repeat center top;
-    margin-top: 0px;
-    padding-top:60px;
-    text-align:center;
-    background-attachment: relative;
-    background-position: center center;
-    min-height: 450px;
-    width: 100%;
-    
-    -webkit-background-size: 100%;
-    -moz-background-size: 100%;
-    -o-background-size: 100%;
-    background-size: 100%;
-
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-#twrap i {
-    font-size: 50px;
-    color: white;
-    margin-bottom: 25px;
-}
-
-#twrap p {
-    color: white;
-    font-size: 15px;
-    line-height: 30px;
-}
-
-/* clients logo */
-#cwrap {
-    background: #f7f7f7;
-    margin-top: 0px;
-    padding-top: 80px;
-    padding-bottom: 100px;
-}
-
-#cwrap h3 {
-    margin-bottom: 60px;
-}
-
 /* Footer */
 #footerwrap {
     padding-top: 60px;
@@ -409,44 +317,6 @@ csmall2 {
     background-size: cover;
 }
 
-/* Blog Page */
-.popular-posts { 
-    margin: 0px;
-    padding-left: 0px;
-    }
-    
-.popular-posts li {
-    list-style: none; 
-    margin-bottom: 20px; 
-    min-height: 70px;
-}
-.popular-posts li a, 
-.popular-posts li a:hover {
-    color:#2f2f2f; 
-    text-decoration: none;
-    }
-    
-.popular-posts li img {
-    float: left; 
-    margin-right: 20px;
-    }
-    
-.popular-posts li em {
-    font-family: 'Lato', sans-serif;
-    font-size: 12px;
-    color: #b3b3b3
-    }
-
-.popular-posts p {
-    line-height: normal;
-    margin-bottom: auto;
-}   
-
-.share i {
-    padding-right: 15px;
-    font-size: 18px;
-}
-
 /*    --------------------------------------------------
     :: Login Section
     -------------------------------------------------- */
@@ -470,6 +340,9 @@ csmall2 {
 #login .btn.btn-custom {
     font-size: 18px;
     margin-bottom: 20px;
+    background: #0099cc;
+    color: #ffffff;
+
 }
 #login .forgot {
     font-size: 15px;
@@ -515,18 +388,21 @@ csmall2 {
 /*    --------------------------------------------------
     :: Inputs & Buttons
     -------------------------------------------------- */
-..form-control {
+.form-control {
     
 }
 .btn-custom {
-    
-    
+    background: #0099cc;
+    color: #ffffff;   
+}
+.btn-default {
+    background: #0099cc;
+    color: #ffffff; 
 }
 .btn-custom:hover,
 .btn-custom:focus {
-    color: #fff;
+    color: #ffffff;;
 }
-
 /*    --------------------------------------------------
     :: Signup Section
     -------------------------------------------------- */
@@ -669,35 +545,138 @@ csmall2 {
     text-align: center;
     padding-left: 50px;
     padding-right: 50px;
+    padding-top: 50px;
+}
+#appinfo p{
+    font-size: 17px;
 }
 /*    --------------------------------------------------
     :: Editor Section
     -------------------------------------------------- */
-#editor {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-#editorTitle {
-    padding-top: 25px;
+::-webkit-input-placeholder {
     text-align: center;
 }
-#commentBox {
-    padding-right: 20px;
-    padding-top: 20px;
-}
+
 #contractEditor {
   font: 18px/1.5 'Source Code Pro';
   color: #323232;
-  outline: black;
 }
 
-/*    --------------------------------------------------
-    :: Dashboard Section
-    -------------------------------------------------- */
-.dashboard-container {
-    padding-left: 20px;
-    padding-right: 20px;
+#page-content-wrapper-editor {
+    padding: 15px;
+    width: 100%;
+    padding-top: 30px;
 }
+
+#editorBody {
+    background: url("../assets/paper.jpg");
+    border: 2px solid #A4A4A4;
+}
+#editorTitle {
+    text-align: center;
+}
+
+#commentBox {
+    
+}
+/*    --------------------------------------------------
+    :: Dashboard & Editor Sidebar Section
+    -------------------------------------------------- */
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #BDBDBD;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding-top: 21px;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #384452;
+    font-size: 17px;
+    font-weight: 550;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #428BCA;
+    font-size: 24px;
+    font-weight: 580;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #sidebar-wrapper {
+        width: 225px;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+    }
+}
+
 
 /*    --------------------------------------------------
     :: User Settings Section
@@ -769,8 +748,8 @@ csmall2 {
 }
 
 .template img {
-  width: 210px;
-  height: 297px;
+  width: 150px;
+  height: 220px;
   /*float: left;*/
   margin: 0 5px;
 }
@@ -786,4 +765,9 @@ csmall2 {
 */
 .template .info {
   margin-left: 0 5px;
+}
+
+#page-content-wrapper-templates {
+    padding-right: 15px;
+    padding-top: 15px;
 }
