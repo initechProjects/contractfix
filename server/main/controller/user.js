@@ -317,8 +317,7 @@ exports.updateProfile = {
             console.error(err);
             return reply(Boom.badImplementation(err));
           }
-
-          reply(Auth.gettoken('login', user));
+          reply({ token: Auth.gettoken('login', user) });
         });
       });
     }
