@@ -569,8 +569,9 @@ csmall2 {
 }
 
 #editorBody {
-    background: url("../assets/paper.jpg");
+    background: #F2F2F2;
     border: 2px solid #A4A4A4;
+    
 }
 #editorTitle {
     text-align: center;
