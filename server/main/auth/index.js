@@ -104,6 +104,7 @@ module.exports = {
       });
     }
     var expiration = Config.dev ? 24*30*3600 : types[operation].expires;
+console.log(expiration);
     return Jwt.sign(tokenData, tokenKey, { algorithm: Config.token.algorithm, expiresIn: expiration });
   },
   checkUserOpsToken: function(token) {
