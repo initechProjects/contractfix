@@ -2,21 +2,22 @@
 <html lang="en" ng-app="app">
 <head>
     <meta charset="utf-8">
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1.0, target-densitydpi=device-dpi" /><!-- this is for mobile (Android) Chrome -->
+    <meta name="viewport" content="initial-scale=1.0, width=device-height"><!--  mobile Safari, FireFox, Opera Mobile  -->
     <meta name="description" content="">
     <meta name="author" content="">
   <title>ContractFix</title>
-
+    <script src="jsignature/libs/modernizr.js"></script>
 	  <!-- Bootstrap Core CSS -->
     <link href="styles/prettyPhoto.css" rel="stylesheet">
     <link href="styles/hoverex-all.css" rel="stylesheet">
+
     <link href="styles/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://css-spinners.com/css/spinner/circles.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <link rel="stylesheet" type="text/css" href="signature-pad/assets/jquery.signaturepad.css">
+    <link rel="stylesheet" type="text/css" href="jsignature/libs/jSignature.css">
     <!-- Custom Fonts -->
     <link href="styles/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
@@ -50,8 +51,11 @@
     <script src="diff-match-patch/diff_match_patch.js"></script>
     <script src="openpgp/dist/openpgp.min.js"></script>
     <script src="openpgp/dist/chance.js"></script>
-    <script src="signature-pad/assets/json2.min.js"></script>
-    <script src="signature-pad/jquery.signaturepad.min.js"></script>
+    <script src="jsignature/libs/jSignature.min.js"></script>
+    <script src="jsignature/src/plugins/jSignature.CompressorBase30.js"></script>
+    <script src="jsignature/src/plugins/jSignature.CompressorSVG.js"></script>
+    <script src="jsignature/src/plugins/jSignature.UndoButton.js"></script>
+    <script src="jsignature/src/plugins/signhere/jSignature.SignHere.js"></script>
 
 </head>
 <body>

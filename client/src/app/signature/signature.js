@@ -1,7 +1,7 @@
 angular.module('app.signature', [])
 
 
-.controller('SignatureController', function ($scope, $rootScope, $sce, $window, $location, Dashboard, $http) {
+.controller('SignatureController', function ($scope, $rootScope, $sce, $window, $document, $location, Dashboard, $http) {
 
   $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   var token = $rootScope.token || localStorage.getItem('token');
@@ -11,6 +11,7 @@ angular.module('app.signature', [])
   var passphrase = chance.sentence();
   $scope.contract = {};
   $scope.contractText;
+  var signaturePad;
 
   var options = {
     numBits: 1024,
@@ -65,7 +66,34 @@ angular.module('app.signature', [])
     });
   };
 
-  $scope.signContract = function() {
+  // $scope.signContract = function() {
+  //   openpgp.config.show_version = false;
+  //   openpgp.config.show_comment = false;
+
+  //   var privateKey = openpgp.key.readArmored(ephemeralPrivate).keys[0];
+  //   // console.log(privateKey.getPrimaryUser().user);
+  //   privateKey.decrypt(passphrase);
+
+  //   var message = $scope.contract.latest.text;
+
+  //   openpgp.signClearMessage(privateKey, message)
+  //   .then(function(result) {
+  //       var newtext = result.match("-----BEGIN PGP SIGNATURE-----([\\s\\S]*?)-----END PGP SIGNATURE-----");
+  //       console.log("with wrapper: \n" + newtext[0].trim());
+  //       console.log("without wrapper: \n" + newtext[1].trim());
+  //       // jQuery('#encryptedA').text(result);
+  //   })
+  //   .catch(function(error) {
+  //     console.log(error);
+  //   });
+  // };
+
+  $('#signatureModal').on('show.bs.modal', function (e) {
+    signaturePad = $("#signature").jSignature({ 'UndoButton':true });
+    $("#signature").resize();
+  });
+
+  $scope.sendForm = function() {
     openpgp.config.show_version = false;
     openpgp.config.show_comment = false;
 
@@ -78,13 +106,19 @@ angular.module('app.signature', [])
     openpgp.signClearMessage(privateKey, message)
     .then(function(result) {
         var newtext = result.match("-----BEGIN PGP SIGNATURE-----([\\s\\S]*?)-----END PGP SIGNATURE-----");
-        console.log("with wrapper: \n" + newtext[0].trim());
-        console.log("without wrapper: \n" + newtext[1].trim());
-        // jQuery('#encryptedA').text(result);
+        var datapair = signaturePad.jSignature("getData","svgbase64");
+
+        var signature = {
+          digital: newtext[0],
+          image: "data:" + datapair.join(",")
+        };
+        console.log(signature);
     })
     .catch(function(error) {
       console.log(error);
     });
 
+    $('#signatureModal').modal('hide');
   };
+
 });
