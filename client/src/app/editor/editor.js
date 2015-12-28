@@ -49,7 +49,7 @@ angular.module('app.editor', [])
   }
 
 
-  CKEDITOR.disableAutoInline = true;
+  // CKEDITOR.disableAutoInline = true;
   var editor = CKEDITOR.inline('contractEditor');
 
   $scope.ckEditor = {};
@@ -147,11 +147,17 @@ angular.module('app.editor', [])
       ctx = canvas.getContext('2d');
       var image = new Image();
       image.src = canvas.toDataURL();
+      console.log(canvas.toDataURL('application/pdf'));
       image.width = 250;
       image.onload = function() {
         document.body.appendChild(image);
       };
     });
+  };
+
+  $scope.ckEditor.saveFile = function() {
+    var dump_file = 'test.pdf';
+    editor.execCommand('inlinesave');
   };
 
   editor.on('instanceReady', function() {
