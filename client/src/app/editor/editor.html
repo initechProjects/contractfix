@@ -8,44 +8,31 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <div class="logo">
-            <a href="#"><img src="assets/logo.png" title="logo"></a>
-          </div>
+          <a class="navbar-brand" href="#/">CONTRACTFIX</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#/">HOME</a></li>
-            <li><a href="about.html">WHAT IS IT</a></li>
-            <li><a href="about.html">HOW IT WORKS</a></li>
-            <li><a href="contact.html">ABOUT</a></li>
-            <li><a href="#/editor">EDITOR</a></li>
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown">START <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#/login">LOG IN</a></li>
-                <li><a href="#/signup">SIGN UP</a></li>
-              </ul>
-            </li>
+            <li><a href="#/dashboard">DASHBOARD</a></li>
+            <li><a href="#/">LOG OUT</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
-
 <br>
 <br>
 <br>
 
-<section id="editorPage">
-<!-- ckEditor content area -->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2" id="left-panel">
-        <div class="fade-object">
-          <h3><span class="glyphicon glyphicon-pencil"></span> Editor</h3>
-           <hr>
 
-          <ul class="nav nav-stacked">
+<div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
+            </li><br>
             <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
             <li id="show-edit-changes"><a href="" target="ext" ng-click="ckEditor.showChanges()"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show Changes</a></li>
             <li id="reject-changes"><a href="" target="ext" ng-click="ckEditor.rejectChanges()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Changes</a></li>
@@ -55,35 +42,41 @@
             <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
             <li id="accept-changes"><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
           </ul>
+        </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
 
-          <hr>
-      </div>
-    </div>
-    <div class="col-md-8">
-          <form method="post" >
-          <p>
-          <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title"></input></div>
-          <br>
-          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
-          </div>
-          </p>
-          <!-- Initialize editor by replacing textarea element-->
-          </form>
-    </div>
-    <div class="col-md-2" id="commentBox">
-      <pre ng-if="selection">{{ selection }}</pre>
-        <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
-        <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
-        <div class="comment-card" ng-repeat="comment in comments">
-          <pre ng-if="comment.selection">{{ comment.selection }}</pre>
-          <p>{{ comment.comment }}</p>
-          <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
-      </div>
-    </div>
-   </div>
-  </div>
-  </div>
-</section>
+        <!-- Page Content -->
+        <div id="page-content-wrapper-editor">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title" size="50"></input></div>
+                        <hr>
+                        <form method="post" id="editorBody">
+                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
+                          </div>
+                          <!-- Initialize editor by replacing textarea element-->
+                        </form>
+                    </div>
+
+                    <div class="col-md-3" id="commentBox">
+                      <pre ng-if="selection">{{ selection }}</pre>
+                      <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
+                      <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
+                      <div class="comment-card" ng-repeat="comment in comments">
+                        <pre ng-if="comment.selection">{{ comment.selection }}</pre>
+                        <p>{{ comment.comment }}</p>
+                        <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
 
 <!-- Signature modal -->
 <div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
@@ -103,6 +96,7 @@
     </div>
   </div>
 </div>
+
 
   <!-- Invitation Email Modal -->
   <div class="modal fade" id="emailmodal" role="dialog">

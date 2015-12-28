@@ -18,6 +18,7 @@ angular.module('app.auth', [])
         $rootScope.authResult = authResult;
         token = authResult.token;
         console.log(authResult);
+        console.log(authResult.scope);
        
         if(contractid){  
           $http({
@@ -40,18 +41,20 @@ angular.module('app.auth', [])
             console.log(err);
           })         
         } 
-         if(authResult.fullname === undefined && authResult.scope !== "registered"){
-          $location.path('/signup2');
-        } 
-        if(authResult.token === undefined){
+        if(authResult.token){
+          if(authResult.fullname === undefined){
+            $location.path('/signup2');
+          } else {
+            Auth.save(authResult);
+            $location.path('/dashboard');
+          }
+        } else if(authResult.token === undefined){
           $scope.flag = true;
           $scope.authResult = authResult.data.message;
           $location.path('/login');
-        } else {
-          Auth.save(authResult);
-          console.log(authResult);
-          $location.path('/dashboard');
         }
+
+
       })
       .catch(function (error) {
         console.error(error);

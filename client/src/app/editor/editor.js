@@ -72,7 +72,7 @@ angular.module('app.editor', [])
         'Content-Type': 'application/json'
       },
       data: {
-        'contractId' : contractid,
+        'contractId' : contractId,
         'collaborators': [collabEmail]
       }
     })

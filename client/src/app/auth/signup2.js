@@ -11,7 +11,7 @@ angular.module('app.signup2', [])
       method: 'POST',
       url: '/updateprofile',
       headers: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': token,
         'Content-Type' : 'application/json'
       },
       data: {
@@ -19,7 +19,7 @@ angular.module('app.signup2', [])
       }
     })
     .success(function(data){
-      //internal server error?
+      //internal server error?, but request does seem to be working?
       $scope.flag = true;
       $scope.response = data;
       $timeout(function(){ $location.path("/dashboard")}, 3000);
