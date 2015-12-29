@@ -62,6 +62,8 @@ exports.save = {
                 contract.comments = request.payload.comments;
               }
 
+              contract.status = 'open';
+
               Contract.updateContract(contract, function(err) {
                 if (!err) {
                   return reply('Contract has been updated');
@@ -86,7 +88,7 @@ exports.save = {
         contract.metadata.dateCreated = Date.now();
         if (request.payload.templateid) contract.metadata.templateId = request.payload.templateid;
         if (request.payload.title) contract.metadata.title = request.payload.title;
-
+        if (request.payload.snapshot) contract.metadata.snapshot = request.payload.snapshot;
 
         if (request.payload.personal) {
           contract.drafts = [];
@@ -121,6 +123,8 @@ exports.save = {
         }
 
         contract.users =[request.auth.credentials._id];
+
+        contract.status = 'open';
 
         Contract.newContract(contract, function(err) {
           if (!err) {
