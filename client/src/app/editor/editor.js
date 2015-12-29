@@ -40,8 +40,6 @@ angular.module('app.editor', [])
         };
       });
 
-      console.log(res.data.comments);
-
       editor.setData(original);
     }, function error(res) {
       console.log(res);
@@ -58,6 +56,13 @@ angular.module('app.editor', [])
 
   var showingChanges = false;
   // var original = 'This contract is an agreement between&nbsp;<strong>{Renter}</strong>, who will be renting a house from&nbsp;<strong>{Owner}</strong>, who owns the house being rented. This arrangement will begin on&nbsp;<strong>{date}</strong>&nbsp;and will end on&nbsp;<strong>{date}</strong>.<br />The rent for this house will be&nbsp;<strong>{rent}</strong>. This amount must be paid on&nbsp;<strong>{date}</strong>&nbsp;every month. Late payments will incur a fee of&nbsp;<strong>{fee}</strong>. A deposit in the amount of&nbsp;<strong>{deposit}</strong>&nbsp;will be held for the duration of the lease and will be returned to the renter within one month after the keys are surrendered.<br />The major rules regarding this house are as follows:&nbsp;<strong>{house rental rules, concerning pets, smoking, and other major violations}</strong>. By signing this agreement, the renter acknowledges that a complete list of these rules has been provided to him or her, and that the renter has read and understood these rules.<br />The owner has a right to enter the house with an advanced notice of 24 hours for any reason. In an emergency, owner may violate this right and enter immediately. Emergencies include those instances in which the property is in immediate danger, such as from a fire or flood.<br />The renter will make his or her best effort to keep the house in good condition. No major alterations will be made to the house without prior discussion with the owner. This includes painting, changes to the lawns, and installation of any permanent changes. All maintenance for the house will be taken care of by the owner, and the tenant must notify the owner immediately of maintenance required.<br />Utilities will be the responsibility of the tenant. The renter will set up and shut down all utilities. This includes water, electric, and gas. Trash services is provided by&nbsp;<strong>{trash}</strong>&nbsp;and will be paid by the tenant.<br />Signing this agreement implies full understanding of the above conditions and the rental agreement. This agreement cannot be altered without full informed consent in writing provided by both parties. In certain cases of violation, the tenant may be required to vacate without appeal.';
+
+  $scope.ckEditor.saveFile = function() {
+    var pdf = new jsPDF();
+    var source = editor.getData();
+    pdf.fromHTML(source, 15, 15, { width: 180 });
+    pdf.output('dataurlnewwindow');
+  };
 
   $scope.ckEditor.sign = function (){
 
@@ -110,10 +115,6 @@ angular.module('app.editor', [])
     $scope.comments.splice($scope.comments.indexOf(comment), 1);
   };
 
-  $scope.ckEditor.handleClick = function(event) {
-    console.log($scope.title);
-  };
-
   $scope.ckEditor.save = function(personal) {
     var data = {
       text: editor.getData(),
@@ -153,11 +154,6 @@ angular.module('app.editor', [])
         document.body.appendChild(image);
       };
     });
-  };
-
-  $scope.ckEditor.saveFile = function() {
-    var dump_file = 'test.pdf';
-    editor.execCommand('inlinesave');
   };
 
   editor.on('instanceReady', function() {
