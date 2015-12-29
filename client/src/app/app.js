@@ -51,8 +51,14 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/editor/editor.html',
         controller: 'EditorController'
     })
-    .when('/about', {
-        templateUrl: 'app/about/about.html',
+    .when('/contactus', {
+        templateUrl: 'app/about/contactus.html',
+    })
+     .when('/howitworks', {
+        templateUrl: 'app/about/howitworks.html',
+    })
+    .when('/whatisit', {
+        templateUrl: 'app/about/whatisit.html'
     })
     .when('/usersetting', {
         templateUrl: 'app/settings/usersetting.html',
