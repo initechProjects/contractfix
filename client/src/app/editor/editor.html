@@ -40,6 +40,8 @@
             <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
             <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Contract</a></li>
             <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
+            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
+          </ul>
         </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -52,7 +54,7 @@
                         <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title" size="50"></input></div>
                         <hr>
                         <form method="post" id="editorBody">
-                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
+                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor" style="min-height:300px;outline:none">
                           </div>
                           <!-- Initialize editor by replacing textarea element-->
                         </form>
@@ -74,7 +76,6 @@
         <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
-
 
 
 <!-- Signature modal -->
