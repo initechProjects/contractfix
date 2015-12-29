@@ -413,7 +413,7 @@ exports.inviteCollaborators = {
                       return reject('db write error');
                     }
                     user._id = result._id;
-                    contract.users.push(user._id);
+                    if (contract.users.indexOf(user._id) < 0) contract.users.push(user._id);
                     resolve(user);
                   });
                 });

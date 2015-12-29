@@ -50,7 +50,18 @@ var Contract = new Schema({
   /**
     users. Users of the contract
   */
-  users: { type: [String], index: true }
+  users: { type: [String], index: true },
+
+  parties:[{
+    party: String,
+    title: String,
+    userid: String
+  }],
+
+  status: {
+    type: String,
+    enum: ['open', 'ready', 'closed']
+  }
 
 }, { autoIndex: false });
 
