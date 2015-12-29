@@ -98,9 +98,27 @@ angular.module('app.signature', [])
       $scope.$apply();
 
       var agreement = {
+        contractId: $scope.contract.contractId,
         text: result,
-        signature: $scope.signature
+        signature: $scope.signature,
+        publicKey: ephemeralPublic
       };
+
+
+      $http({
+        method: 'POST',
+        url: '/signcontract',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        data: agreement
+      }).then(function(res) {
+
+        console.log(res);
+      }, function(res) {
+        console.log(res);
+      });
     })
     .catch(function(error) {
       console.log(error);

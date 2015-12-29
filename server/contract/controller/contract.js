@@ -5,6 +5,7 @@ var Joi    = require('joi');
 var Boom   = require('boom');
 var Contract   = require('../model/contract').Contract;
 var User = require('../../main/model/user').User;
+var OpenPGP = require('openpgp');
 var _ = require('lodash');
 
 exports.save = {
@@ -217,7 +218,8 @@ exports.open = {
       revisions: Joi.number().integer().description('number of revisions published'),
       personal: Joi.object().description('personal draft'),
       latest: Joi.object().description('latest published version'),
-      previous: Joi.object().description('previous version of published contract')
+      previous: Joi.object().description('previous version of published contract'),
+      parties: Joi.array().description('parties of the contract, if exists')
     })
   },
   handler: function(request, reply) {
@@ -236,6 +238,8 @@ exports.open = {
         result.contractId = contract._id;
         result.metadata = contract.metadata;
         result.comments = contract.comments;
+
+        if (contract.parties) result.parties = contract.parties;
 
         if (contract.drafts) {
           let l = contract.drafts.length;
@@ -308,6 +312,90 @@ exports.open = {
         Promise.all(promises).then(response.success, response.error);
 
       });
+    }
+  }
+};
+
+exports.sign = {
+  description: 'sign contract',
+  tags:['api', 'Contract'],
+  validate: {
+    payload: {
+      contractId: Joi.string().required().description('id of signed contract'),
+      text: Joi.string().required().description('signed text of the contract'),
+      signature: Joi.object({
+        digital: Joi.string().required(),
+        image: Joi.string().required()
+      }).required().description('signature on the contract'),
+      publicKey: Joi.string().required().description('ephemeral public key of signer')
+    },
+    headers: Joi.object({
+      'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
+    }).options({ allowUnknown: true })
+  },
+  auth: {
+    strategy: 'token'
+  },
+  handler: function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      // check the token username, public key user are the same
+      let loggedin = request.auth.credentials.userName.trim();
+      let signatureUser = OpenPGP.key.readArmored(request.payload.publicKey).keys[0].users[0].userId.userid.trim();
+
+      if (loggedin !== signatureUser) return reply(Boom.unauthorized('wrong user key'));
+
+      Contract.findContract(request.payload.contractId, function(err, contract) {
+        if (err) return reply(Boom.badImplementation(err));
+        if (!contract) return reply(Boom.badImplementation('wrong contractId'));
+
+        let signer = false;
+
+        contract.parties.forEach(function(party) {
+          console.log(request.auth.credentials._id.toString(), party.userid);
+          if (party.userid === request.auth.credentials._id.toString()) signer = true;
+        });
+
+        if (!signer) return reply(Boom.unauthorized('user is not a party'));
+
+        let publicKeyObject = OpenPGP.key.readArmored(request.payload.publicKey).keys[0];
+
+        let cleartextMessageObject = OpenPGP.cleartext.readArmored(request.payload.text);
+        OpenPGP.verifyClearSignedMessage(publicKeyObject, cleartextMessageObject)
+        .then(function(result) {
+            let validMessage = false;
+            if ('signatures' in result) {
+              let signatures = result['signatures'];
+              if (signatures.length > 0) {
+                let signature = signatures[0];
+                if ('valid' in signature) {
+                   validMessage = signature['valid'];
+                }
+              }
+            }
+
+            // check if the sent signed document is valid
+            if (!validMessage) return reply(Boom.unauthorized('wrong document'));
+
+            // check if the signed document is the same as latest version sent
+            //find a way to check if text is correct version!!!
+            // if (result.text !== JSON.stringify(contract.versions[contract.versions.length - 1])) return reply(Boom.unauthorized('wrong text of the contract'));
+
+            // update parties with signature
+            // send email to users who are not signed yet
+            // if all users signed, change status to closed
+            // send all users in parties the pdf signed version
+
+            return reply('Success');
+
+        }).catch(function(err) {
+          return reply(Boom.badImplementation(err));
+        });
+
+
+      });
+
+
+
     }
   }
 };

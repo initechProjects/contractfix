@@ -218,7 +218,7 @@ a:focus {
 
 /* Services Wrap */
 #service {
-    margin-top: 100px;
+    margin-top: 50px;
     margin-bottom: 80px;
 }
 
@@ -538,18 +538,7 @@ csmall2 {
     padding-left: 50px;
     padding-right: 50px;
 }
-/*    --------------------------------------------------
-    :: About Section
-    -------------------------------------------------- */
-#appinfo {
-    text-align: center;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 50px;
-}
-#appinfo p{
-    font-size: 17px;
-}
+
 /*    --------------------------------------------------
     :: Editor Section
     -------------------------------------------------- */
@@ -571,7 +560,7 @@ csmall2 {
 #editorBody {
     background: #F2F2F2;
     border: 2px solid #A4A4A4;
-    
+
 }
 #editorTitle {
     text-align: center;
@@ -593,7 +582,7 @@ csmall2 {
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: fixed;
+    position: absolute;
     left: 250px;
     width: 0;
     height: 100%;
@@ -780,3 +769,73 @@ csmall2 {
     padding-top: 15px;
 }
 
+/*    --------------------------------------------------
+    :: What Is It Section
+    -------------------------------------------------- */
+#whatisit-container {
+    padding-bottom: 50px;
+}
+
+/*    --------------------------------------------------
+    :: How It Works Section
+    -------------------------------------------------- */
+#blue {
+    margin-bottom: 0px;
+}
+#cwrap {
+    padding-bottom: 35px;
+    padding-top: 35px;
+}
+#twrap {
+    padding-bottom: 20px;
+    background: #00b3fe;
+}
+#twrap p{
+    font-size: 17px;
+    font-style: italic;
+}
+.intro-header {
+    background: url(../assets/landingpage.jpg) no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    padding-bottom: 0px;
+}
+#howToUse h3{
+    text-align: center;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+.listitem {
+    background-color: #E6E6E6;
+    margin-bottom: 13px;
+}
+.listitem div.icon {
+    margin-left: 15px;
+    color: #E18628;
+    font-weight: bold;
+    font-size: 30px;
+    vertical-align: middle;
+    width: 25px;
+    margin-right: 25px;
+    display: inline-block;
+}
+
+.listitem div.content {
+    vertical-align: middle;
+    display: inline-block;
+    width: 85%;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.listitem .content {
+    text-align: left;
+}
+
+/*    --------------------------------------------------
+    :: Contact Us Section
+    -------------------------------------------------- */
+#contactus h4{
+    text-align: center;
+}

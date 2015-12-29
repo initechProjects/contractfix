@@ -12,10 +12,10 @@
 	  <!-- Bootstrap Core CSS -->
     <link href="styles/prettyPhoto.css" rel="stylesheet">
     <link href="styles/hoverex-all.css" rel="stylesheet">
-
     <link href="styles/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://css-spinners.com/css/spinner/circles.css" type="text/css">
+    <link href="styles/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <link rel="stylesheet" type="text/css" href="jsignature/libs/jSignature.css">
     <!-- Custom Fonts -->
@@ -70,36 +70,36 @@
 
          <div ng-view></div>
 
-  <script>
-    $(function() {
-        var timer;
-        var fadeInBuffer = false;
-        $(document).mousemove(function () {
-            if (!fadeInBuffer) {
-                if (timer) {
-                    console.log("clearTimer");
-                    clearTimeout(timer);
-                    timer = 0;
-                }
-    //fadein
-                $('.fade-object').fadeIn(2000);
-                $('html').css({
-                    cursor: ''
-                });
-            } else {
-                fadeInBuffer = false;
-            }
-            timer = setTimeout(function () {
-    //fadeout
-                $('.fade-object').fadeOut(4000);
-                $('html').css({
-                    cursor: 'none'
-                });
-                fadeInBuffer = true;
-            }, 6000)
-        });
-    });
-  </script>
-
+  <!-- // <script>
+  //   $(function() {
+  //       var timer;
+  //       var fadeInBuffer = false;
+  //       $(document).mousemove(function () {
+  //           if (!fadeInBuffer) {
+  //               if (timer) {
+  //                   console.log("clearTimer");
+  //                   clearTimeout(timer);
+  //                   timer = 0;
+  //               }
+  //   //fadein
+  //               $('.fade-object').fadeIn(2000);
+  //               $('html').css({
+  //                   cursor: ''
+  //               });
+  //           } else {
+  //               fadeInBuffer = false;
+  //           }
+  //           timer = setTimeout(function () {
+  //   //fadeout
+  //               $('.fade-object').fadeOut(4000);
+  //               $('html').css({
+  //                   cursor: 'none'
+  //               });
+  //               fadeInBuffer = true;
+  //           }, 6000)
+  //       });
+  //   });
+  // </script>
+ -->
   </body>
 </html>
