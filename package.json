@@ -27,6 +27,7 @@
     "mongodb": "^2.0.52",
     "mongoose": "^4.3.1",
     "node-uuid": "^1.4.7",
+    "openpgp": "^1.4.1",
     "sendgrid": "^2.0.0",
     "vision": "^4.0.1"
   },
