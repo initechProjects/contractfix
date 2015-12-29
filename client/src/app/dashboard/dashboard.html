@@ -81,6 +81,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Select a contract template.</h4>
         </div>
+
         <div class="modal-body">
             <div class="templates">
               <div class="template" ng-repeat="template in templates" ng-click="handleClick(template.templateid)">
@@ -92,7 +93,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <a href="#/editor"><button type="button" class="btn btn-default">I just want to use an empty editor!</button></a>
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="newContract()">I just want to use an empty editor!</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
