@@ -1,5 +1,5 @@
 <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top fade-object" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -28,7 +28,7 @@
 <div id="wrapper">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
+        <div id="sidebar-wrapper" class="fade-object">
             <ul class="sidebar-nav">
             <li class="sidebar-brand">
                 <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
@@ -100,7 +100,7 @@
 
   <!-- Invitation Email Modal -->
   <div class="modal fade" id="emailmodal" role="dialog">
-    <div class="modal-dialog">   
+    <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -113,10 +113,10 @@
                 <input type="text" ng-model='collabEmail' id="key" class="form-control" placeholder="Collaborator's email">
             </div>
             <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
-          <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">       
+          <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">
           </form>
         </div>
-      </div>    
+      </div>
     </div>
   </div>
 
@@ -127,4 +127,3 @@
 <br>
 <br>
 <br>
-
