@@ -354,37 +354,10 @@ csmall2 {
     display: block;
     font-size: 15px;
 }
-#login .checkbox {
-    margin-bottom: 20px;
-    position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+.showPassword {
+    text-align: center;
 }
-#login .checkbox.show:before {
-    content: '\e013';
-    color: #1fa67b;
-    font-size: 17px;
-    margin: 1px 0 0 3px;
-    position: absolute;
-    pointer-events: none;
-}
-#login .checkbox .character-checkbox {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
-    display: inline-block;
-}
-#login .checkbox .label {
-    color: #6d6d6d;
-    font-size: 13px;
-    font-weight: normal;
-}
+
 /*    --------------------------------------------------
     :: Inputs & Buttons
     -------------------------------------------------- */
@@ -433,38 +406,10 @@ csmall2 {
     display: block;
     font-size: 15px;
 }
-
-#signup .checkbox {
-    margin-bottom: 20px;
-    position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-#signup .checkbox.show:before {
-    content: '\e013';
-    font-size: 17px;
-    margin: 1px 0 0 3px;
-    position: absolute;
-    pointer-events: none;
-}
-#signup .checkbox .character-checkbox {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
-    display: inline-block;
-}
-#signup .checkbox .label {
-    color: #6d6d6d;
-    font-size: 13px;
-    font-weight: normal;
-}
 .re-send {
+    text-align: center;
+}
+.showPassword {
     text-align: center;
 }
 
@@ -498,35 +443,8 @@ csmall2 {
     text-align: center;
 }
 
-#resetPassword .checkbox {
-    margin-bottom: 20px;
-    position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-#resetPassword .checkbox.show:before {
-    content: '\e013';
-    font-size: 17px;
-    margin: 1px 0 0 3px;
-    position: absolute;
-    pointer-events: none;
-}
-#resetPassword .checkbox .character-checkbox {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
-    display: inline-block;
-}
-#resetPassword .checkbox .label {
-    color: #6d6d6d;
-    font-size: 13px;
-    font-weight: normal;
+.showPassword {
+    text-align: center;
 }
 
 /*    --------------------------------------------------
@@ -583,10 +501,10 @@ csmall2 {
 #sidebar-wrapper {
     z-index: 1000;
     position: absolute;
-    left: 250px;
+    left: 190px;
     width: 0;
     height: 100%;
-    margin-left: -250px;
+    margin-left: -190px;
     overflow-y: auto;
     background: #BDBDBD;
     -webkit-transition: all 0.5s ease;
@@ -596,7 +514,7 @@ csmall2 {
 }
 
 #page-content-wrapper {
-    width: 100%;
+    width: 80%;
     position: absolute;
     padding: 15px;
 }
@@ -678,38 +596,9 @@ csmall2 {
 /*    --------------------------------------------------
     :: User Settings Section
     -------------------------------------------------- */
-#passwordmodal .checkbox {
-    margin-bottom: 20px;
-    position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+.showPassword {
+    text-align: center;
 }
-#passwordmodal .checkbox.show:before {
-    content: '\e013';
-    color: #1fa67b;
-    font-size: 17px;
-    margin: 1px 0 0 3px;
-    position: absolute;
-    pointer-events: none;
-}
-#passwordmodal .checkbox .character-checkbox {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
-    display: inline-block;
-}
-#passwordmodal .checkbox .label {
-    color: #6d6d6d;
-    font-size: 13px;
-    font-weight: normal;
-}
-
 /*    --------------------------------------------------
     :: Invitation Section
     -------------------------------------------------- */
