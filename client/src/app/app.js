@@ -10,7 +10,8 @@ var app = angular.module('app', [
     'app.signup2',
     'app.usersetting',
     'app.invitation',
-    'app.templates'
+    'app.templates',
+    'app.signature'
     ]);
 
 
@@ -72,7 +73,11 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/templates/templates.html',
         controller: 'TemplatesController'
     })
-    
+    .when('/sig', {
+        templateUrl: 'app/signature/signature.html',
+        controller: 'SignatureController'
+    })
+
 });
 
 

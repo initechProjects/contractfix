@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
-<head>
-    <meta charset="utf-8">
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1.0, target-densitydpi=device-dpi" /><!-- this is for mobile (Android) Chrome -->
+    <meta name="viewport" content="initial-scale=1.0, width=device-height"><!--  mobile Safari, FireFox, Opera Mobile  -->
     <meta name="description" content="">
     <meta name="author" content="">
-  <title>ContractFix</title>
-
+    <title>ContractFix</title>
+    <script src="jsignature/libs/modernizr.js"></script>
 	  <!-- Bootstrap Core CSS -->
     <link href="styles/prettyPhoto.css" rel="stylesheet">
     <link href="styles/hoverex-all.css" rel="stylesheet">
+    <link href="styles/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Hind' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://css-spinners.com/css/spinner/circles.css" type="text/css">
     <link href="styles/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <link rel="stylesheet" type="text/css" href="jsignature/libs/jSignature.css">
     <!-- Custom Fonts -->
     <link href="styles/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
-	
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 	<script src="https://code.angularjs.org/1.4.5/angular-route.js"></script>
+
+    <script src="jspdf/jspdf.js"></script>
+    <script src="jspdf/plugins/from_html.js"></script>
+    <script src="jspdf/plugins/split_text_to_size.js"></script>
+    <script src="jspdf/plugins/standard_fonts_metrics.js"></script>
+
     <script src="app/auth/auth.js"></script>
     <script src="app/dashboard/dashboard.js"></script>
     <script src="app/services/services.js"></script>
@@ -33,6 +41,7 @@
     <script src="app/settings/usersetting.js"></script>
     <script src="app/invitation/invitation.js"></script>
     <script src="app/templates/templates.js"></script>
+    <script src="app/signature/signature.js"></script>
     <script src="app/app.js"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -45,28 +54,52 @@
     <script src="ckeditor2/ckeditor.js"></script>
     <script src="html2canvas/html2canvas.js"></script>
     <script src="diff-match-patch/diff_match_patch.js"></script>
+    <script src="openpgp/dist/openpgp.min.js"></script>
+    <script src="openpgp/dist/chance.js"></script>
+    <script src="jsignature/libs/jSignature.min.js"></script>
+    <script src="jsignature/src/plugins/jSignature.CompressorBase30.js"></script>
+    <script src="jsignature/src/plugins/jSignature.CompressorSVG.js"></script>
+    <script src="jsignature/src/plugins/jSignature.UndoButton.js"></script>
+    <script src="jsignature/src/plugins/signhere/jSignature.SignHere.js"></script>
 
-    <script src="html2canvas.js"></script>
+  </head>
 
-</head>
-<body>
+  <body>
 
+      <!--Insert Views-->
 
+         <div ng-view></div>
 
+  <script>
+    $(function() {
+        var timer;
+        var fadeInBuffer = false;
+        $(document).mousemove(function () {
+            if (!fadeInBuffer) {
+                if (timer) {
+                    console.log("clearTimer");
+                    clearTimeout(timer);
+                    timer = 0;
+                }
+    //fadein
+                $('.fade-object').fadeIn(2000);
+                $('html').css({
+                    cursor: ''
+                });
+            } else {
+                fadeInBuffer = false;
+            }
+            timer = setTimeout(function () {
+    //fadeout
+                $('.fade-object').fadeOut(4000);
+                $('html').css({
+                    cursor: 'none'
+                });
+                fadeInBuffer = true;
+            }, 6000)
+        });
+    });
+  </script>
 
-
-    <!--Insert Views-->
-
-       <div ng-view></div>
-
-
-
-
-
-
-
-
-
-
-</body>
+  </body>
 </html>

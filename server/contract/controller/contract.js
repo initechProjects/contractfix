@@ -4,6 +4,7 @@ var Joi    = require('joi');
 // Joi.objectId = require('joi-objectid')(Joi);
 var Boom   = require('boom');
 var Contract   = require('../model/contract').Contract;
+var User = require('../../main/model/user').User;
 var _ = require('lodash');
 
 exports.save = {
@@ -17,7 +18,8 @@ exports.save = {
       text: Joi.string().required().description('latest text to be saved'),
       tag: Joi.string().description('tag of the draft/version'),
       comments: Joi.array().description('newly added comments'),
-      personal: Joi.boolean().description('is it personal draft?')
+      personal: Joi.boolean().description('is it personal draft?'),
+      snapshot: Joi.string().description('snapshot of latest version')
     },
     headers: Joi.object({
       'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
@@ -44,6 +46,8 @@ exports.save = {
               };
 
               if (request.payload.tag) version.tag = request.payload.tag;
+
+              if (request.payload.snapshot) contract.metadata.snapshot = request.payload.snapshot;
 
               if (request.payload.title) contract.metadata.title = request.payload.title;
 
@@ -146,7 +150,8 @@ exports.findContractByUserId = {
       id: Joi.any().required().description('contractid'),
       title: Joi.string().description('title of contract'),
       drafts: Joi.any().description('tag of latest draft, if exists, or true'),
-      versions: Joi.any().description('tag of latest version, if exists, or true')
+      versions: Joi.any().description('tag of latest version, if exists, or true'),
+      snapshot: Joi.string().description('snapshot of the latest version, if exists')
     }))
   },
   handler: function(request, reply) {
@@ -158,6 +163,7 @@ exports.findContractByUserId = {
           let item = {};
           item.id = contract._id;
           if (contract.metadata.title) item.title = contract.metadata.title;
+          if (contract.metadata.snapshot) item.snapshot = contract.metadata.snapshot;
 
           if (contract.drafts) {
             let l = contract.drafts.length;
@@ -203,7 +209,7 @@ exports.open = {
       contractId: Joi.any().required().description('contractId'),
       metadata: Joi.object().description('metadata of contract'),
       comments: Joi.array().description('array of comments'),
-      users: Joi.array().description('userid of user who can access'),
+      users: Joi.array().description('users who can access'),
       revisions: Joi.number().integer().description('number of revisions published'),
       personal: Joi.object().description('personal draft'),
       latest: Joi.object().description('latest published version'),
@@ -226,7 +232,6 @@ exports.open = {
         result.contractId = contract._id;
         result.metadata = contract.metadata;
         result.comments = contract.comments;
-        result.users = contract.users;
 
         if (contract.drafts) {
           let l = contract.drafts.length;
@@ -258,10 +263,46 @@ exports.open = {
               if (contract.versions[result.revisions - 2].tag) result.latest.tag = contract.versions[result.revisions - 2].tag;
             }
           }
-
         }
 
-        return reply(result);
+        let promises = [];
+
+        contract.users.forEach(function(userId) {
+          promises.push(new Promise(function(resolve, reject){
+            User.findUserById(userId, function(err, user) {
+              if (err) {
+                console.log(err);
+                return reject(err);
+              }
+
+              resolve(user);
+            });
+          }));
+        });
+
+        result.users = [];
+
+        let response = {
+          success: function(values) {
+
+            values.forEach(function(user) {
+              result.users.push({
+                id: user._id,
+                fullname: user.fullname,
+                email: user.userName
+              });
+            });
+
+            return reply(result);
+          },
+          error: function(result) {
+            console.log(result);
+            return reply(Boom.badImplementation(result));
+          }
+        };
+
+        Promise.all(promises).then(response.success, response.error);
+
       });
     }
   }

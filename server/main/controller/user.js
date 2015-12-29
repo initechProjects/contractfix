@@ -84,6 +84,14 @@ exports.login = {
         Config.dev = request.payload.valid ? true : false;
         res.token = Auth.gettoken('login', user);
 
+        // console.log(request.connection);
+        console.log(request.connection.info.host);
+        console.log(request.connection.info.id);
+        console.log(request.connection.info.address);
+        console.log((new Date(request.connection.info.created)).toISOString());
+        console.log('x-forwarded-for', request.headers['x-forwarded-for']);
+        console.log('connection.remoteAdress', request.connection.remoteAddress);
+
         return reply(res);
       });
     });
@@ -317,8 +325,7 @@ exports.updateProfile = {
             console.error(err);
             return reply(Boom.badImplementation(err));
           }
-
-          reply(Auth.gettoken('login', user));
+          reply({ token: Auth.gettoken('login', user) });
         });
       });
     }
@@ -414,7 +421,7 @@ exports.inviteCollaborators = {
                       return reject('db write error');
                     }
                     user._id = result._id;
-                    contract.users.push(user._id);
+                    if (contract.users.indexOf(user._id) < 0) contract.users.push(user._id);
                     resolve(user);
                   });
                 });

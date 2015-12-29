@@ -1,5 +1,5 @@
 <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top fade-object" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -28,7 +28,7 @@
 <div id="wrapper">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
+        <div id="sidebar-wrapper" class="fade-object">
             <ul class="sidebar-nav">
             <li class="sidebar-brand">
                 <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
@@ -40,6 +40,8 @@
             <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
             <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Contract</a></li>
             <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
+            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
+          </ul>
         </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -52,7 +54,7 @@
                         <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title" size="50"></input></div>
                         <hr>
                         <form method="post" id="editorBody">
-                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
+                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor" style="min-height:300px;outline:none">
                           </div>
                           <!-- Initialize editor by replacing textarea element-->
                         </form>
@@ -74,7 +76,6 @@
         <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
-
 
 
 <!-- Signature modal -->
@@ -99,7 +100,7 @@
 
   <!-- Invitation Email Modal -->
   <div class="modal fade" id="emailmodal" role="dialog">
-    <div class="modal-dialog">   
+    <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -112,10 +113,10 @@
                 <input type="text" ng-model='collabEmail' id="key" class="form-control" placeholder="Collaborator's email">
             </div>
             <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
-          <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">       
+          <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">
           </form>
         </div>
-      </div>    
+      </div>
     </div>
   </div>
 
@@ -126,4 +127,3 @@
 <br>
 <br>
 <br>
-
