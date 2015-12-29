@@ -40,6 +40,10 @@ angular.module('app.dashboard', [])
     $scope.showingDrafts = false;
     $location.hash('');
   };
+
+  $scope.newContract = function() {
+    $location.path('/editor');
+  };
 });
 
 

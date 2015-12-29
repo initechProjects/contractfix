@@ -48,7 +48,7 @@ angular.module('app.editor', [])
 
 
   // CKEDITOR.disableAutoInline = true;
-  var editor = CKEDITOR.inline('contractEditor');
+  var editor = CKEDITOR.replace('contractEditor');
 
   $scope.ckEditor = {};
   $scope.selection = '';

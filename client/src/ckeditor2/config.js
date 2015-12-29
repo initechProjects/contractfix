@@ -51,8 +51,8 @@ CKEDITOR.editorConfig = function( config ) {
 		LITE.Commands.REJECT_ONE
 	];
 
-	config.enterMode =  CKEDITOR.ENTER_BR;
-	config.autoParagraph = false;
+	// config.enterMode =  CKEDITOR.ENTER_BR;
+	// config.autoParagraph = false;
   // config.allowedContent = 'br strong ins del em s ul ol li';
 
 };
