@@ -14,7 +14,8 @@ var Contract = new Schema({
   metadata: {
     dateCreated: Date,
     templateId: String,
-    title: String
+    title: String,
+    snapshot: String
   },
 
   /**
@@ -55,7 +56,11 @@ var Contract = new Schema({
   parties:[{
     party: String,
     title: String,
-    userid: String
+    userid: String,
+    digitalSignature: String,
+    signedText: String,
+    signedOn: Date,
+    userIP: String
   }],
 
   status: {
