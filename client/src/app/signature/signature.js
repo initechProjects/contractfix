@@ -11,7 +11,9 @@ angular.module('app.signature', [])
   var passphrase = chance.sentence();
   $scope.contract = {};
   $scope.contractText;
+  $scope.signed = false;
   var signaturePad;
+  $scope.signature = {};
 
   var options = {
     numBits: 1024,
@@ -66,28 +68,6 @@ angular.module('app.signature', [])
     });
   };
 
-  // $scope.signContract = function() {
-  //   openpgp.config.show_version = false;
-  //   openpgp.config.show_comment = false;
-
-  //   var privateKey = openpgp.key.readArmored(ephemeralPrivate).keys[0];
-  //   // console.log(privateKey.getPrimaryUser().user);
-  //   privateKey.decrypt(passphrase);
-
-  //   var message = $scope.contract.latest.text;
-
-  //   openpgp.signClearMessage(privateKey, message)
-  //   .then(function(result) {
-  //       var newtext = result.match("-----BEGIN PGP SIGNATURE-----([\\s\\S]*?)-----END PGP SIGNATURE-----");
-  //       console.log("with wrapper: \n" + newtext[0].trim());
-  //       console.log("without wrapper: \n" + newtext[1].trim());
-  //       // jQuery('#encryptedA').text(result);
-  //   })
-  //   .catch(function(error) {
-  //     console.log(error);
-  //   });
-  // };
-
   $('#signatureModal').on('show.bs.modal', function (e) {
     signaturePad = $("#signature").jSignature({ 'UndoButton':true });
     $("#signature").resize();
@@ -105,20 +85,28 @@ angular.module('app.signature', [])
 
     openpgp.signClearMessage(privateKey, message)
     .then(function(result) {
-        var newtext = result.match("-----BEGIN PGP SIGNATURE-----([\\s\\S]*?)-----END PGP SIGNATURE-----");
-        var datapair = signaturePad.jSignature("getData","svgbase64");
+      $scope.signed = true;
+      var newtext = result.match("-----BEGIN PGP SIGNATURE-----([\\s\\S]*?)-----END PGP SIGNATURE-----");
+      var datapair = signaturePad.jSignature("getData","svgbase64");
 
-        var signature = {
-          digital: newtext[0],
-          image: "data:" + datapair.join(",")
-        };
-        console.log(signature);
+      $scope.signature = {
+        digital: newtext[0],
+        image: "data:" + datapair.join(",")
+      };
+      console.log($scope.signature);
+      $('#signatureModal').modal('hide');
+      $scope.$apply();
+
+      var agreement = {
+        text: result,
+        signature: $scope.signature
+      };
     })
     .catch(function(error) {
       console.log(error);
+      $('#signatureModal').modal('hide');
     });
 
-    $('#signatureModal').modal('hide');
   };
 
 });
