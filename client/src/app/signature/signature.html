@@ -35,8 +35,6 @@
       </li><br>
       <li ng-repeat="contract in contracts" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
       <hr>
-      <li ng-click="signContract()"><a href=""><i class="fa fa-pencil-square-o"></i> Old Sign</a></li>
-      <hr>
       <li data-toggle="modal" data-target="#signatureModal"><a href=""><i class="fa fa-pencil-square-o"></i> Sign</a></li>
     </ul>
   </div>
@@ -46,7 +44,20 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <pre id="contract" ng-bind-html="contractText"></pre>
+        <pre id="contract">
+          <div><h2>{{ contract.metadata.title }}</h2></div>
+          <div  ng-bind-html="contractText"></div>
+          <div class="row" ng-if="signed">
+            <div class="col-md-6">
+              <div>{{ user }}</div>
+              <div><img ng-src="{{ signature.image }}" /></div>
+              <div><small>{{ signature.digital }}</small></div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+          </div>
+        </pre>
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@ var Joi    = require('joi');
 // Joi.objectId = require('joi-objectid')(Joi);
 var Boom   = require('boom');
 var Contract   = require('../model/contract').Contract;
+var User = require('../../main/model/user').User;
 var _ = require('lodash');
 
 exports.save = {
@@ -203,7 +204,7 @@ exports.open = {
       contractId: Joi.any().required().description('contractId'),
       metadata: Joi.object().description('metadata of contract'),
       comments: Joi.array().description('array of comments'),
-      users: Joi.array().description('userid of user who can access'),
+      users: Joi.array().description('users who can access'),
       revisions: Joi.number().integer().description('number of revisions published'),
       personal: Joi.object().description('personal draft'),
       latest: Joi.object().description('latest published version'),
@@ -226,7 +227,6 @@ exports.open = {
         result.contractId = contract._id;
         result.metadata = contract.metadata;
         result.comments = contract.comments;
-        result.users = contract.users;
 
         if (contract.drafts) {
           let l = contract.drafts.length;
@@ -258,10 +258,46 @@ exports.open = {
               if (contract.versions[result.revisions - 2].tag) result.latest.tag = contract.versions[result.revisions - 2].tag;
             }
           }
-
         }
 
-        return reply(result);
+        let promises = [];
+
+        contract.users.forEach(function(userId) {
+          promises.push(new Promise(function(resolve, reject){
+            User.findUserById(userId, function(err, user) {
+              if (err) {
+                console.log(err);
+                return reject(err);
+              }
+
+              resolve(user);
+            });
+          }));
+        });
+
+        result.users = [];
+
+        let response = {
+          success: function(values) {
+
+            values.forEach(function(user) {
+              result.users.push({
+                id: user._id,
+                fullname: user.fullname,
+                email: user.userName
+              });
+            });
+
+            return reply(result);
+          },
+          error: function(result) {
+            console.log(result);
+            return reply(Boom.badImplementation(result));
+          }
+        };
+
+        Promise.all(promises).then(response.success, response.error);
+
       });
     }
   }
