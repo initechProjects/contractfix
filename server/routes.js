@@ -148,9 +148,13 @@ exports.endpoints = [
   */
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 
+  { method: 'POST', path: '/signcontract', config: Contract.sign },
+
+
   { method: 'POST', path: '/template/get', config: Template.open },
   { method: 'POST', path: '/template/list', config: Template.findTemplateByGroup },
   { method: 'POST', path: '/template/save', config: Template.save },
   { method: 'POST', path: '/template/__', config: Template.__internalTemplates },
+
 
 ];
