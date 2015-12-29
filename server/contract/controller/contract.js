@@ -18,7 +18,8 @@ exports.save = {
       text: Joi.string().required().description('latest text to be saved'),
       tag: Joi.string().description('tag of the draft/version'),
       comments: Joi.array().description('newly added comments'),
-      personal: Joi.boolean().description('is it personal draft?')
+      personal: Joi.boolean().description('is it personal draft?'),
+      snapshot: Joi.string().description('snapshot of latest version')
     },
     headers: Joi.object({
       'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
@@ -45,6 +46,8 @@ exports.save = {
               };
 
               if (request.payload.tag) version.tag = request.payload.tag;
+
+              if (request.payload.snapshot) contract.metadata.snapshot = request.payload.snapshot;
 
               if (request.payload.title) contract.metadata.title = request.payload.title;
 
@@ -147,7 +150,8 @@ exports.findContractByUserId = {
       id: Joi.any().required().description('contractid'),
       title: Joi.string().description('title of contract'),
       drafts: Joi.any().description('tag of latest draft, if exists, or true'),
-      versions: Joi.any().description('tag of latest version, if exists, or true')
+      versions: Joi.any().description('tag of latest version, if exists, or true'),
+      snapshot: Joi.string().description('snapshot of the latest version, if exists')
     }))
   },
   handler: function(request, reply) {
@@ -159,6 +163,7 @@ exports.findContractByUserId = {
           let item = {};
           item.id = contract._id;
           if (contract.metadata.title) item.title = contract.metadata.title;
+          if (contract.metadata.snapshot) item.snapshot = contract.metadata.snapshot;
 
           if (contract.drafts) {
             let l = contract.drafts.length;

@@ -84,6 +84,14 @@ exports.login = {
         Config.dev = request.payload.valid ? true : false;
         res.token = Auth.gettoken('login', user);
 
+        // console.log(request.connection);
+        console.log(request.connection.info.host);
+        console.log(request.connection.info.id);
+        console.log(request.connection.info.address);
+        console.log((new Date(request.connection.info.created)).toISOString());
+        console.log('x-forwarded-for', request.headers['x-forwarded-for']);
+        console.log('connection.remoteAdress', request.connection.remoteAddress);
+
         return reply(res);
       });
     });
