@@ -6,6 +6,7 @@ var Boom   = require('boom');
 var Contract   = require('../model/contract').Contract;
 var User = require('../../main/model/user').User;
 var OpenPGP = require('openpgp');
+var Mongoose = require('mongoose');
 var _ = require('lodash');
 
 exports.save = {
@@ -333,6 +334,12 @@ exports.sign = {
       'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
     }).options({ allowUnknown: true })
   },
+  response: {
+    schema: Joi.object({
+      contractId: Joi.any().required().description('contractId'),
+      parties: Joi.array().description('parties of the contract, if exists')
+    })
+  },
   auth: {
     strategy: 'token'
   },
@@ -348,14 +355,24 @@ exports.sign = {
         if (err) return reply(Boom.badImplementation(err));
         if (!contract) return reply(Boom.badImplementation('wrong contractId'));
 
-        let signer = false;
+        let signer;
+        let notSignedBy = [];
 
-        contract.parties.forEach(function(party) {
-          console.log(request.auth.credentials._id.toString(), party.userid);
-          if (party.userid === request.auth.credentials._id.toString()) signer = true;
+        contract.parties.forEach(function(party, index) {
+          if (party.userid === request.auth.credentials._id.toString()) {
+            if (party.pgpSignature)  return reply(Boom.unauthorized('already signed'));
+            signer = index;
+          } else {
+            if (!party.pgpSignature) {
+              notSignedBy.push(party.userId);
+            }
+          }
         });
 
-        if (!signer) return reply(Boom.unauthorized('user is not a party'));
+        // if all users signed, change status to closed
+        if (notSignedBy.length === 0) contract.status = 'closed';
+
+        if (signer === undefined) return reply(Boom.unauthorized('user is not a party'));
 
         let publicKeyObject = OpenPGP.key.readArmored(request.payload.publicKey).keys[0];
 
@@ -377,25 +394,163 @@ exports.sign = {
             if (!validMessage) return reply(Boom.unauthorized('wrong document'));
 
             // check if the signed document is the same as latest version sent
-            //find a way to check if text is correct version!!!
-            // if (result.text !== JSON.stringify(contract.versions[contract.versions.length - 1])) return reply(Boom.unauthorized('wrong text of the contract'));
+            if (result.text !== contract.versions[contract.versions.length - 1].text) return reply(Boom.unauthorized('wrong text of the contract'));
 
             // update parties with signature
-            // send email to users who are not signed yet
-            // if all users signed, change status to closed
-            // send all users in parties the pdf signed version
+            contract.parties[signer].pgpSignature = request.payload.signature.digital;
+            contract.parties[signer].imageSignature = request.payload.signature.image;
+            contract.parties[signer].signedText = request.payload.text;
 
-            return reply('Success');
+            let xFF = request.headers['x-forwarded-for'];
+            let userIP = xFF ? xFF.split(',')[0] : request.info.remoteAddress;
+
+            contract.parties[signer].userIP = userIP;
+            contract.parties[signer].signedOn = (new Date(request.info.received));
+
+            Contract.updateContract(contract, function(err, item) {
+              if (err) return reply(Boom.badImplementation(err));
+              if (!item) return reply(Boom.badImplementation('could not save'));
+
+              let promises = [];
+              var tmpContract = item.toObject();
+
+              tmpContract.parties.forEach(function(part, index) {
+                promises.push(new Promise(function(resolve, reject){
+                  User.findUserById(Mongoose.Types.ObjectId(part.userid), function(err, user) {
+                    if (err) return reject(err);
+                    if (!user) return reject('corrupted data');
+                    part.username = user.userName;
+                    part.fullname = user.fullname;
+                    resolve(user);
+                  });
+                }));
+              });
+
+              let response = {
+                success: function(values) {
+                  // send all users in parties the pdf of signed version
+
+                  // send email to users who are not signed yet
+                  //add Email sending to each party
+                  // values.forEach(function(user) {
+
+                  //   Email.sendMailSignedWarning(user.fullname, user.userName, contract.metadata.title, contract._id);
+
+                  // });
+
+                  return reply({
+                    contractId: tmpContract._id,
+                    parties: tmpContract.parties
+                  });
+                },
+                error: function(result) {
+                  console.log(result);
+                  return reply(Boom.badImplementation(result));
+                }
+              };
+
+              Promise.all(promises).then(response.success, response.error);
+            });
 
         }).catch(function(err) {
           return reply(Boom.badImplementation(err));
         });
+      });
+    }
+  }
+};
 
+exports.getUsersDetails = {
+  description: 'sign contract',
+  tags:['api', 'Contract'],
+  validate: {
+    payload: {
+      contractId: Joi.string().required().description('id of signed contract'),
+    },
+    headers: Joi.object({
+      'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
+    }).options({ allowUnknown: true })
+  },
+  response: {
+    schema: Joi.object({
+      usersdetails: Joi.array().description('parties of the contract')
+    })
+  },
+  auth: {
+    strategy: 'token'
+  },
+  handler: function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      Contract.findContract(request.payload.contractId, function(err, contract) {
+        let promises = [];
+
+        contract.users.forEach(function(item) {
+          promises.push(new Promise(function(resolve, reject){
+            User.findUserById(Mongoose.Types.ObjectId(item), function(err, user) {
+
+              resolve({
+                userId: user._id.toString(),
+                userName: user.userName,
+                fullname: user.fullname
+              });
+            });
+          }));
+        });
+
+        let response = {
+          success: function(values) {
+
+            return reply({
+              usersdetails: values
+            });
+          },
+          error: function(result) {
+            console.log(result);
+            return reply(Boom.badImplementation(result));
+          }
+        };
+
+        Promise.all(promises).then(response.success, response.error);
 
       });
+    }
+  }
+};
 
+exports.prepareForSignature = {
+  description: 'sign contract',
+  tags:['api', 'Contract'],
+  validate: {
+    payload: {
+      contractId: Joi.string().required().description('id of signed contract'),
+      parties: Joi.array().description('parties of the contract')
 
+      // party: String,
+      // title: String,
+      // userid: String,
+      // fullname: String,
+      // userName: String,
+    },
+    headers: Joi.object({
+      'authorization': Joi.string().regex(/^Bearer\s/).required().description('Starts with "Bearer "')
+    }).options({ allowUnknown: true })
+  },
+  auth: {
+    strategy: 'token'
+  },
+  handler: function(request, reply) {
+    if (request.auth.isAuthenticated) {
+      Contract.findContract(request.payload.contractId, function(err, contract) {
 
+        request.payload.parties.forEach(function(item) {
+          contract.parties = [];
+          contract.parties.push(item);
+        });
+
+        Contract.updateContract(contract, function(err, saved) {
+          return reply('Contract prepared for signature');
+        });
+      });
     }
   }
 };

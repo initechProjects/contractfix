@@ -31,7 +31,8 @@ var config = {
     companyName: 'ContractFix',
     verifyEmailUrl: 'verifyemail',
     invitationUrl: 'invitation',
-    resetPasswordUrl: 'resetpassword'
+    resetPasswordUrl: 'resetpassword',
+    loginUrl: 'login'
   }
 };
 

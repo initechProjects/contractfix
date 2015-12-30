@@ -57,7 +57,10 @@ var Contract = new Schema({
     party: String,
     title: String,
     userid: String,
-    digitalSignature: String,
+    fullname: String,
+    userName: String,
+    pgpSignature: String,
+    imageSignature: String,
     signedText: String,
     signedOn: Date,
     userIP: String

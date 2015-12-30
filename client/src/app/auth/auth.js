@@ -6,10 +6,10 @@ angular.module('app.auth', [])
   $scope.user = {};
   var token;
   $scope.flag = false;
-  
+
   var contractid = $rootScope.contractid;
   console.log(contractid);
-  
+
 
 
   $scope.login = function () {
@@ -19,8 +19,8 @@ angular.module('app.auth', [])
         token = authResult.token;
         console.log(authResult);
         console.log(authResult.scope);
-       
-        if(contractid){  
+
+        if(contractid){
           $http({
             method: 'POST',
             url: '/opencontract',
@@ -33,14 +33,14 @@ angular.module('app.auth', [])
             }
           })
           .success(function(data){
-            console.log("CONTRACTDATA", data, data.contractid);
-            $location.path('/editor').search({'id': data.contractid});
-            
+            // console.log("CONTRACTDATA", data, data.contractid);
+            $location.path('/editor').search({ 'id': data.contractid });
+
           })
           .catch(function(err){
             console.log(err);
-          })         
-        } 
+          });
+        }
         if(authResult.token){
           if(authResult.fullname === undefined){
             $location.path('/signup2');
@@ -70,9 +70,9 @@ angular.module('app.auth', [])
           $scope.message = authResult;
         } else {
         $scope.message = authResult.data.message;
-        console.log(authResult.data.message);  
+        console.log(authResult.data.message);
         }
-        
+
       })
       .catch(function (error) {
         console.error(error);
@@ -104,7 +104,7 @@ angular.module('app.auth', [])
     $location.path("/login");
   };
 
- 
+
 });
 
 

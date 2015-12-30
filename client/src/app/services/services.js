@@ -5,7 +5,7 @@ angular.module('app.services', [])
   // auth service responsible for authenticating our user
   // by exchanging the user's username and password
   // for a JWT from the server
-  // that JWT is then stored in localStorage 
+  // that JWT is then stored in localStorage
   // after you login/signup open devtools, click resources,
   // then localStorage and you'll see your token from the server
 
@@ -22,9 +22,11 @@ angular.module('app.services', [])
       var storageItem = {
         token: resp.data.token,
         username: resp.data.username,
+        userId: resp.data.userId,
         scope: resp.data.scope,
         fullname: resp.data.fullname
       };
+      console.log(storageItem);
       if(resp.data.token === undefined){
         return resp.data;
       }
@@ -32,7 +34,7 @@ angular.module('app.services', [])
     })
     .catch(function(error){
       return error;
-    })
+    });
   };
 
   var signup = function (user) {
@@ -64,7 +66,7 @@ angular.module('app.services', [])
       }
     })
     .then(function (resp) {
-      
+
       return resp.data;
     });
   };
@@ -77,7 +79,7 @@ angular.module('app.services', [])
         userName: user.username,
       }
     })
-    .then(function (resp) {  
+    .then(function (resp) {
       return resp.data;
     });
   };
@@ -104,9 +106,12 @@ angular.module('app.services', [])
     $rootScope.expires = Date.now() + 900000; // now + 15 minutes
     $rootScope.username = data.username;
     $rootScope.fullname = data.fullname;
+    console.log(data);
+    $rootScope.userId = data.userId;
     localStorage.setItem('token', data.token);
     localStorage.setItem('expires', Date.now() + 900000);
     localStorage.setItem('username', data.username);
+    localStorage.setItem('userId', data.userId);
     localStorage.setItem('fullname', data.fullname);
   };
 

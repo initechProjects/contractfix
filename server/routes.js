@@ -149,6 +149,8 @@ exports.endpoints = [
   { method: 'POST', path: '/findmycontracts', config: Contract.findContractByUserId },
 
   { method: 'POST', path: '/signcontract', config: Contract.sign },
+  { method: 'POST', path: '/getusersdetails', config: Contract.getUsersDetails },
+  { method: 'POST', path: '/prepareforsignature', config: Contract.prepareForSignature },
 
 
   { method: 'POST', path: '/template/get', config: Template.open },
