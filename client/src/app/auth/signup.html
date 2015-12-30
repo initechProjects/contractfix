@@ -33,10 +33,10 @@
                         <label for="key" class="sr-only">Password</label>
                         <input type="{{inputType}}" name="key" ng-model='user.password' id="key" class="form-control" placeholder="password">
                     </div> 
-                    <div class="checkbox">
-                            <span class="character-checkbox" ng-click="hideShowPassword()"></span>
-                            <span class="label">Show password</span>
-                    </div>             
+                    <div class="showPassword">
+                    <i class="fa fa-eye"></i><a href="" ng-click="hideShowPassword()"> Show Password</a>
+                    </div>     
+                    <br>             
                     <input type="submit" id="btn-signup" class="btn btn-custom btn-lg btn-block" data-toggle="modal" data-target=".email-veri-modal" value="Sign up">
                 </form>
           </div>

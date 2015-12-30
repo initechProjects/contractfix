@@ -33,14 +33,11 @@
             <li class="sidebar-brand">
                 <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
             </li><br>
-            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
-            <li id="show-edit-changes"><a href="" target="ext" ng-click="ckEditor.showChanges()"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show Changes</a></li>
-            <li id="reject-changes"><a href="" target="ext" ng-click="ckEditor.rejectChanges()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reject Changes</a></li>
-            <li id="accept-changes"><a href="" target="ext" ng-click="ckEditor.acceptChanges()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Accept Changes</a></li>
-            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Contract</a></li>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
-            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
+            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li><br>
+            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li><br>
+            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li><br>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li><br>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li><br>
           </ul>
         </ul>
         </div>
@@ -54,7 +51,7 @@
                         <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title" size="50"></input></div>
                         <hr>
                         <form method="post" id="editorBody">
-                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor" style="min-height:300px;outline:none">
+                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
                           </div>
                           <!-- Initialize editor by replacing textarea element-->
                         </form>
@@ -64,7 +61,7 @@
                       <pre ng-if="selection">{{ selection }}</pre>
                       <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
                       <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
-                      <div class="comment-card" ng-repeat="comment in comments">
+                      <div class="comment-card well" ng-repeat="comment in comments">
                         <pre ng-if="comment.selection">{{ comment.selection }}</pre>
                         <p>{{ comment.comment }}</p>
                         <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
@@ -84,14 +81,45 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Sign contract</h4>
+        <h4 class="modal-title" id="myModalLabel">Ready to sign? Add signatories.</h4>
       </div>
-      <div class="modal-body" contenteditable="true">
-        Are you sure you want to sign the contract?
+      <div class="modal-body lg" contenteditable="true">
+        <form>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span>Name</span>
+                </span>
+                <input type="text" class="form-control" aria-label="name">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-4">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span>Title</span>
+                </span>
+                <input type="text" class="form-control" aria-label="title">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-4">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span>Company</span>
+                </span>
+                <input type="text" class="form-control" aria-label="name">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <br><br>
+            <button type="button" class="btn btn-default pull-right">Add</button>
+          </div><!-- /.row -->
+
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Next</button>
       </div>
     </div>
   </div>
