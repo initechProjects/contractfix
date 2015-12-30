@@ -522,6 +522,10 @@ csmall2 {
     font-size: 15px;
     color: white;
 }
+#heading0 {
+    background: #3399ff;
+    color: white;
+}
 #heading1 {
     background: #f9243f;
     color: white;
@@ -536,20 +540,30 @@ csmall2 {
 }
 #open {
     box-shadow: 1px 1px 1px #888888;
-    height: 600px;
+    height: 300px;
     background: #f1f4f7;
+}
+#personal ul,
+#open ul,
+#ready ul,
+#signed ul{
+    padding-left: 20px;
 }
 #ready {
     box-shadow: 1px 1px 1px #888888;
-    height: 600px;
+    height: 300px;
     background: #f1f4f7;
 }
 #signed {
     box-shadow: 1px 1px 1px #888888;
-    height: 600px;
+    height: 300px;
     background: #f1f4f7;
 }
-
+#personal {
+    box-shadow: 1px 1px 1px #888888;
+    height: 300px;
+    background: #f1f4f7;
+}
 /* Sidebar Styles */
 
 .sidebar-nav {
