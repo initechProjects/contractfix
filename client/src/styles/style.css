@@ -484,8 +484,8 @@ csmall2 {
     text-align: center;
 }
 
-#commentBox {
-    
+.copyForm {
+    text-align: center;
 }
 /*    --------------------------------------------------
     :: Dashboard & Editor Sidebar Section
