@@ -83,8 +83,17 @@
         </div>
 
         <div class="modal-body">
+          <ul class="nav nav-tabs">
+            <li role="presentation" ng-click="showTemplates('event contracts')"><a href="">Events</a></li>
+            <li role="presentation" ng-click="showTemplates('sales contracts')"><a href="">Sales</a></li>
+            <li role="presentation" ng-click="showTemplates('warranties')"><a href="">Warranties</a></li>
+            <li role="presentation" ng-click="showTemplates('household services contracts')"><a href="">Household Services</a></li>
+            <li role="presentation" ng-click="showTemplates('job contracts')"><a href="">Jobs</a></li>
+            <li role="presentation"><a href="">Real Estate</a></li>
+            <li role="presentation"><a href="">Rental</a></li>
+          </ul>
             <div class="templates">
-              <div class="template" ng-repeat="template in templates" ng-click="handleClick(template.templateid)">
+              <div class="template" ng-repeat="template in templates" data-dismiss="modal" ng-click="handleClick(template.templateid)">
                 <img ng-src ="{{ template.snapshot || '/assets/no_preview.png' }}" style="width:210px; height:297px;" />
                 <div class="info">
                   <div class="title">{{ template.name || 'Untitled' }}</div>
@@ -92,6 +101,8 @@
               </div>
             </div>
         </div>
+
+
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="newContract()">I just want to use an empty editor!</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

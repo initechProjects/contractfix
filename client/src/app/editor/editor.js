@@ -6,6 +6,7 @@ angular.module('app.editor', [])
   // with the ckEditor proper using the editor API.
 
   var contractId = $location.search().id;
+  var templateId = $location.search().tempId;
   var isDraft = $location.search().draft;
   var user = $rootScope.username || localStorage.getItem('username');
   var token = $rootScope.token || localStorage.getItem('token');
@@ -44,8 +45,26 @@ angular.module('app.editor', [])
     }, function error(res) {
       console.log(res);
     });
-  }
+  } else if (templateId) {
+    $http({
+      method: 'POST',
+      url: '/template/get',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        templateid: templateId
+      }
+    }).then(function success(res) {
+      $scope.title = res.data.name;
+      original = res.data.text;
 
+      editor.setData(original);
+    }, function error(res) {
+      console.log(res);
+    });
+  }
 
   // CKEDITOR.disableAutoInline = true;
   var editor = CKEDITOR.replace('contractEditor');
