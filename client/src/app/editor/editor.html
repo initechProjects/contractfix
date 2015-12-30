@@ -72,7 +72,8 @@
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-</div><!-- /#wrapper -->
+</div>
+<!-- /#wrapper -->
 
 
 
@@ -84,41 +85,35 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Add Signatories</h4>
           </div>
-          
-          <div class="clonedBody">
-           <div class="clonedInput" contenteditable="true">
-                <!-- Select Signatories-->
-                <label class="label_ttl control-label" for="signatories">Signed by: </label>
-                 <div class="form-group">
-                    <select class="select_ttl form-control" name="title" ng-model="contractUsers" ng-options="contractUser.fullname for contractUser in contractUsers" id="title">
+
+           <div class="modal-body" contenteditable="true">
+              <form class="form-inline"
+                <div ng-repeat="signatory in signatoryList">
+                  <!-- Select Signatories-->
+                  <div class="form-group">
+                    <label class="sr-only" for="signees">Signed by: </label>
+                    <select class="select_ttl form-control" name="signees" ng-model="signatory.user" ng-options="contractUser.fullname for contractUser in contractUsers" id="title">
                       <option value="" selected="selected" disabled="disabled">Select Signatories</option>
-                      <option value=""></option>
-                      <option value=""></option>
-                      <option value=""></option>
-                      <option value=""></option>
-                    </select>       
+                    </select> <!-- end .select_ttl -->
+                  </div>
+                  <!-- Party Name -->
+                  <div class="form-group">
+                    <label class="sr-only" for="partyname">Partyname: </label>
+                    <input id="" name="partyname" type="text" placeholder="Party" class="input_fn form-control" ng-model="signatory.party">
+<!--                     <p class="help-block">Enter in a name of party, if applicable.</p> -->
+                  </div>
+                  <!-- Job Title-->
+                  <div class="form-group">
+                    <label class="sr-only" for="jobtitle">Title:</label>
+                    <input id="" name="jobtitle" type="text" placeholder="" class="input_ln form-control" ng-model="signatory.jobtitle">
+<!--                     <p class="help-block">Enter the job title of the signee.</p> -->
+                  </div>
                 </div>
-                <!-- Party Name -->
-                <div class="form-group">
-                  <label class="label_fn control-label" for="partyname">Partyname: </label>
-                  <input id="partyname" type="text" placeholder="Enter in a company name if applicable." class="input_fn form-control">
-                </div>
-                <!-- Job Title-->
-                <div class="form-group">
-                  <label class="label_ln control-label" for="jobtitle">Title:</label>
-                  <input id="jobtitle" type="text" placeholder="Enter the job title of the signee." class="input_ln form-control">
-                </div>
+                <button ng-click="addSignatory()">Add another signatory</button>
            </div><!-- end modal body -->
-          </div>
-
-          <div class="actions">
-              <button class="clone">Clone</button> 
-              <button class="remove">Remove</button>
-          </div>
-
            <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" ng-click="">Confirm</button>
+            <button type="button" class="btn btn-primary" ng-click="showSignatories()">Confirm</button>
           </div>
     </div> <!-- end modal content -->
   </div>
@@ -166,6 +161,5 @@
       </div>
     </div>
   </div>
-
 
 
