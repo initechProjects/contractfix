@@ -163,11 +163,17 @@ angular.module('app.editor', [])
       console.log(res);
     });
 
-    html2canvas(document.getElementById('contractEditor'), { letterRendering: true }).then(function(canvas) {
+    var div = document.createElement('div');
+    div.innerHTML = editor.getData();
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div);
+
+    console.log(div);
+
+    html2canvas(div, { letterRendering: true }).then(function(canvas) {
       ctx = canvas.getContext('2d');
       var image = new Image();
       image.src = canvas.toDataURL();
-      console.log(canvas.toDataURL('application/pdf'));
       image.width = 250;
       image.onload = function() {
         document.body.appendChild(image);
