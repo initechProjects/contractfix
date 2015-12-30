@@ -37,7 +37,7 @@
             <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
             <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
             <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#prepareSignature"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Prepare Signature</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#prepareSignature" ng-click="getDetails()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Prepare Signature</a></li>
             <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
           </ul>
         </ul>
@@ -90,11 +90,11 @@
                 <!-- Select Signatories-->
                 <label class="label_ttl control-label" for="signatories">Signed by: </label>
                  <div class="form-group">
-                    <select class="select_ttl form-control" name="title" id="title">
+                    <select class="select_ttl form-control" name="title" ng-model="contractUsers" ng-options="contractUser.userId as contractUser.fullname for contractUser in contractUsers" id="title">
                       <option value="" selected="selected" disabled="disabled">Select Signatories</option>
+<!--                       <option value=""></option>
                       <option value=""></option>
-                      <option value=""></option>
-                      <option value=""></option>
+                      <option value=""></option> -->
                     </select> <!-- end .select_ttl -->
                   </div>
                 <!-- Party Name -->
