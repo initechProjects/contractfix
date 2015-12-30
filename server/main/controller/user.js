@@ -53,6 +53,7 @@ exports.login = {
   response: {
     schema: Joi.object({
       username: Joi.string().required().description('email address of user'),
+      userId: Joi.string().required().description('userid'),
       fullname: Joi.string().description('full name of user, if exist'),
       scope: Joi.array().required().description('array of roles of user'),
       token: Joi.string().required().description('login token valid for 15 mins')
@@ -78,19 +79,12 @@ exports.login = {
 
         var res = {};
         res.username = user.userName;
+        res.userId = user._id.toString();
         if (user.fullname) res.fullname = user.fullname;
         res.scope = user.scope;
 
         Config.dev = request.payload.valid ? true : false;
         res.token = Auth.gettoken('login', user);
-
-        // console.log(request.connection);
-        console.log(request.connection.info.host);
-        console.log(request.connection.info.id);
-        console.log(request.connection.info.address);
-        console.log((new Date(request.connection.info.created)).toISOString());
-        console.log('x-forwarded-for', request.headers['x-forwarded-for']);
-        console.log('connection.remoteAdress', request.connection.remoteAddress);
 
         return reply(res);
       });
@@ -112,6 +106,7 @@ exports.refreshToken = {
   response: {
     schema: Joi.object({
       username: Joi.string().required().description('email of user'),
+      userId: Joi.string().required().description('userid'),
       scope: Joi.array().required().description('array of roles of user'),
       fullname: Joi.string().description('full name of user, if exist'),
       token: Joi.string().required().description('refreshed token')
@@ -122,6 +117,7 @@ exports.refreshToken = {
       var res = {
         username: request.auth.credentials.userName,
         scope: request.auth.credentials.scope,
+        userId: request.auth.credentials._id.toString(),
         fullname: request.auth.credentials.fullname,
         token: Auth.gettoken('login', request.auth.credentials)
       };

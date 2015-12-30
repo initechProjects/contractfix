@@ -3,7 +3,7 @@ angular.module('app.signature', [])
 
 .controller('SignatureController', function ($scope, $rootScope, $sce, $window, $document, $location, Dashboard, $http) {
 
-  $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
+  // $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   var token = $rootScope.token || localStorage.getItem('token');
 
   var ephemeralPublic;
@@ -13,11 +13,19 @@ angular.module('app.signature', [])
   $scope.contractText;
   $scope.signed = false;
   var signaturePad;
+  var signature = {};
   $scope.signature = {};
+  $scope.user = {};
+  $scope.user.username = $rootScope.username;
+  $scope.user.userId = $rootScope.userId;
+  $scope.user.fullname = $rootScope.fullname;
+  $scope.col;
+  $scope.contractUsers = [];
+  $scope.signatories = [];
 
   var options = {
     numBits: 1024,
-    userId: $rootScope.username,
+    userId: $scope.user.username,
     passphrase: passphrase
   };
 
@@ -42,8 +50,6 @@ angular.module('app.signature', [])
     }
   }).then(function(res) {
     $scope.contracts = res.data.filter(function(contract) { return contract.versions; });
-    // $scope.showingDrafts = false;
-    console.log(res.data);
   }, function(res) {
     console.log(res);
   });
@@ -60,8 +66,24 @@ angular.module('app.signature', [])
         contractId: id
       }
     }).then(function(res) {
+      res.data.parties.forEach(function(party) {
+
+        if (party.userid === $scope.user.userId) {
+          $scope.user.party = party.party;
+          if (party.title) $scope.user.title = party.title;
+        }
+      });
+
+      if (!$scope.user.party) {
+        console.error('you are not part in this contract');
+        return;
+      }
+
+      $scope.signatures = res.data.parties;
       $scope.contract = res.data;
       $scope.contractText = $sce.trustAsHtml($scope.contract.latest.text);
+      $scope.col = 12 / res.data.parties.length;
+
       console.log($scope.contract);
     }, function(res) {
       console.log(res);
@@ -89,21 +111,22 @@ angular.module('app.signature', [])
       var newtext = result.match("-----BEGIN PGP SIGNATURE-----([\\s\\S]*?)-----END PGP SIGNATURE-----");
       var datapair = signaturePad.jSignature("getData","svgbase64");
 
-      $scope.signature = {
+      signature = {
         digital: newtext[0],
         image: "data:" + datapair.join(",")
       };
-      console.log($scope.signature);
+
       $('#signatureModal').modal('hide');
-      $scope.$apply();
 
       var agreement = {
         contractId: $scope.contract.contractId,
         text: result,
-        signature: $scope.signature,
+        signature: signature,
         publicKey: ephemeralPublic
       };
 
+      // let myScope = $scope;
+      // $scope.$apply();
 
       $http({
         method: 'POST',
@@ -114,6 +137,7 @@ angular.module('app.signature', [])
         },
         data: agreement
       }).then(function(res) {
+        $scope.signatures = res.data.parties;
 
         console.log(res);
       }, function(res) {
@@ -124,7 +148,43 @@ angular.module('app.signature', [])
       console.log(error);
       $('#signatureModal').modal('hide');
     });
-
   };
 
+  $scope.getDetails = function(id) {
+    $http({
+      method: 'POST',
+      url: '/getusersdetails',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      data: {
+        contractId: id
+      }
+    }).then(function(res) {
+      $scope.contractUsers = res.data.usersdetails;
+    }, function(res) {
+      console.log(res);
+    });
+  };
+
+  $scope.prepareForSigning = function() {
+    $http({
+      method: 'POST',
+      url: '/prepareforsignature',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      data: {
+        contractId: $scope.contract.contractId,
+        parties: $scope.signatories
+      }
+    }).then(function(res) {
+
+      console.log(res);
+    }, function(res) {
+      console.log(res);
+    });
+  };
 });

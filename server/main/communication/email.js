@@ -35,3 +35,8 @@ exports.sendMailForgotPassword = function(user, token) {
   var mailbody = Reset.email(user, token);
   mail(Config.email.username, `${Config.email.companyName} Team`, user.userName , 'Account password', mailbody);
 };
+
+exports.sendMailSignedWarning = function(fullname, username, title, contractId) {
+  var mailbody = `<p>Dear ${fullname}</p><p>Other party signed ${title}.<br/><p>If you want to check your contract, please click below link:</p><p><a href='http://${Config.server.host}:${Config.server.port}/#/${Config.email.loginUrl}?q=${contractId}'>http://${Config.server.host}:${Config.server.port}/#/${Config.email.loginUrl}?q=${contractId}</a>`;
+  mail(Config.email.username, `${Config.email.companyName} Team`, username , `ContractFix: ${title} signed`, mailbody);
+};
