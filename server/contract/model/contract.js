@@ -68,7 +68,8 @@ var Contract = new Schema({
 
   status: {
     type: String,
-    enum: ['open', 'ready', 'closed']
+    enum: ['open', 'ready', 'closed'],
+    default: 'open'
   }
 
 }, { autoIndex: false });
