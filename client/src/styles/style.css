@@ -514,10 +514,40 @@ csmall2 {
 }
 
 #page-content-wrapper {
-    width: 80%;
+    width: 75%;
     position: absolute;
-    padding: 15px;
-    color: black;
+    padding-right: 15px;
+}
+.panel-heading {
+    font-size: 15px;
+    color: white;
+}
+#heading1 {
+    background: #f9243f;
+    color: white;
+}
+#heading2 {
+    background: #ffb53e;
+    color: white;
+}
+#heading3 {
+    background: #1ebfae;
+    color: white;
+}
+#open {
+    box-shadow: 1px 1px 1px #888888;
+    height: 600px;
+    background: #f1f4f7;
+}
+#ready {
+    box-shadow: 1px 1px 1px #888888;
+    height: 600px;
+    background: #f1f4f7;
+}
+#signed {
+    box-shadow: 1px 1px 1px #888888;
+    height: 600px;
+    background: #f1f4f7;
 }
 
 /* Sidebar Styles */

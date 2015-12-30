@@ -47,21 +47,32 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2>Welcome {{user}}!</h2>
-                        <br>
-                        <ul ng-if="!showingDrafts">
-                        <h4>My Contracts:</h4>
-                          <li ng-repeat="contract in contracts" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
-                        </ul>
-                        <ul ng-if="showingDrafts">
-                        <h4>My Drafts:</h4>
-                          <li ng-repeat="draft in drafts" ng-click="handleClick(draft.id, true)"><a href="">{{ (draft.drafts === true ? draft.title : draft.drafts) || 'Untitled' }}</a></li>
-                        </ul>
-                    </div>
+           <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                   <h2>Welcome {{user}}!</h2><br>
+                      <div class="row">
+                        <div class="col-md-4">
+                           <div class="panel panel-default"  id="open">
+                              <div class="panel-heading centered" id="heading1"><i class="fa fa-file-o"></i> OPEN AND EDITABLE</div>
+                              <div class="panel-body">Panel Content</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default" id="ready">
+                              <div class="panel-heading centered" id="heading2"><i class="fa fa-file-text-o"></i> READY FOR SIGNATURE</div>
+                              <div class="panel-body">Panel Content</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default" id="signed">
+                              <div class="panel-heading centered" id="heading3"><i class="fa fa-file-archive-o"></i> CLOSED AND SIGNED</div>
+                              <div class="panel-body">Panel Content</div>
+                            </div>
+                        </div>
+                      </div>
                 </div>
+              </div>
             </div>
         </div><!-- /#page-content-wrapper -->
  </div><!-- /#wrapper -->
@@ -108,4 +119,20 @@
       
     </div>
   </div>
+
+            
+
+ <!--     <ul ng-if="!showingDrafts">
+                                <h4><i class="fa fa-file-o"></i> OPEN and editable</h4><hr>
+                                  <li ng-repeat="contract in contracts" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                                </ul>
+                                <ul ng-if="showingDrafts">
+                                <h4>My Drafts:</h4>
+                                  <li ng-repeat="draft in drafts" ng-click="handleClick(draft.id, true)"><a href="">{{ (draft.drafts === true ? draft.title : draft.drafts) || 'Untitled' }}</a></li>
+                             </ul> -->
+
+
+
+
+
 
