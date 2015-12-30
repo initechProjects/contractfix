@@ -33,11 +33,12 @@
             <li class="sidebar-brand">
                 <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
             </li><br>
-            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li><br>
-            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li><br>
-            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li><br>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li><br>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li><br>
+            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
+            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
+            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#prepareSignature"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Prepare Signature</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
           </ul>
         </ul>
         </div>
@@ -75,51 +76,63 @@
 <!-- /#wrapper -->
 
 
+
+<!-- Prepare Signature modal -->
+<div class="modal fade" id="prepareSignature" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Add Signatories</h4>
+          </div>
+
+           <div class="modal-body" contenteditable="true">
+                <!-- Select Signatories-->
+                <label class="label_ttl control-label" for="signatories">Signed by: </label>
+                 <div class="form-group">
+                    <select class="select_ttl form-control" name="title" id="title">
+                      <option value="" selected="selected" disabled="disabled">Select Signatories</option>
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select> <!-- end .select_ttl -->
+                  </div>
+                <!-- Party Name -->
+                <div class="form-group">
+                  <label class="label_fn control-label" for="partyname">Partyname: </label>
+                  <input id="" name="partyname" type="text" placeholder="" class="input_fn form-control">
+                  <p class="help-block">Enter in a company name if applicable.</p>
+                </div>
+                <!-- Job Title-->
+                <div class="form-group">
+                  <label class="label_ln control-label" for="jobtitle">Title:</label>
+                  <input id="" name="jobtitle" type="text" placeholder="" class="input_ln form-control">
+                  <p class="help-block">Enter the job title of the signee.</p>
+                </div>
+           </div><!-- end modal body -->
+           <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" ng-click="">Confirm</button>
+          </div>
+    </div> <!-- end modal content -->
+  </div>
+</div>
+
+
 <!-- Signature modal -->
-<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
+<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ready to sign? Add signatories.</h4>
+        <h4 class="modal-title" id="myModalLabel">Sign contract</h4>
       </div>
-      <div class="modal-body lg" contenteditable="true">
-        <form>
-
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Name</span>
-                </span>
-                <input type="text" class="form-control" aria-label="name">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Title</span>
-                </span>
-                <input type="text" class="form-control" aria-label="title">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Company</span>
-                </span>
-                <input type="text" class="form-control" aria-label="name">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <br><br>
-            <button type="button" class="btn btn-default pull-right">Add</button>
-          </div><!-- /.row -->
-
-        </form>
+      <div class="modal-body" contenteditable="true">
+        Are you sure you want to sign the contract?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Next</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Yes</button>
       </div>
     </div>
   </div>
@@ -149,9 +162,91 @@
   </div>
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<script>
+  $(function () {
+    $('#btnAdd').click(function () {
+        var num = $('.clonedInput').length, 
+            newNum  = new Number(num + 1),      // The numeric ID of the new input field being added, increasing by 1 each time
+            newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); // create the new element via clone(), and manipulate it's ID using newNum value
+    
+    /*  This is where we manipulate the name/id values of the input inside the new, cloned element
+        Below are examples of what forms elements you can clone, but not the only ones.
+        There are 2 basic structures below: one for an H2, and one for form elements.
+        To make more, you can copy the one for form elements and simply update the classes for its label and input.
+        Keep in mind that the .val() method is what clears the element when it gets cloned. Radio and checkboxes need .val([]) instead of .val('').
+    */
+        // H2 - section
+        newElem.find('.heading-reference').attr('id', 'ID' + newNum + '_reference').attr('name', 'ID' + newNum + '_reference').html('Entry #' + newNum);
+
+        // Title - select
+        newElem.find('.label_ttl').attr('for', 'ID' + newNum + '_title');
+        newElem.find('.select_ttl').attr('id', 'ID' + newNum + '_title').attr('name', 'ID' + newNum + '_title').val('');
+
+        // First name - text
+        newElem.find('.label_fn').attr('for', 'ID' + newNum + '_first_name');
+        newElem.find('.input_fn').attr('id', 'ID' + newNum + '_first_name').attr('name', 'ID' + newNum + '_first_name').val('');
+
+        // Last name - text
+        newElem.find('.label_ln').attr('for', 'ID' + newNum + '_last_name');
+        newElem.find('.input_ln').attr('id', 'ID' + newNum + '_last_name').attr('name', 'ID' + newNum + '_last_name').val('');
+
+        // Flavor - checkbox
+        // Note that each input_checkboxitem has a unique identifier "-0". This helps pair up duplicated checkboxes and labels correctly. A bit verbose, at the moment.
+        newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
+        newElem.find('.input_checkboxitem-0').attr('id', 'ID' + newNum + '_checkboxitem-0').attr('name', 'ID' + newNum + '_checkboxitem').val([]);
+        newElem.find('.input_checkboxitem-1').attr('id', 'ID' + newNum + '_checkboxitem-1').attr('name', 'ID' + newNum + '_checkboxitem').val([]);
+        newElem.find('.input_checkboxitem-2').attr('id', 'ID' + newNum + '_checkboxitem-2').attr('name', 'ID' + newNum + '_checkboxitem').val([]);
+        newElem.find('.input_checkboxitem-3').attr('id', 'ID' + newNum + '_checkboxitem-3').attr('name', 'ID' + newNum + '_checkboxitem').val([]);
+
+        // Flavor - checkbox labels
+        // Note that each checkboxitem has a unique identifier "-0". This helps pair up duplicated checkboxes and labels correctly. A bit verbose, at the moment.
+        newElem.find('.checkboxitem-0').attr('for', 'ID' + newNum + '_checkboxitem-0');
+        newElem.find('.checkboxitem-1').attr('for', 'ID' + newNum + '_checkboxitem-1');
+        newElem.find('.checkboxitem-2').attr('for', 'ID' + newNum + '_checkboxitem-2');
+        newElem.find('.checkboxitem-3').attr('for', 'ID' + newNum + '_checkboxitem-3');
+
+        // Skate - radio
+        newElem.find('.label_radio').attr('for', 'ID' + newNum + '_radioitem');
+        newElem.find('.input_radio').attr('id', 'ID' + newNum + '_radioitem').attr('name', 'ID' + newNum + '_radioitem').val([]);
+
+        // Email - text
+        newElem.find('.label_email').attr('for', 'ID' + newNum + '_email_address');
+        newElem.find('.input_email').attr('id', 'ID' + newNum + '_email_address').attr('name', 'ID' + newNum + '_email_address').val('');
+
+        // Twitter handle (for Bootstrap demo) - append and text
+        newElem.find('.label_twt').attr('for', 'ID' + newNum + '_twitter_handle');
+        newElem.find('.input_twt').attr('id', 'ID' + newNum + '_twitter_handle').attr('name', 'ID' + newNum + '_twitter_handle').val('');
+
+    // Insert the new element after the last "duplicatable" input field
+        $('#entry' + num).after(newElem);
+        $('#ID' + newNum + '_title').focus();
+
+    // Enable the "remove" button. This only shows once you have a duplicated section.
+        $('#btnDel').attr('disabled', false);
+
+    // Right now you can only add 4 sections, for a total of 5. Change '5' below to the max number of sections you want to allow.
+        if (newNum == 5)
+        $('#btnAdd').attr('disabled', true).prop('value', "You've reached the limit"); // value here updates the text in the 'add' button when the limit is reached 
+    });
+
+    $('#btnDel').click(function () {
+    // Confirmation dialog box. Works on all desktop browsers and iPhone.
+        if (confirm("Are you sure you wish to remove this section? This cannot be undone."))
+            {
+                var num = $('.clonedInput').length;
+                // how many "duplicatable" input fields we currently have
+                $('#entry' + num).slideUp('slow', function () {$(this).remove();
+                // if only one element remains, disable the "remove" button
+                    if (num -1 === 1)
+                $('#btnDel').attr('disabled', true);
+                // enable the "add" button
+                $('#btnAdd').attr('disabled', false).prop('value', "add section");});
+            }
+        return false; // Removes the last section you added
+    });
+    // Enable the "add" button
+    $('#btnAdd').attr('disabled', false);
+    // Disable the "remove" button
+    $('#btnDel').attr('disabled', true);
+});
+</script>
