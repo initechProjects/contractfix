@@ -26,7 +26,6 @@ angular.module('app.services', [])
         scope: resp.data.scope,
         fullname: resp.data.fullname
       };
-      console.log(storageItem);
       if(resp.data.token === undefined){
         return resp.data;
       }
@@ -66,7 +65,6 @@ angular.module('app.services', [])
       }
     })
     .then(function (resp) {
-
       return resp.data;
     });
   };
@@ -174,7 +172,6 @@ angular.module('app.services', [])
       return storageItem;
     })
     .catch(function(error){
-      //console.log(error.data.message);
       return error.data.message;
     })
   };

@@ -6,7 +6,6 @@ angular.module('app.forgotPassword', [])
 	  $scope.forgotPassword = function(){
       Auth.forgotPassword($scope.user)
       .then(function(authResult) {
-        console.log("I am authResult", authResult);
         $scope.flag = true;
         $scope.authResult = authResult;
       })

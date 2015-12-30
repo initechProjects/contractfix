@@ -1,8 +1,6 @@
 angular.module('app.resetPassword', [])
 
-
 .controller('resetPasswordController', function ($scope, $rootScope, $window, $location, $http, Auth, $timeout) {
-	console.log("I am inside resetpasswordCtrl");
 
 	 var url = $location.url();
    var token = url.slice(url.indexOf("=")).slice(1);
@@ -17,7 +15,7 @@ angular.module('app.resetPassword', [])
   };
 
    $scope.resetPassword = function(newPassword){
-   	 console.log(newPassword);
+
 	   $http({
 	    method: 'POST',
 	    url: '/resetpassword',
@@ -51,10 +49,6 @@ angular.module('app.resetPassword', [])
 	    console.log(err);
 	   })
    };
-
-   
-   
-
 
     
 });

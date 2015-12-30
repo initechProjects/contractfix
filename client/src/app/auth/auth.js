@@ -1,4 +1,5 @@
 angular.module('app.auth', [])
+
 .controller('AuthController', function($scope, $rootScope, $window, $location, Auth, $http){
 
   $scope.user = {};
