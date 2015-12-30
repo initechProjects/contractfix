@@ -19,13 +19,14 @@ angular.module('app.templates', [])
       group: 'event contracts'
     }
   }).then(function(res) {
-    console.log(res.data);
     $scope.templates = res.data;
   }, function(res) {
     console.log(res);
   });
 
   $scope.showTemplates = function(group) {
+    $scope.templates = [];
+
     $http({
       method: 'POST',
       url: '/template/__',
@@ -37,61 +38,46 @@ angular.module('app.templates', [])
         group: group
       }
     }).then(function(res) {
-      // console.log(res.data);
       $scope.templates = res.data;
-      jQuery('#templatetext').html('');
-      console.log($scope.templates);
     }, function(res) {
       console.log(res);
     });
   };
 
-  $scope.handleClick = function(id) {
-    var l = $scope.templates.length;
-
-    for (var i = 0; i<l; i++) {
-      if ($scope.templates[i].templateid === id) {
-        $scope.currentTemplate = id;
-        jQuery('#templatetext').html($scope.templates[i].text);
-        break;
-      }
-    }
+  $scope.handleClick = function(templateId) {
+    $location.path('/editor').search('tempId', templateId);
   };
 
-  $scope.takeSnapshot = function() {
-    html2canvas($('#templatetext'), { letterRendering: true, width: 630, height: 891,
-      onrendered: function(canvas) {
-        var img = canvas.toDataURL('base64');
-        // console.log(img);
 
-        $http({
-          method: 'POST',
-          url: '/template/save',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          },
-          data: {
-            templateid: $scope.currentTemplate,
-            snapshot: img
-          }
-        }).then(function(res) {
-          console.log('saved:', img);
-          // alert('saved');
-        }, function(res) {
-          console.log(res);
-        });
+  // $scope.takeSnapshot = function() {
+  //   html2canvas($('#templatetext'), { letterRendering: true, width: 630, height: 891,
+  //     onrendered: function(canvas) {
+  //       var img = canvas.toDataURL('base64');
+  //       // console.log(img);
 
-        // console.log(img);
-        // window.open(img);
-      }
-    });
+  //       $http({
+  //         method: 'POST',
+  //         url: '/template/save',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Authorization': 'Bearer ' + token
+  //         },
+  //         data: {
+  //           templateid: $scope.currentTemplate,
+  //           snapshot: img
+  //         }
+  //       }).then(function(res) {
+  //         console.log('saved:', img);
+  //         // alert('saved');
+  //       }, function(res) {
+  //         console.log(res);
+  //       });
 
-  };
+  //       // console.log(img);
+  //       // window.open(img);
+  //     }
+  //   });
 
-  $(".modal-wide").on("show.bs.modal", function() {
-  var height = $(window).height() - 200;
-  $(this).find(".modal-body").css("max-height", height);
-});
+  // };
 
 });
