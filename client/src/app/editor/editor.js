@@ -248,7 +248,7 @@ angular.module('app.editor', [])
     $scope.signatoryList.push({ user: '' });
   };
 
-  $scope.showSignatories = function() {
+  $scope.saveSignatories = function() {
     console.log($scope.signatoryList);
   };
 
