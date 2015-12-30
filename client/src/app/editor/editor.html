@@ -61,7 +61,7 @@
                       <pre ng-if="selection">{{ selection }}</pre>
                       <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
                       <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
-                      <div class="comment-card" ng-repeat="comment in comments">
+                      <div class="comment-card well" ng-repeat="comment in comments">
                         <pre ng-if="comment.selection">{{ comment.selection }}</pre>
                         <p>{{ comment.comment }}</p>
                         <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
