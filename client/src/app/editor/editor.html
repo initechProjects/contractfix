@@ -61,7 +61,7 @@
                       <pre ng-if="selection">{{ selection }}</pre>
                       <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
                       <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
-                      <div class="comment-card" ng-repeat="comment in comments">
+                      <div class="comment-card well" ng-repeat="comment in comments">
                         <pre ng-if="comment.selection">{{ comment.selection }}</pre>
                         <p>{{ comment.comment }}</p>
                         <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
@@ -81,14 +81,45 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Sign contract</h4>
+        <h4 class="modal-title" id="myModalLabel">Ready to sign? Add signatories.</h4>
       </div>
-      <div class="modal-body" contenteditable="true">
-        Are you sure you want to sign the contract?
+      <div class="modal-body lg" contenteditable="true">
+        <form>
+
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span>Name</span>
+                </span>
+                <input type="text" class="form-control" aria-label="name">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-4">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span>Title</span>
+                </span>
+                <input type="text" class="form-control" aria-label="title">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-4">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <span>Company</span>
+                </span>
+                <input type="text" class="form-control" aria-label="name">
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <br><br>
+            <button type="button" class="btn btn-default pull-right">Add</button>
+          </div><!-- /.row -->
+
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Done</button>
       </div>
     </div>
   </div>
