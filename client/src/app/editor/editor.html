@@ -33,11 +33,12 @@
             <li class="sidebar-brand">
                 <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
             </li><br>
-            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li><br>
-            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li><br>
-            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li><br>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li><br>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li><br>
+            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
+            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
+            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#prepareSignature"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Prepare Signature</a></li>
+            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li>
           </ul>
         </ul>
         </div>
@@ -75,51 +76,63 @@
 <!-- /#wrapper -->
 
 
+
+<!-- Prepare Signature modal -->
+<div class="modal fade" id="prepareSignature" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Add Signatories</h4>
+          </div>
+
+           <div class="modal-body" contenteditable="true">
+                <!-- Select Signatories-->
+                <label class="label_ttl control-label" for="signatories">Signed by: </label>
+                 <div class="form-group">
+                    <select class="select_ttl form-control" name="title" id="title">
+                      <option value="" selected="selected" disabled="disabled">Select Signatories</option>
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select> <!-- end .select_ttl -->
+                  </div>
+                <!-- Party Name -->
+                <div class="form-group">
+                  <label class="label_fn control-label" for="partyname">Partyname: </label>
+                  <input id="" name="partyname" type="text" placeholder="" class="input_fn form-control">
+                  <p class="help-block">Enter in a company name if applicable.</p>
+                </div>
+                <!-- Job Title-->
+                <div class="form-group">
+                  <label class="label_ln control-label" for="jobtitle">Title:</label>
+                  <input id="" name="jobtitle" type="text" placeholder="" class="input_ln form-control">
+                  <p class="help-block">Enter the job title of the signee.</p>
+                </div>
+           </div><!-- end modal body -->
+           <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" ng-click="">Confirm</button>
+          </div>
+    </div> <!-- end modal content -->
+  </div>
+</div>
+
+
 <!-- Signature modal -->
-<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
+<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ready to sign? Add signatories.</h4>
+        <h4 class="modal-title" id="myModalLabel">Sign contract</h4>
       </div>
-      <div class="modal-body lg" contenteditable="true">
-        <form>
-
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Name</span>
-                </span>
-                <input type="text" class="form-control" aria-label="name">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Title</span>
-                </span>
-                <input type="text" class="form-control" aria-label="title">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Company</span>
-                </span>
-                <input type="text" class="form-control" aria-label="name">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <br><br>
-            <button type="button" class="btn btn-default pull-right">Add</button>
-          </div><!-- /.row -->
-
-        </form>
+      <div class="modal-body" contenteditable="true">
+        Are you sure you want to sign the contract?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Next</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Yes</button>
       </div>
     </div>
   </div>
@@ -149,9 +162,4 @@
   </div>
 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
