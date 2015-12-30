@@ -33,13 +33,13 @@
             </li><br>
             <li ng-click="showContracts()">
                 <a href="" target="ext"><i class="fa fa-folder-open-o"></i> My Contracts</a>
-            </li><br>
+            </li>
             <li ng-click="showDrafts()">
                 <a href="" target="ext"><i class="fa fa-inbox"></i></i> My Drafts</a>
-            </li><br>
+            </li>
             <li>
                 <a href="" data-toggle="modal" data-target="#templateModal"><i class="fa fa-pencil-square-o"></i> New Contract</a>
-            </li><br>
+            </li>
             <li>
                 <a href="#/usersetting"><i class="fa fa-user"></i> Settings</a>
             </li>
@@ -52,7 +52,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Welcome {{user}}!</h1>
+                        <h2>Welcome {{user}}!</h2>
                         <br>
                         <ul ng-if="!showingDrafts">
                         <h4>My Contracts:</h4>
@@ -81,35 +81,6 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Select a contract template.</h4>
         </div>
-
-
-<!--                 <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-              <li class="sidebar-brand">
-                  <a href="#/dashboard"><i class="fa fa-file-word-o"></i> Templates</a>
-              </li><br>
-              <li ng-click="showTemplates('event contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Events</a></li>
-              <li ng-click="showTemplates('sales contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Sales</a></li>
-              <li ng-click="showTemplates('warranties')"><a href=""><i class="fa fa-hand-o-right"></i> Warranties</a></li>
-              <li ng-click="showTemplates('household services contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Household Services</a></li>
-              <li ng-click="showTemplates('job contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Jobs</a></li>
-              <li ng-click="showTemplates('real estate contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Real Estate</a></li>
-              <li ng-click="showTemplates('rental contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Rental</a></li>
-              <hr>
-              <li ng-click="takeSnapshot()"><a href=""><i class="fa fa-camera-retro"></i> Take Snapshot</a></li>
-            </ul>
-        </div> -->
-
-<!--         <div class="modal-body">
-            <div class="templates">
-              <div class="template" ng-repeat="template in templates" ng-click="handleClick(template.templateid)">
-                <img ng-src ="{{ template.snapshot || '/assets/no_preview.png' }}" style="width:210px; height:297px;" />
-                <div class="info">
-                  <div class="title">{{ template.name || 'Untitled' }}</div>
-                </div>
-              </div>
-            </div>
-        </div> -->
 
         <div class="modal-body">
           <ul class="nav nav-tabs">
