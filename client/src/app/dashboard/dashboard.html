@@ -24,28 +24,26 @@
 <br>
 
  <div id="wrapper">
-
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <a href="#/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
-            </li><br>
-            <li ng-click="showContracts()">
-                <a href="" target="ext"><i class="fa fa-folder-open-o"></i> My Contracts</a>
-            </li>
-            <li ng-click="showDrafts()">
-                <a href="" target="ext"><i class="fa fa-inbox"></i></i> My Drafts</a>
-            </li>
-            <li>
-                <a href="" data-toggle="modal" data-target="#templateModal"><i class="fa fa-pencil-square-o"></i> New Contract</a>
-            </li>
-            <li>
-                <a href="#/usersetting"><i class="fa fa-user"></i> Settings</a>
-            </li>
-        </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+              <li class="sidebar-brand">
+                  <a href="#/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
+              </li><br>
+              <li ng-click="showContracts()">
+                  <a href="" target="ext"><i class="fa fa-folder-open-o"></i> My Contracts</a>
+              </li>
+              <li ng-click="showDrafts()">
+                  <a href="" target="ext"><i class="fa fa-inbox"></i></i> My Drafts</a>
+              </li>
+              <li>
+                  <a href="" data-toggle="modal" data-target="#templateModal"><i class="fa fa-pencil-square-o"></i> New Contract</a>
+              </li>
+              <li>
+                  <a href="#/usersetting"><i class="fa fa-user"></i> Settings</a>
+              </li>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
@@ -61,15 +59,12 @@
                         <ul ng-if="showingDrafts">
                         <h4>My Drafts:</h4>
                           <li ng-repeat="draft in drafts" ng-click="handleClick(draft.id, true)"><a href="">{{ (draft.drafts === true ? draft.title : draft.drafts) || 'Untitled' }}</a></li>
-                      </ul>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
+        </div><!-- /#page-content-wrapper -->
+ </div><!-- /#wrapper -->
 
 <!-- Template Modal -->
   <div class="modal modal-wide fade" id="templateModal" role="dialog" ng-controller="TemplatesController">
@@ -83,15 +78,17 @@
         </div>
 
         <div class="modal-body">
-          <ul class="nav nav-tabs">
-            <li role="presentation" ng-click="showTemplates('event contracts')"><a href="">Events</a></li>
-            <li role="presentation" ng-click="showTemplates('sales contracts')"><a href="">Sales</a></li>
-            <li role="presentation" ng-click="showTemplates('warranties')"><a href="">Warranties</a></li>
-            <li role="presentation" ng-click="showTemplates('household services contracts')"><a href="">Household Services</a></li>
-            <li role="presentation" ng-click="showTemplates('job contracts')"><a href="">Jobs</a></li>
-            <li role="presentation"><a href="">Real Estate</a></li>
-            <li role="presentation"><a href="">Rental</a></li>
-          </ul>
+            <div class="categories">
+              <ul class="nav nav-tabs">
+                <li role="presentation" ng-click="showTemplates('event contracts')"><a href="">EVENTS</a></li>
+                <li role="presentation" ng-click="showTemplates('sales contracts')"><a href="">SALES</a></li>
+                <li role="presentation" ng-click="showTemplates('warranties')"><a href="">WARRANTIES</a></li>
+                <li role="presentation" ng-click="showTemplates('household services contracts')"><a href="">HOUSEHOLD SERVICES</a></li>
+                <li role="presentation" ng-click="showTemplates('job contracts')"><a href="">JOBS</a></li>
+                <li role="presentation"><a href="">REAL ESTATE</a></li>
+                <li role="presentation"><a href="">RENTAL</a></li>
+              </ul>
+            </div>
             <div class="templates">
               <div class="template" ng-repeat="template in templates" data-dismiss="modal" ng-click="handleClick(template.templateid)">
                 <img ng-src ="{{ template.snapshot || '/assets/no_preview.png' }}" style="width:210px; height:297px;" />

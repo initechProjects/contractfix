@@ -29,7 +29,7 @@ p {
     margin-bottom: 12px; 
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    font-size: 14px; 
+    font-size: 15px; 
     line-height: 24px;
     color: #384452; 
     margin-top: 10px; 
@@ -478,15 +478,15 @@ csmall2 {
 #editorBody {
     background: #F2F2F2;
     border: 2px solid #A4A4A4;
-
 }
 #editorTitle {
     text-align: center;
 }
 
-#commentBox {
-    
+#prepareSig {
+    text-align: center;
 }
+
 /*    --------------------------------------------------
     :: Dashboard & Editor Sidebar Section
     -------------------------------------------------- */
@@ -585,15 +585,12 @@ csmall2 {
         padding: 20px;
     }
 }
-
 .modal.modal-wide .modal-dialog {
   width: 90%;
 }
 .modal-wide .modal-body {
   overflow-y: auto;
 }
-
-
 /*    --------------------------------------------------
     :: User Settings Section
     -------------------------------------------------- */
@@ -635,8 +632,8 @@ csmall2 {
 }
 
 .template img {
-  width: 150px;
-  height: 220px;
+  width: 90px;
+  height: 160px;
   /*float: left;*/
   margin: 0 5px;
 }
@@ -680,7 +677,7 @@ csmall2 {
 }
 #cwrap {
     padding-bottom: 35px;
-    padding-top: 35px;
+    padding-top: 15px;
 }
 #twrap {
     padding-bottom: 20px;
@@ -698,8 +695,10 @@ csmall2 {
 }
 #howToUse h3{
     text-align: center;
-    padding-left: 70px;
-    padding-right: 70px;
+}
+#howToUse {
+    padding-left: 140px;
+    padding-right: 140px;
 }
 .listitem {
     background-color: #E6E6E6;
