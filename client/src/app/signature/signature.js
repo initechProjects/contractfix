@@ -39,18 +39,40 @@ angular.module('app.signature', [])
     console.log(error);
   });
 
+
   $http({
     method: 'POST',
-    url: '/findmycontracts',
+    url: '/opencontract',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + token
+    },
+    data: {
+      contractId: $location.search().id
     }
   }).then(function(res) {
-    $scope.contracts = res.data.filter(function(contract) { return contract.versions; });
+    res.data.parties.forEach(function(party) {
+
+      if (party.userid === $scope.user.userId) {
+        $scope.user.party = party.party;
+        if (party.title) $scope.user.title = party.title;
+      }
+    });
+
+    if (!$scope.user.party) {
+      console.error('you are not part in this contract');
+      return;
+    }
+
+    $scope.signatures = res.data.parties;
+    $scope.contract = res.data;
+    $scope.contractText = $sce.trustAsHtml($scope.contract.latest.text);
+    $scope.col = 12 / res.data.parties.length;
+
   }, function(res) {
     console.log(res);
   });
+
 
   $scope.handleClick = function(id) {
     $http({

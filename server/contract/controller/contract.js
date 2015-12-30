@@ -158,7 +158,7 @@ exports.findContractByUserId = {
       drafts: Joi.any().description('tag of latest draft, if exists, or true'),
       versions: Joi.any().description('tag of latest version, if exists, or true'),
       snapshot: Joi.string().description('snapshot of the latest version, if exists'),
-      status: Joi.string().description('status of the contract')
+      status: Joi.string().required().description('status of the contract')
     }))
   },
   handler: function(request, reply) {
@@ -223,7 +223,7 @@ exports.open = {
       latest: Joi.object().description('latest published version'),
       previous: Joi.object().description('previous version of published contract'),
       parties: Joi.array().description('parties of the contract, if exists'),
-      status: Joi.string().description('status of the contract')
+      status: Joi.string().required().description('status of the contract')
     })
   },
   handler: function(request, reply) {
@@ -544,12 +544,18 @@ exports.prepareForSignature = {
   },
   handler: function(request, reply) {
     if (request.auth.isAuthenticated) {
+      console.log(request.payload.parties.length);
+
       Contract.findContract(request.payload.contractId, function(err, contract) {
+        contract.parties = [];
 
         request.payload.parties.forEach(function(item) {
-          contract.parties = [];
+          console.log(item);
           contract.parties.push(item);
         });
+
+        console.log(contract.parties);
+        contract.status = 'ready';
 
         Contract.updateContract(contract, function(err, saved) {
           return reply('Contract prepared for signature');
