@@ -491,7 +491,7 @@ csmall2 {
     :: Dashboard & Editor Sidebar Section
     -------------------------------------------------- */
 #wrapper {
-    padding-left: 0;
+    height: 100%;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -514,9 +514,9 @@ csmall2 {
 }
 
 #page-content-wrapper {
+    height: 100%;
     width: 75%;
     position: absolute;
-    padding-right: 15px;
 }
 .panel-heading {
     font-size: 15px;
