@@ -1,8 +1,6 @@
 angular.module('app.signup2', [])
 
-
 .controller('signup2Controller', function ($scope, $rootScope, $window, $location, $http, $timeout) {
-  console.log($rootScope.authResult.token);
   var token = $rootScope.authResult.token;
    $scope.flag = false;
    
@@ -19,7 +17,6 @@ angular.module('app.signup2', [])
       }
     })
     .success(function(data){
-      //console.log(data);
       $scope.flag = true;
       $scope.response = "Your name is updated!";
       $timeout(function(){ $location.path("/dashboard")}, 3000);

@@ -27,131 +27,114 @@
 
 <div id="wrapper">
 
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper" class="fade-object">
-            <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
-            </li><br>
-            <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li><br>
-            <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li><br>
-            <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li><br>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li><br>
-            <li><a href="" target="ext" data-toggle="modal" data-target="#signatureModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Sign Contract</a></li><br>
-          </ul>
-        </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper" class="fade-object">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+          <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
+      </li><br>
+      <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
+      <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
+      <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Send Draft</a></li>
+      <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li>
+      <li><a href="" target="ext" data-toggle="modal" data-target="#prepareSignature" ng-click="getDetails()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Prepare Signature</a></li>
+    </ul>
+  </ul>
+  </div>
+  <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper-editor">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-9">
-                        <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title" size="50"></input></div>
-                        <hr>
-                        <form method="post" id="editorBody">
-                          <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
-                          </div>
-                          <!-- Initialize editor by replacing textarea element-->
-                        </form>
-                    </div>
-
-                    <div class="col-md-3" id="commentBox">
-                      <pre ng-if="selection">{{ selection }}</pre>
-                      <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
-                      <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
-                      <div class="comment-card well" ng-repeat="comment in comments">
-                        <pre ng-if="comment.selection">{{ comment.selection }}</pre>
-                        <p>{{ comment.comment }}</p>
-                        <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
-                      </div>
-                  </div>
-                </div>
+  <!-- Page Content -->
+  <div id="page-content-wrapper-editor">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-9">
+          <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title" size="50"></input></div>
+          <hr>
+          <form method="post" id="editorBody">
+            <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
             </div>
+            <!-- Initialize editor by replacing textarea element-->
+          </form>
         </div>
-        <!-- /#page-content-wrapper -->
+
+        <div class="col-md-3" id="commentBox">
+          <pre ng-if="selection">{{ selection }}</pre>
+          <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
+          <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
+          <div class="comment-card well" ng-repeat="comment in comments">
+            <pre ng-if="comment.selection">{{ comment.selection }}</pre>
+            <p>{{ comment.comment }}</p>
+            <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->
 
-
-<!-- Signature modal -->
-<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
+<!-- Prepare Signature modal -->
+<div class="modal fade" id="prepareSignature" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Ready to sign? Add signatories.</h4>
+        <h4 class="modal-title" id="myModalLabel">Add Signatories</h4>
       </div>
-      <div class="modal-body lg" contenteditable="true">
-        <form>
 
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Name</span>
-                </span>
-                <input type="text" class="form-control" aria-label="name">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Title</span>
-                </span>
-                <input type="text" class="form-control" aria-label="title">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <div class="col-lg-4">
-              <div class="input-group">
-                <span class="input-group-addon">
-                  <span>Company</span>
-                </span>
-                <input type="text" class="form-control" aria-label="name">
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
-            <br><br>
-            <button type="button" class="btn btn-default pull-right">Add</button>
-          </div><!-- /.row -->
+      <div class="modal-body" contenteditable="true" id="prepareSig">
+        <form class="form-inline">
+          <div ng-repeat="signatory in signatoryList">
+            <!-- Select Signatories-->
+            <div class="form-group">
+              <label class="sr-only" for="signees">Signed by: </label>
+              <select class="select_ttl form-control" name="signees" ng-model="signatory.user" ng-options="contractUser.fullname for contractUser in contractUsers" id="title">
+                <option value="" selected="selected" disabled="disabled">Select Signatories</option>
+              </select> <!-- end .select_ttl -->
+            </div>
+            <!-- Party Name -->
+            <div class="form-group">
+              <input id="" name="partyname" type="text" placeholder="Partyname" class="input_fn form-control" ng-model="signatory.party">
+            </div>
+            <!-- Job Title-->
+            <div class="form-group">
+              <input id="" name="jobtitle" type="text" placeholder="Job Title" class="input_ln form-control" ng-model="signatory.jobtitle">
+            </div>
+          </div>
+          <br>
+
+          <button ng-click="addSignatory()">Add another signatory</button>
 
         </form>
-      </div>
+      </div><!-- end modal body -->
+
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" ng-click="ckEditor.sign()">Next</button>
+        <button type="button" class="btn btn-primary" ng-click="saveSignatories()">Confirm</button>
+      </div>
+    </div> <!-- end modal content -->
+  </div>
+</div>
+
+<!-- Invitation Email Modal -->
+<div class="modal fade" id="emailmodal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Enter the email of a party receiving invitation to this contract.</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='ckEditor.inviteEmail(collabEmail)'>
+          <div class="form-group">
+              <input type="text" ng-model='collabEmail' id="key" class="form-control" placeholder="Collaborator's email">
+          </div>
+          <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
+        <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">
+        </form>
       </div>
     </div>
   </div>
 </div>
-
-
-  <!-- Invitation Email Modal -->
-  <div class="modal fade" id="emailmodal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Enter the email of a party receiving invitation to this contract.</h4>
-        </div>
-        <div class="modal-body">
-          <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='ckEditor.inviteEmail(collabEmail)'>
-            <div class="form-group">
-                <input type="text" ng-model='collabEmail' id="key" class="form-control" placeholder="Collaborator's email">
-            </div>
-            <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
-          <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" value="Confirm">
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>

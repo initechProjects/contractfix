@@ -1,24 +1,17 @@
 angular.module('app.auth', [])
 
-//todo: username if it is an email address or not
 .controller('AuthController', function($scope, $rootScope, $window, $location, Auth, $http){
 
   $scope.user = {};
-  var token;
   $scope.flag = false;
-
+  var token;
   var contractid = $rootScope.contractid;
-  console.log(contractid);
-
-
 
   $scope.login = function () {
     Auth.login($scope.user)
       .then(function (authResult) {
         $rootScope.authResult = authResult;
         token = authResult.token;
-        console.log(authResult);
-        console.log(authResult.scope);
 
         if(contractid){
           $http({
@@ -33,9 +26,7 @@ angular.module('app.auth', [])
             }
           })
           .success(function(data){
-            // console.log("CONTRACTDATA", data, data.contractid);
             $location.path('/editor').search({ 'id': data.contractid });
-
           })
           .catch(function(err){
             console.log(err);
@@ -53,8 +44,6 @@ angular.module('app.auth', [])
           $scope.authResult = authResult.data.message;
           $location.path('/login');
         }
-
-
       })
       .catch(function (error) {
         console.error(error);
@@ -64,15 +53,12 @@ angular.module('app.auth', [])
   $scope.signup = function () {
     Auth.signup($scope.user)
       .then(function (authResult) {
-        console.log(authResult, typeof authResult);
         if(typeof authResult === "string"){
           $scope.flag=true;
           $scope.message = authResult;
         } else {
         $scope.message = authResult.data.message;
-        console.log(authResult.data.message);
         }
-
       })
       .catch(function (error) {
         console.error(error);
@@ -100,7 +86,6 @@ angular.module('app.auth', [])
     }
 
   $scope.redirect = function(){
-    //Why does the screen turn gray here?
     $location.path("/login");
   };
 

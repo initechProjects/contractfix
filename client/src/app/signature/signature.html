@@ -1,25 +1,25 @@
 <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#/">CONTRACTFIX</a>
-        </div>
-        <div class="navbar-collapse collapse navbar-right">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#/">HOME</a></li>
-            <li><a href="#/dashboard">DASHBOARD</a></li>
-            <li><a href="#/editor">EDITOR</a></li>
-            <li><a href="#/">LOG OUT</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/">CONTRACTFIX</a>
     </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#/">HOME</a></li>
+        <li><a href="#/dashboard">DASHBOARD</a></li>
+        <li><a href="#/editor">EDITOR</a></li>
+        <li><a href="#/">LOG OUT</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
 
 <br>
 <br>
@@ -35,7 +35,7 @@
       </li><br>
       <li ng-repeat="contract in contracts" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
       <hr>
-      <li data-toggle="modal" data-target="#signatureModal" ng-click="getDetails(contract.id)"><a href=""><i class="fa fa-pencil-square-o"></i> Prepare to sign</a>
+      <li data-toggle="modal" data-target="#signatoriesModal" ng-click="getDetails()"><a href=""><i class="fa fa-pencil-square-o"></i> Prepare to sign</a>
       <hr>
       <li data-toggle="modal" data-target="#signatureModal"><a href=""><i class="fa fa-pencil-square-o"></i> Sign</a></li>
     </ul>
@@ -95,7 +95,7 @@
 <!-- /#Signature Modal -->
 
 <!-- Signatories Modal -->
-<div class="modal fade" id="signatureModal" role="dialog">
+<div class="modal modal-wide fade" id="signatoriesModal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -106,9 +106,15 @@
       </div>
       <form ng-submit="prepareForSigning()" name="signatoriesForm">
         <div class="modal-body">
-            <div id="signatureparent">
-              <div id="signature"></div>
-            </div>
+          <fieldset>
+
+
+
+
+
+          </fieldset>
+
+
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-default" ng-disabled="signForm.$invalid">I accept the terms of this agreement.</button>

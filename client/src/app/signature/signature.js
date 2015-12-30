@@ -1,9 +1,7 @@
 angular.module('app.signature', [])
 
-
 .controller('SignatureController', function ($scope, $rootScope, $sce, $window, $document, $location, Dashboard, $http) {
 
-  // $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   var token = $rootScope.token || localStorage.getItem('token');
 
   var ephemeralPublic;
@@ -150,7 +148,7 @@ angular.module('app.signature', [])
     });
   };
 
-  $scope.getDetails = function(id) {
+  $scope.getDetails = function() {
     $http({
       method: 'POST',
       url: '/getusersdetails',
@@ -159,10 +157,11 @@ angular.module('app.signature', [])
         'Authorization': 'Bearer ' + token
       },
       data: {
-        contractId: id
+        contractId: $scope.contract.contractId
       }
     }).then(function(res) {
       $scope.contractUsers = res.data.usersdetails;
+      console.log(res.data.usersdetails);
     }, function(res) {
       console.log(res);
     });

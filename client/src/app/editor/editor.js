@@ -34,10 +34,10 @@ angular.module('app.editor', [])
       }
 
       $scope.comments = res.data.comments || [];
-      $scope.comments = $scope.comments.map(function(comment) { 
-        return { 
-          comment: comment.text, 
-          selection: comment.selection 
+      $scope.comments = $scope.comments.map(function(comment) {
+        return {
+          comment: comment.text,
+          selection: comment.selection
         };
       });
 
@@ -224,5 +224,38 @@ angular.module('app.editor', [])
     if (!original)
       $scope.lite.toggleTracking(false);
   });
+
+
+  // Preparation to sign
+  $scope.contractUsers = [];
+
+  $scope.getDetails = function() {
+    $http({
+      method: 'POST',
+      url: '/getusersdetails',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      data: {
+        contractId: contractId
+      }
+    }).then(function(res) {
+      $scope.contractUsers = res.data.usersdetails;
+      console.log(res.data.usersdetails);
+    }, function(res) {
+      console.log(res);
+    });
+  };
+
+  $scope.signatoryList = [{ user: '' }];
+
+  $scope.addSignatory = function() {
+    $scope.signatoryList.push({ user: '' });
+  };
+
+  $scope.saveSignatories = function() {
+    console.log($scope.signatoryList);
+  };
 
 });

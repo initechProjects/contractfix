@@ -1,16 +1,13 @@
 angular.module('app.usersetting', [])
 
-
 .controller('usersettingController', function ($scope, $rootScope, $window, $location, $http, Auth, $timeout) {
-	console.log("I am inside usersettingCtrl");
 
 	$scope.user = $rootScope.fullname;
 	$scope.email = $rootScope.username;
   var token = $rootScope.token;
 
   $scope.updateEmail = function(newEmail){
-  	console.log(newEmail);
-  	//Todo: verification for new email?
+
   	$http({
       method: 'POST',
       url: '/updateprofile',
@@ -25,7 +22,6 @@ angular.module('app.usersetting', [])
     .success(function(data){
       $scope.flag = true;
       $scope.response = data;
-      console.log(data);
     })
     .catch(function(err){
       console.log(err);
@@ -33,8 +29,7 @@ angular.module('app.usersetting', [])
   }
 
    $scope.updateName = function(newName){
-  	console.log(newName);
-  	//Todo: verification for new email?
+
   	$http({
       method: 'POST',
       url: '/updateprofile',
@@ -49,14 +44,11 @@ angular.module('app.usersetting', [])
     .success(function(data){
       $scope.flag = true;
       $scope.response = data;
-      console.log(data);
     })
     .catch(function(err){
       console.log(err);
     })
   }
-
-
 
 
   $scope.inputType = 'password';
@@ -99,14 +91,9 @@ angular.module('app.usersetting', [])
 
      })
      .catch(function(err){
-
       console.log(err);
      })
    };
 
    
-   
-
-
-    
 });
