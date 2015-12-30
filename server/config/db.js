@@ -1,7 +1,10 @@
 var Mongoose = require('mongoose');
 var config   = require('./config');
 
-Mongoose.connect('mongodb://' + config.database.host + '/' + config.database.db);
+var path = 'mongodb://initech:hrr9@ds037215.mongolab.com:37215/heroku_vtlmqz20';
+
+// Mongoose.connect('mongodb://' + config.database.host + '/' + config.database.db);
+Mongoose.connect(path);
 var db = Mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function callback() {
