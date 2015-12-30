@@ -242,4 +242,14 @@ angular.module('app.editor', [])
     });
   };
 
+  $scope.signatoryList = [{ user: '' }];
+
+  $scope.addSignatory = function() {
+    $scope.signatoryList.push({ user: '' });
+  };
+
+  $scope.showSignatories = function() {
+    console.log($scope.signatoryList);
+  };
+
 });
