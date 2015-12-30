@@ -77,6 +77,10 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/signature/signature.html',
         controller: 'SignatureController'
     })
+    .when('/signed', {
+        templateUrl: 'app/signature/signature.html',
+        controller: 'SignatureController'
+    })
     // .when('/prepareSig', {
     //     templateUrl: 'app/editor/prepareSig.html',
     // })
