@@ -157,7 +157,8 @@ exports.findContractByUserId = {
       title: Joi.string().description('title of contract'),
       drafts: Joi.any().description('tag of latest draft, if exists, or true'),
       versions: Joi.any().description('tag of latest version, if exists, or true'),
-      snapshot: Joi.string().description('snapshot of the latest version, if exists')
+      snapshot: Joi.string().description('snapshot of the latest version, if exists'),
+      status: Joi.string().description('status of the contract')
     }))
   },
   handler: function(request, reply) {
@@ -168,6 +169,7 @@ exports.findContractByUserId = {
         contracts.forEach(function(contract) {
           let item = {};
           item.id = contract._id;
+          item.status = contract.status;
           if (contract.metadata.title) item.title = contract.metadata.title;
           if (contract.metadata.snapshot) item.snapshot = contract.metadata.snapshot;
 
@@ -220,7 +222,8 @@ exports.open = {
       personal: Joi.object().description('personal draft'),
       latest: Joi.object().description('latest published version'),
       previous: Joi.object().description('previous version of published contract'),
-      parties: Joi.array().description('parties of the contract, if exists')
+      parties: Joi.array().description('parties of the contract, if exists'),
+      status: Joi.string().description('status of the contract')
     })
   },
   handler: function(request, reply) {
@@ -239,6 +242,7 @@ exports.open = {
         result.contractId = contract._id;
         result.metadata = contract.metadata;
         result.comments = contract.comments;
+        result.status = contract.status;
 
         if (contract.parties) result.parties = contract.parties;
 
