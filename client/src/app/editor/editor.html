@@ -95,19 +95,31 @@
                       <option value=""></option>
                       <option value=""></option>
                       <option value=""></option>
-                    </select> <!-- end .select_ttl -->
-                  </div>
+                    </select> <!-- end .select_ttl -->        
+                </div>
                 <!-- Party Name -->
+                <form role="form" autocomplete="off">
+                    <div class="entry input-group col-md-12">
+                        <input class="form-control" name="fields[]" type="text" placeholder="Type something" />
+                      <span class="input-group-btn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+
+
+
+
                 <div class="form-group">
                   <label class="label_fn control-label" for="partyname">Partyname: </label>
-                  <input id="" name="partyname" type="text" placeholder="" class="input_fn form-control">
-                  <p class="help-block">Enter in a company name if applicable.</p>
+                  <input id="" name="partyname" type="text" placeholder="Enter in a company name if applicable." class="input_fn form-control">
                 </div>
                 <!-- Job Title-->
                 <div class="form-group">
                   <label class="label_ln control-label" for="jobtitle">Title:</label>
-                  <input id="" name="jobtitle" type="text" placeholder="" class="input_ln form-control">
-                  <p class="help-block">Enter the job title of the signee.</p>
+                  <input id="" name="jobtitle" type="text" placeholder="Enter the job title of the signee." class="input_ln form-control">
                 </div>
            </div><!-- end modal body -->
            <div class="modal-footer">
