@@ -72,21 +72,21 @@
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-</div>
-<!-- /#wrapper -->
+</div><!-- /#wrapper -->
 
 
 
 <!-- Prepare Signature modal -->
 <div class="modal fade" id="prepareSignature" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
   <div class="modal-dialog" role="document">
-    <div class="modal-content" id="canCopy">
+    <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Add Signatories</h4>
           </div>
-
-           <div class="modal-body" contenteditable="true">
+          
+          <div class="clonedBody">
+           <div class="clonedInput" contenteditable="true">
                 <!-- Select Signatories-->
                 <label class="label_ttl control-label" for="signatories">Signed by: </label>
                  <div class="form-group">
@@ -101,17 +101,21 @@
                 <!-- Party Name -->
                 <div class="form-group">
                   <label class="label_fn control-label" for="partyname">Partyname: </label>
-                  <input id="" name="partyname" type="text" placeholder="Enter in a company name if applicable." class="input_fn form-control">
+                  <input id="partyname" type="text" placeholder="Enter in a company name if applicable." class="input_fn form-control">
                 </div>
                 <!-- Job Title-->
                 <div class="form-group">
                   <label class="label_ln control-label" for="jobtitle">Title:</label>
-                  <input id="" name="jobtitle" type="text" placeholder="Enter the job title of the signee." class="input_ln form-control">
-                </div>
-                <div class="copyForm">
-                   <i class="fa fa-plus-circle"></i><a href=""> Add Section</a>
+                  <input id="jobtitle" type="text" placeholder="Enter the job title of the signee." class="input_ln form-control">
                 </div>
            </div><!-- end modal body -->
+          </div>
+
+          <div class="actions">
+              <button class="clone">Clone</button> 
+              <button class="remove">Remove</button>
+          </div>
+
            <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-primary" ng-click="">Confirm</button>
