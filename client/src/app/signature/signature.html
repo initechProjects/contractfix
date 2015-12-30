@@ -31,13 +31,12 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
-        <a href="#/dashboard"><i class="fa fa-file-word-o"></i> Contracts</a>
+        <a href="#/dashboard"><i class="fa fa-file-word-o"></i> Dashboard</a>
       </li><br>
-      <li ng-repeat="contract in contracts" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+
       <hr>
-      <li data-toggle="modal" data-target="#signatoriesModal" ng-click="getDetails()"><a href=""><i class="fa fa-pencil-square-o"></i> Prepare to sign</a>
-      <hr>
-      <li data-toggle="modal" data-target="#signatureModal"><a href=""><i class="fa fa-pencil-square-o"></i> Sign</a></li>
+      <li data-toggle="modal" data-target="#signatureModal" ng-show="contract.status === 'ready'"><a href=""><i class="fa fa-pencil-square-o"></i> Sign</a></li>
+      <hr ng-show="contract.status === 'ready'"">
     </ul>
   </div>
   <!-- /#sidebar-wrapper -->
