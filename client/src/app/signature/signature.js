@@ -150,7 +150,7 @@ angular.module('app.signature', [])
     });
   };
 
-  $scope.getDetails = function(id) {
+  $scope.getDetails = function() {
     $http({
       method: 'POST',
       url: '/getusersdetails',
@@ -159,10 +159,11 @@ angular.module('app.signature', [])
         'Authorization': 'Bearer ' + token
       },
       data: {
-        contractId: id
+        contractId: $scope.contract.contractId
       }
     }).then(function(res) {
       $scope.contractUsers = res.data.usersdetails;
+      console.log(res.data.usersdetails);
     }, function(res) {
       console.log(res);
     });
