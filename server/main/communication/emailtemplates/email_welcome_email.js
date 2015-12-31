@@ -2,7 +2,7 @@ var Config    = require('../../../config/config');
 
 exports.email = function(user, token) {
   var Company = Config.email.companyName;
-  var Url = `http://${Config.server.host}/#/${Config.email.verifyEmailUrl}?q=${token}`;
+  var Url = `https://${Config.server.host}/#/${Config.email.verifyEmailUrl}?q=${token}`;
 
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">

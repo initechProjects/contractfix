@@ -6,7 +6,7 @@ var configProduction = {
     saltRounds: 12
   },
   server: {
-    host: 'www.contractfix.com',
+    host: 'contract-fix.herokuapp.com',
     port: process.env.PORT || 8000
   },
   database: {

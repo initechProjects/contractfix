@@ -27,7 +27,7 @@ exports.sendMailVerificationLink = function(user, token) {
 };
 
 exports.sendMailInvitation = function(user, senderemail, sendername, title, token) {
-  var mailbody = `<p>You have received this invitation from ${sendername}.</p><p>You can clicking on the link below to review, comment and sign ${title}.<br/><a href='http://${Config.server.host}/#/${Config.email.invitationUrl}?q=${token}'>Verification Link</a></p>`;
+  var mailbody = `<p>You have received this invitation from ${sendername}.</p><p>You can clicking on the link below to review, comment and sign ${title}.<br/><a href='https://${Config.server.host}/#/${Config.email.invitationUrl}?q=${token}'>Verification Link</a></p>`;
   mail(Config.email.username, `${Config.email.companyName} Team`, user.userName , `Invitation to ${title}`, mailbody);
 };
 
@@ -37,6 +37,6 @@ exports.sendMailForgotPassword = function(user, token) {
 };
 
 exports.sendMailSignedWarning = function(fullname, username, title, contractId) {
-  var mailbody = `<p>Dear ${fullname}</p><p>Other party signed ${title}.<br/><p>If you want to check your contract, please click below link:</p><p><a href='http://${Config.server.host}/#/${Config.email.loginUrl}?q=${contractId}'>http://${Config.server.host}/#/${Config.email.loginUrl}?q=${contractId}</a>`;
+  var mailbody = `<p>Dear ${fullname}</p><p>Other party signed ${title}.<br/><p>If you want to check your contract, please click below link:</p><p><a href='https://${Config.server.host}/#/${Config.email.loginUrl}?q=${contractId}'>https://${Config.server.host}/#/${Config.email.loginUrl}?q=${contractId}</a>`;
   mail(Config.email.username, `${Config.email.companyName} Team`, username , `ContractFix: ${title} signed`, mailbody);
 };
