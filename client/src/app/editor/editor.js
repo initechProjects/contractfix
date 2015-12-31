@@ -127,6 +127,7 @@ angular.module('app.editor', [])
       text: editor.getData(),
       personal: personal,
       comments: $scope.comments,
+      title: $scope.title
     };
 
     if (contractId)
@@ -134,8 +135,6 @@ angular.module('app.editor', [])
 
     if (personal)
       data.tag = $scope.title;
-    else
-      data.title = $scope.title;
 
     $http({
       method: 'POST',
@@ -262,8 +261,6 @@ angular.module('app.editor', [])
         userName: signatory.user.userName
       });
     });
-
-    console.log(payload);
 
     $http({
       method: 'POST',
