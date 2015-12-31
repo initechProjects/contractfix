@@ -469,52 +469,48 @@ csmall2 {
   color: #323232;
 }
 
-#page-content-wrapper-editor {
-    padding: 15px;
-    width: 100%;
-    padding-top: 30px;
-}
-
 #editorBody {
     background: #F2F2F2;
     border: 2px solid #A4A4A4;
 }
 #editorTitle {
     text-align: center;
+    padding-bottom: 30px;
 }
 
 #prepareSig {
     text-align: center;
 }
-
+#commentBox {
+    text-align: center;
+    padding-bottom: 40px;
+}
 /*    --------------------------------------------------
     :: Dashboard & Editor Sidebar Section
     -------------------------------------------------- */
-#wrapper {
-    height: 100%;
+#menustyle {
+    padding-top: 20px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-bottom: 30px;
+}
+#menustyle h2 {
+    text-align: center;
+    font-weight: 400;
+}
+#menustyle h5{
+    color: black;
+}
+.menu {
+    padding-bottom: 20px;
 }
 
-#sidebar-wrapper {
-    position: absolute;
-    left: 120px;
-    width: 0;
-    height: 100%;
-    margin-left: -120px;
-    overflow-y: auto;
-    background: #222;
-}
-
-#page-content-wrapper {
-    height: 100%;
-    width: 75%;
-    position: absolute;
-}
 .panel-heading {
     font-size: 15px;
     color: white;
 }
 #heading0 {
-    background: #3399ff;
+    background: #9C6DB3;
     color: white;
 }
 #heading1 {
@@ -526,12 +522,12 @@ csmall2 {
     color: white;
 }
 #heading3 {
-    background: #1ebfae;
+    background: #239B53;
     color: white;
 }
 #open {
     box-shadow: 1px 1px 1px #888888;
-    height: 300px;
+    height: 250px;
     background: #f1f4f7;
 }
 #personal ul,
@@ -542,17 +538,17 @@ csmall2 {
 }
 #ready {
     box-shadow: 1px 1px 1px #888888;
-    height: 300px;
+    height: 250px;
     background: #f1f4f7;
 }
 #signed {
     box-shadow: 1px 1px 1px #888888;
-    height: 300px;
+    height: 250px;
     background: #f1f4f7;
 }
 #personal {
     box-shadow: 1px 1px 1px #888888;
-    height: 300px;
+    height: 250px;
     background: #f1f4f7;
 }
 /* Sidebar Styles */
@@ -635,9 +631,6 @@ csmall2 {
 #settings {
     padding-top: 60px;
     text-align: center;
-}
-#settings h5 {
-    color: black;
 }
 /* Pulse Grow */
 @-webkit-keyframes hvr-pulse-grow {

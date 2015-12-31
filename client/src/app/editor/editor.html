@@ -24,40 +24,54 @@
 <br>
 <br>
 
-
-<div id="wrapper">
-
-  <!-- Sidebar -->
-  <div id="sidebar-wrapper" class="fade-object">
-    <ul class="sidebar-nav">
-      <li class="sidebar-brand">
-          <a href="#/dashboard"><i class="fa fa-pencil-square-o"></i> Editor</a>
-      </li><br>
-      <li id="save"><a href="" target="ext" ng-click="ckEditor.save(true)"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save Draft</a></li>
-      <li><a href="" target="ext" ng-click="ckEditor.saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
-      <li><a href="" target="ext" ng-click="ckEditor.save(false)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span> Share Draft</a></li>
-      <li><a href="" target="ext" data-toggle="modal" data-target="#emailmodal"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Invite party</a></li>
-      <li><a href="" target="ext" data-toggle="modal" data-target="#prepareSignature" ng-click="getDetails()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Prepare Signature</a></li>
-    </ul>
-  </ul>
-  </div>
-  <!-- /#sidebar-wrapper -->
-
-  <!-- Page Content -->
-  <div id="page-content-wrapper-editor">
+ <div id="menustyle">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-9">
+      <h2>Contract Editor</h2><br>
+      <div class="row menu centered">
+          <div class="col-md-1"></div>
+          <div class="col-md-2">
+            <a href="" ng-click="ckEditor.save(true)"><i class="fa fa-floppy-o fa-5x hvr-pulse-grow"></i></a>
+            <h5>Save Drafts</h5>
+          </div>
+
+          <div class="col-md-2">
+            <a href="" ng-click="ckEditor.saveFile()"><i class="fa fa-file-pdf-o fa-5x hvr-pulse-grow"></i></a>
+            <h5>Save as PDF</h5>
+          </div>
+
+           <div class="col-md-2">
+            <a href="" ng-click="ckEditor.save(false)"><i class="fa fa-share-square-o fa-5x hvr-pulse-grow"></i></a>
+            <h5>Share Draft</h5>
+          </div>
+
+           <div class="col-md-2">
+            <a href="" data-toggle="modal" data-target="#emailmodal"><i class="fa fa-users fa-5x hvr-pulse-grow"></i></a>
+            <h5>Invite Party</h5>
+          </div>
+
+          <div class="col-md-2">
+            <a href="" data-toggle="modal" data-target="#prepareSignature"><i class="fa fa-paper-plane fa-5x hvr-pulse-grow"></i></a>
+            <h5>Prepare Signature</h5>
+          </div>
+
+          <div class="col-md-1"></div>
+
+        </div>
+      </div>
+
+
+
+        <div class="col-md-12">
           <div id="editorTitle"><input style="outline:none" ng-model="title" placeholder="Enter Contract Title" size="50"></input></div>
-          <hr>
+
           <form method="post" id="editorBody">
             <div contenteditable="true" ng-click="ckEditor.handleClick($event)" name="contractEditor" id="contractEditor">
             </div>
             <!-- Initialize editor by replacing textarea element-->
           </form>
-        </div>
+        </div><br>
 
-        <div class="col-md-3" id="commentBox">
+        <div class="col-md-12" id="commentBox">
           <pre ng-if="selection">{{ selection }}</pre>
           <textarea ng-model="comment" placeholder="Enter a comment..." style="width:100%"></textarea>
           <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
@@ -67,12 +81,12 @@
             <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
           </div>
         </div>
-      </div>
     </div>
   </div>
-  <!-- /#page-content-wrapper -->
-</div>
-<!-- /#wrapper -->
+
+
+
+
 
 <!-- Prepare Signature modal -->
 <div class="modal fade" id="prepareSignature" tabindex="-1" role="dialog" aria-labelledby="confirmSignature">
