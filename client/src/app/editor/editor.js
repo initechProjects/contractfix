@@ -110,18 +110,6 @@ angular.module('app.editor', [])
 
   };
 
-  $scope.ckEditor.showChanges = function() {
-    $scope.lite.toggleShow();
-  };
-
-  $scope.ckEditor.acceptChanges = function() {
-    editor.execCommand('lite-acceptone');
-  };
-
-  $scope.ckEditor.rejectChanges = function() {
-    console.log(editor.getData());
-  };
-
   $scope.ckEditor.addComment = function() {
     if ($scope.comment) {
       $scope.comments.push({ comment: $scope.comment, selection: $scope.selection });
