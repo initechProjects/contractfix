@@ -1,12 +1,12 @@
 'use strict';
 
-var config = {
+var configProduction = {
   dev: true,
   params: {
     saltRounds: 12
   },
   server: {
-    host: 'contractfix.com',
+    host: process.env.NODE_ENV === 'production' ? 'contractfix.com' : '127.0.0.1',
     port: process.env.PORT || 8000
   },
   database: {
@@ -34,40 +34,40 @@ var config = {
   }
 };
 
-// Dev.
-// var config = {
-//   dev: true,
-//   params: {
-//     saltRounds: 12
-//   },
-//   server: {
-//     host: '127.0.0.1',
-//     port: process.env.PORT || 8000
-//   },
-//   database: {
-//     host: '127.0.0.1',
-//     port: 27015,
-//     db: 'ContractFix',
-//     username: '',
-//     password: ''
-//   },
-//   token: {
-//     key: 'f16fc55d48f2494d',
-//     algorithm: 'HS256'
-//   },
-//   encryption: {
-//     key: 'f6ec95b3f51f468fb48a5239c985c808',
-//     algorithm: 'aes-256-ctr'
-//   },
-//   email: {
-//     username: 'team@contractfix.com',
-//     companyName: 'ContractFix',
-//     verifyEmailUrl: 'verifyemail',
-//     invitationUrl: 'invitation',
-//     resetPasswordUrl: 'resetpassword',
-//     loginUrl: 'login'
-//   }
-// };
+var configDevelopment = {
+  dev: true,
+  params: {
+    saltRounds: 12
+  },
+  server: {
+    host: '127.0.0.1',
+    port: 8000
+  },
+  database: {
+    host: '127.0.0.1',
+    port: 27015,
+    db: 'ContractFix',
+    username: '',
+    password: ''
+  },
+  token: {
+    key: 'f16fc55d48f2494d',
+    algorithm: 'HS256'
+  },
+  encryption: {
+    key: 'f6ec95b3f51f468fb48a5239c985c808',
+    algorithm: 'aes-256-ctr'
+  },
+  email: {
+    username: 'team@contractfix.com',
+    companyName: 'ContractFix',
+    verifyEmailUrl: 'verifyemail',
+    invitationUrl: 'invitation',
+    resetPasswordUrl: 'resetpassword',
+    loginUrl: 'login'
+  }
+};
 
+var config = process.env.NODE_ENV === 'production' ? configProduction : configDevelopment;
 
 module.exports = config;

@@ -20,6 +20,7 @@ angular.module('app.templates', [])
     }
   }).then(function(res) {
     $scope.templates = res.data;
+    console.log($scope.templates);
   }, function(res) {
     console.log(res);
   });
@@ -45,39 +46,57 @@ angular.module('app.templates', [])
   };
 
   $scope.handleClick = function(templateId) {
-    $location.path('/editor').search('tempId', templateId);
+    if ($location.path() === '/templates') {
+      $http({
+        method: 'POST',
+        url: '/template/get',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        data: {
+          templateid: templateId
+        }
+      }).then(function success(res) {
+         $('#templatetext').html(res.data.text);
+      }, function error(res) {
+        console.log(res);
+      });
+    } else {
+      $location.path('/editor').search('tempId', templateId);
+    }
   };
 
 
-  // $scope.takeSnapshot = function() {
-  //   html2canvas($('#templatetext'), { letterRendering: true, width: 630, height: 891,
-  //     onrendered: function(canvas) {
-  //       var img = canvas.toDataURL('base64');
-  //       // console.log(img);
+  $scope.takeSnapshot = function() {
+    html2canvas($('#templatetext'), { letterRendering: true, width: 630, height: 891,
+      onrendered: function(canvas) {
+        var img = canvas.toDataURL('base64');
+        // console.log(img);
 
-  //       $http({
-  //         method: 'POST',
-  //         url: '/template/save',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': 'Bearer ' + token
-  //         },
-  //         data: {
-  //           templateid: $scope.currentTemplate,
-  //           snapshot: img
-  //         }
-  //       }).then(function(res) {
-  //         console.log('saved:', img);
-  //         // alert('saved');
-  //       }, function(res) {
-  //         console.log(res);
-  //       });
+        $http({
+          method: 'POST',
+          url: '/template/save',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          data: {
+            templateid: $scope.currentTemplate,
+            snapshot: img
+          }
+        }).then(function(res) {
+          console.log('saved:', img);
+          // alert('saved');
+        }, function(res) {
+          console.log(res);
+        });
 
-  //       // console.log(img);
-  //       // window.open(img);
-  //     }
-  //   });
+        // console.log(img);
+        // window.open(img);
+      }
+    });
 
-  // };
+  };
 
 });
