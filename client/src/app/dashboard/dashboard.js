@@ -30,10 +30,10 @@ angular.module('app.dashboard', [])
 
     for(var i = 0; i < data.length; i++){
       if(data[i].status === "open" && data[i].drafts){
-        $scope.personal.push(data[i]);
-      }
-      if(data[i].status === "open"){
-        $scope.shared.push(data[i]);
+        if (data[i].drafts) 
+          $scope.personal.push(data[i]);
+        else
+          $scope.shared.push(data[i]);
       }
       if(data[i].status === "ready"){
         $scope.ready.push(data[i]);
@@ -42,8 +42,6 @@ angular.module('app.dashboard', [])
         $scope.signed.push(data[i]);
       }
     }
-
-    console.log('data', res.data);
     
   }, function(res) {
     console.log(res);
