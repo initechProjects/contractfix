@@ -106,7 +106,7 @@ angular.module('app.editor', [])
     })
     .catch(function(err){
       console.log(err);
-    })
+    });
 
   };
 
