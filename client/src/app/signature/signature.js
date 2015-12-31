@@ -212,12 +212,7 @@ angular.module('app.signature', [])
   $scope.saveFile = function() {
     var pdf = new jsPDF();
     var contract = jQuery('#page-content-wrapper').html();
-    console.log(contract);
-    pdf.addHTML(document.getElementById('#page-content-wrapper'), function() {
-      var string = pdf.output('dataurinewwindow');
-      console.log(string);
-    })
-    // pdf.fromHTML(contract, 15, 15, { width: 180 });
-    // pdf.output('dataurlnewwindow');
+    pdf.fromHTML(contract, 15, 15, { width: 180 });
+    pdf.output('dataurlnewwindow');
   };
 });
