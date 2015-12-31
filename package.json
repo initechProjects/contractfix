@@ -19,6 +19,7 @@
     "hapi": "^11.1.2",
     "hapi-auth-jwt": "^4.0.0",
     "hapi-swagger": "^2.2.4",
+    "hover.css": "^2.0.2",
     "inert": "^3.2.0",
     "joi": "^7.0.1",
     "jsonwebtoken": "^5.4.1",
