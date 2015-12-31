@@ -59,6 +59,7 @@ angular.module('app.templates', [])
         }
       }).then(function success(res) {
          $('#templatetext').html(res.data.text);
+         $scope.currentTemplate = templateId;
       }, function error(res) {
         console.log(res);
       });
