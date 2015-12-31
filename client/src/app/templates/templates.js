@@ -20,7 +20,6 @@ angular.module('app.templates', [])
     }
   }).then(function(res) {
     $scope.templates = res.data;
-    console.log($scope.templates);
   }, function(res) {
     console.log(res);
   });
