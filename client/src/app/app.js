@@ -73,13 +73,17 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/templates/templates.html',
         controller: 'TemplatesController'
     })
-    .when('/sig', {
+    .when('/signatures', {
         templateUrl: 'app/signature/signature.html',
         controller: 'SignatureController'
     })
-    .when('/prepareSig', {
-        templateUrl: 'app/editor/prepareSig.html',
+    .when('/signed', {
+        templateUrl: 'app/signature/signature.html',
+        controller: 'SignatureController'
     })
+    // .when('/prepareSig', {
+    //     templateUrl: 'app/editor/prepareSig.html',
+    // })
 
 });
 

@@ -242,7 +242,6 @@ angular.module('app.editor', [])
       }
     }).then(function(res) {
       $scope.contractUsers = res.data.usersdetails;
-      console.log(res.data.usersdetails);
     }, function(res) {
       console.log(res);
     });
@@ -255,7 +254,38 @@ angular.module('app.editor', [])
   };
 
   $scope.saveSignatories = function() {
-    console.log($scope.signatoryList);
+    var payload = {
+      contractId: contractId,
+      parties: []
+    };
+
+    $scope.signatoryList.forEach(function(signatory) {
+      payload.parties.push({
+        party: signatory.party,
+        title: signatory.jobtitle,
+        userid: signatory.user.userId,
+        fullname: signatory.user.fullname,
+        userName: signatory.user.userName
+      });
+    });
+
+    console.log(payload);
+
+    $http({
+      method: 'POST',
+      url: '/prepareforsignature',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      data: payload
+    }).then(function(res) {
+      $('#prepareSignature').modal('hide');
+      $location.path('/signatures').search('id', contractId);
+    }, function(res) {
+      console.log(res);
+    });
+
   };
 
 });

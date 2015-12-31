@@ -491,7 +491,7 @@ csmall2 {
     :: Dashboard & Editor Sidebar Section
     -------------------------------------------------- */
 #wrapper {
-    padding-left: 0;
+    height: 100%;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -514,18 +514,62 @@ csmall2 {
 }
 
 #page-content-wrapper {
-    width: 80%;
+    height: 100%;
+    width: 75%;
     position: absolute;
-    padding: 15px;
-    color: black;
 }
-
+.panel-heading {
+    font-size: 15px;
+    color: white;
+}
+#heading0 {
+    background: #3399ff;
+    color: white;
+}
+#heading1 {
+    background: #f9243f;
+    color: white;
+}
+#heading2 {
+    background: #ffb53e;
+    color: white;
+}
+#heading3 {
+    background: #1ebfae;
+    color: white;
+}
+#open {
+    box-shadow: 1px 1px 1px #888888;
+    height: 300px;
+    background: #f1f4f7;
+}
+#personal ul,
+#open ul,
+#ready ul,
+#signed ul{
+    padding-left: 20px;
+}
+#ready {
+    box-shadow: 1px 1px 1px #888888;
+    height: 300px;
+    background: #f1f4f7;
+}
+#signed {
+    box-shadow: 1px 1px 1px #888888;
+    height: 300px;
+    background: #f1f4f7;
+}
+#personal {
+    box-shadow: 1px 1px 1px #888888;
+    height: 300px;
+    background: #f1f4f7;
+}
 /* Sidebar Styles */
 
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 250px;
+    width: 200px;
     margin: 0;
     padding: 0;
     list-style: none;
