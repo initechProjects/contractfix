@@ -24,15 +24,11 @@ angular.module('app.editor', [])
         contractId: contractId
       }
     }).then(function success(res) {
-      console.log(res);
-      if (isDraft) {
-        original = res.data.personal.text;
-        $scope.title = res.data.personal.tag || 'Untitled';
-      } else {
-        original = res.data.latest.text;
-        $scope.title = res.data.metadata.title || 'Untitled';
-      }
+      original = isDraft ? res.data.personal.text : res.data.latest.text;
 
+      $scope.lite.toggleTracking(!!original);
+
+      $scope.title = res.data.metadata.title || 'Untitled';
       $scope.comments = res.data.comments || [];
       $scope.comments = $scope.comments.map(function(comment) {
         return {
@@ -59,8 +55,8 @@ angular.module('app.editor', [])
     }).then(function success(res) {
       $scope.title = res.data.name;
       original = res.data.text;
-
       editor.setData(original);
+      $scope.lite.toggleTracking(!!original);
     }, function error(res) {
       console.log(res);
     });
@@ -147,30 +143,14 @@ angular.module('app.editor', [])
     }).then(function(res) {
       contractId = res.data.contractId;
 
-      $location.search('id', contractId);
+      if (contractId)
+        $location.search('id', contractId);
 
       if (personal)
         $location.search('draft', true);
 
     }, function(res) {
       console.log(res);
-    });
-
-    var div = document.createElement('div');
-    div.innerHTML = editor.getData();
-    div.style.visibility = 'hidden';
-    document.body.appendChild(div);
-
-    console.log(div);
-
-    html2canvas(div, { letterRendering: true }).then(function(canvas) {
-      ctx = canvas.getContext('2d');
-      var image = new Image();
-      image.src = canvas.toDataURL();
-      image.width = 250;
-      image.onload = function() {
-        document.body.appendChild(image);
-      };
     });
   };
 
@@ -213,9 +193,6 @@ angular.module('app.editor', [])
   editor.on('lite:init', function() {
     $scope.lite = editor.plugins.lite.findPlugin(editor);
     $scope.lite.setUserInfo({ name: user, id: user });
-
-    if (!original)
-      $scope.lite.toggleTracking(false);
   });
 
 
