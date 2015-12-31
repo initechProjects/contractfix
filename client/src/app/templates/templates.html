@@ -14,7 +14,6 @@
           <ul class="nav navbar-nav">
             <li><a href="#/">HOME</a></li>
             <li><a href="#/dashboard">DASHBOARD</a></li>
-            <li><a href="#/editor">EDITOR</a></li>
             <li><a href="#/">LOG OUT</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -40,18 +39,19 @@
               <li ng-click="showTemplates('job contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Jobs</a></li>
               <li ng-click="showTemplates('real estate contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Real Estate</a></li>
               <li ng-click="showTemplates('rental contracts')"><a href=""><i class="fa fa-hand-o-right"></i> Rental</a></li>
-              <hr>
+              <br>
+              <br>
               <li ng-click="takeSnapshot()"><a href=""><i class="fa fa-camera-retro"></i> Take Snapshot</a></li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper-templates">
+        <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Welcome {{user}}!</h1>
+                        <h2>Welcome {{user}}!</h2>
                         <br>
                          <h4>Templates:</h4>
                         <div class="templates">
