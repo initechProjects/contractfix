@@ -9,7 +9,6 @@ angular.module('app.dashboard', [])
   $scope.drafts = [];
 
   $scope.showingDrafts = $location.hash() === 'drafts';
-  console.log($scope.showingDrafts);
 
   $http({
     method: 'POST',
@@ -29,7 +28,7 @@ angular.module('app.dashboard', [])
     $scope.signed = [];
 
     for(var i = 0; i < data.length; i++){
-      if(data[i].status === "open" && data[i].drafts === true){
+      if(data[i].status === "open" && data[i].drafts){
         $scope.personal.push(data[i]);
       }
       if(data[i].status === "open"){
@@ -42,6 +41,8 @@ angular.module('app.dashboard', [])
         $scope.signed.push(data[i]);
       }
     }
+
+    console.log('data', res.data);
     
   }, function(res) {
     console.log(res);
@@ -50,6 +51,7 @@ angular.module('app.dashboard', [])
   $scope.handleClick = function(id, draft) {
     $location.path('/editor').search('id', id);
     $location.hash('');
+    console.log(draft);
     if (draft)
       $location.search('draft', true);
   };

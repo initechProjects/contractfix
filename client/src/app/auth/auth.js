@@ -14,10 +14,10 @@ angular.module('app.auth', [])
         token = authResult.token;
 
         if(authResult.token){
+          Auth.save(authResult);
           if(authResult.fullname === undefined){
             $location.path('/signup2');
           } else {
-            Auth.save(authResult);
             $location.path('/dashboard');
           }
         } else if(authResult.token === undefined){

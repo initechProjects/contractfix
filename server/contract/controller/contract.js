@@ -128,9 +128,9 @@ exports.save = {
 
         contract.status = 'open';
 
-        Contract.newContract(contract, function(err) {
+        Contract.newContract(contract, function(err, item) {
           if (!err) {
-            return reply('Contract has been saved');
+            return reply({ contractId: item._id });
           } else {
             return reply(Boom.badImplementation(err));
           }

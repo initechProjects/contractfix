@@ -106,7 +106,7 @@ angular.module('app.editor', [])
     })
     .catch(function(err){
       console.log(err);
-    })
+    });
 
   };
 
@@ -127,6 +127,7 @@ angular.module('app.editor', [])
       text: editor.getData(),
       personal: personal,
       comments: $scope.comments,
+      title: $scope.title
     };
 
     if (contractId)
@@ -134,8 +135,6 @@ angular.module('app.editor', [])
 
     if (personal)
       data.tag = $scope.title;
-    else
-      data.title = $scope.title;
 
     $http({
       method: 'POST',
@@ -146,7 +145,13 @@ angular.module('app.editor', [])
       },
       data: data
     }).then(function(res) {
-      console.log(res);
+      contractId = res.data.contractId;
+
+      $location.search('id', contractId);
+
+      if (personal)
+        $location.search('draft', true);
+
     }, function(res) {
       console.log(res);
     });
@@ -256,8 +261,6 @@ angular.module('app.editor', [])
         userName: signatory.user.userName
       });
     });
-
-    console.log(payload);
 
     $http({
       method: 'POST',

@@ -141,12 +141,12 @@
         <h4 class="modal-title">Enter the email of a party receiving invitation to this contract.</h4>
       </div>
       <div class="modal-body">
-        <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off" ng-submit='ckEditor.inviteEmail(collabEmail)'>
+        <form role="form" action="javascript:;" method="post" id="reset-form" autocomplete="off">
           <div class="form-group">
               <input type="text" ng-model='collabEmail' id="key" class="form-control" placeholder="Collaborator's email">
           </div>
           <div class="alert alert-info" class="ng-hide" ng-show ="flag">{{ response }}</div>
-        <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" data-dismiss="modal" value="Confirm">
+        <input type="submit" id="btn-reset" class="btn btn-custom btn-lg btn-block" ng-click="ckEditor.inviteEmail(collabEmail)" data-dismiss="modal" value="Confirm">
         </form>
       </div>
     </div>

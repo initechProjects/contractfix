@@ -50,7 +50,8 @@ app.config(function($routeProvider, $httpProvider) {
     })
     .when('/editor', {
         templateUrl: 'app/editor/editor.html',
-        controller: 'EditorController'
+        controller: 'EditorController',
+        reloadOnSearch: false
     })
     .when('/contactus', {
         templateUrl: 'app/about/contactus.html',

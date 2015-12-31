@@ -66,14 +66,13 @@ angular.module('app.usersetting', [])
       method: 'POST',
       url: '/resetpassword',
       headers: {
-        'Authorization': token,
+        'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
       },
       data: {
         'password': newPassword
       }
-      })
-     .success(function(data){
+    }).success(function(data){
       $scope.flag = true;
       $scope.response = data;
       $scope.counter = 5;
