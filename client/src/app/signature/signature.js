@@ -208,4 +208,12 @@ angular.module('app.signature', [])
       console.log(res);
     });
   };
+
+  $scope.saveFile = function() {
+    var pdf = new jsPDF();
+    var contract = jQuery('#page-content-wrapper').html();
+    console.log(contract);
+    pdf.fromHTML(contract, 15, 15, { width: 180 });
+    pdf.output('dataurlnewwindow');
+  };
 });
