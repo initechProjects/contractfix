@@ -6,7 +6,7 @@ var configProduction = {
     saltRounds: 12
   },
   server: {
-    host: process.env.NODE_ENV === 'production' ? 'www.contractfix.com' : '127.0.0.1',
+    host: 'www.contractfix.com',
     port: process.env.PORT || 8000
   },
   database: {

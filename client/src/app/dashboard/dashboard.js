@@ -54,6 +54,10 @@ angular.module('app.dashboard', [])
       $location.search('draft', true);
   };
 
+  $scope.handleSignature = function(id) {
+    $location.path('/signatures').search('id', id);
+  };
+
   // $scope.showDrafts = function() {
   //   $scope.showingDrafts = true;
   //   $location.hash('drafts');
