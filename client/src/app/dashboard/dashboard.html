@@ -22,26 +22,26 @@
 <br>
 <br>
 
- <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-              <li class="sidebar-brand">
-                  <a href="#/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
-              </li><br>
-              <li>
-                  <a href="" data-toggle="modal" data-target="#templateModal"><i class="fa fa-pencil-square-o"></i> New Contract</a>
-              </li>
-              <li>
-                  <a href="#/usersetting"><i class="fa fa-user"></i> Settings</a>
-              </li>
-            </ul>
-        </div><!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-           <div class="container-fluid">
-             <h2>Welcome {{user}}!</h2><br>
+  <!-- Page Content -->
+  <div id="menustyle">
+     <div class="container-fluid">
+       <h2>Welcome {{user}}!</h2><br>
+        
+        <div class="row">
+           <div class="col-md-12 menu">
+              <div class="col-md-4 centered">
+                      <a href="#/dashboard"><i class="fa fa-tachometer fa-5x hvr-pulse-grow"></i></a>
+                      <h5>Dashboard</h5>
+              </div>     
+              <div class="col-md-4 centered">
+                      <a href="" data-toggle="modal" data-target="#templateModal"><i class="fa fa-pencil-square-o fa-5x hvr-pulse-grow"></i></a>
+                      <h5>New Contract</li></h5>
+              </div>         
+              <div class="col-md-4 centered">
+                      <a href="#/usersetting"><i class="fa fa-user fa-5x hvr-pulse-grow"></i></a>
+                      <h5>Settings</h5>
+              </div>
+         </div>
               
               <div class="row">
                 <div class="col-md-12">
@@ -66,32 +66,37 @@
                               </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="panel panel-default" id="ready">
-                              <div class="panel-heading centered" id="heading2"><i class="fa fa-file-text-o"></i>  READY FOR SIGNATURE</div>
-                              <div class="panel-body">
-                                <ul ng-if="!showingDrafts">
-                                  <li ng-repeat="contract in ready" ng-click="handleSignature(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="panel panel-default" id="signed">
-                              <div class="panel-heading centered" id="heading3"><i class="fa fa-file-archive-o"></i>  CLOSED AND SIGNED</div>
-                              <div class="panel-body">
-                                <ul ng-if="!showingDrafts">
-                                  <li ng-repeat="contract in signed" ng-click="handleSignature(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
-                                </ul>
-                              </div>
-                            </div>
+                      </div>
+                  </div>
+                  </div>
+
+                  <div class="col-md-12">
+                  <div class="col-md-6">
+                      <div class="panel panel-default" id="ready">
+                        <div class="panel-heading centered" id="heading2"><i class="fa fa-file-text-o"></i>  READY FOR SIGNATURE</div>
+                        <div class="panel-body">
+                          <ul ng-if="!showingDrafts">
+                            <li ng-repeat="contract in ready" ng-click="handleSignature(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                          </ul>
                         </div>
                       </div>
+                  </div>
+
+                  <div class="col-md-6">
+                      <div class="panel panel-default" id="signed">
+                        <div class="panel-heading centered" id="heading3"><i class="fa fa-file-archive-o"></i>  CLOSED AND SIGNED</div>
+                        <div class="panel-body">
+                          <ul ng-if="!showingDrafts">
+                            <li ng-repeat="contract in signed" ng-click="handleSignature(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                  </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-        </div><!-- /#page-content-wrapper -->
- </div><!-- /#wrapper -->
+          </div>
+        </div>
+
 
 <!-- Template Modal -->
   <div class="modal modal-wide fade" id="templateModal" role="dialog" ng-controller="TemplatesController">

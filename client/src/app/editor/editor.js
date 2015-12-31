@@ -211,6 +211,7 @@ angular.module('app.editor', [])
         contractId: contractId
       }
     }).then(function(res) {
+      console.log(res);
       $scope.contractUsers = res.data.usersdetails;
     }, function(res) {
       console.log(res);

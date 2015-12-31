@@ -24,26 +24,23 @@
 <br>
 <br>
 
-<div id="wrapper">
 
-  <!-- Sidebar -->
-  <div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-      <li class="sidebar-brand">
-        <a href="#/dashboard"><i class="fa fa-file-word-o"></i> Dashboard</a>
-      </li><br>
-
-      <li data-toggle="modal" data-target="#signatureModal" ng-show="contract.status === 'ready'"><a href=""><i class="fa fa-pencil-square-o"></i> Sign</a></li>
-
-      <li><a href="" target="ext" ng-click="saveFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save as PDF</a></li>
-
-    </ul>
-  </div>
-  <!-- /#sidebar-wrapper -->
-
-<!-- Page Content -->
-<div id="page-content-wrapper">
+<div id="menustyle">
   <div class="container-fluid">
+    <h2>Sign Contract</h2><br>
+    <div class="row menu centered">
+      <div class="col-md-2"></div>
+      <div class="col-md-4">
+        <a href="" data-toggle="modal" data-target="#signatureModal" ng-show="contract.status === 'ready'"><i class="fa fa-file-pdf-o fa-5x hvr-pulse-grow"></i></a>
+        <h5>Submit Signature</h5>
+      </div>
+      <div class="col-md-4">
+        <a href="" ng-click="saveFile()"><i class="fa fa-file-pdf-o fa-5x hvr-pulse-grow"></i></a>
+        <h5>Save as PDF</h5>    
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+
     <div class="row">
       <div class="col-md-12" id="contractBody">
         <div id="contract">
@@ -60,10 +57,10 @@
             </div>
           </div>
         </div>
-      </div>
+       </div>
     </div>
-  </div><!-- /#page-content-wrapper -->
-</div><!-- /#wrapper -->
+  </div>
+
 
 <!-- Signature Modal -->
 <div class="modal fade" id="signatureModal" role="dialog">

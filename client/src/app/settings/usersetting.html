@@ -23,46 +23,31 @@
 <br>
 <br>
 
-<div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-            <li class="sidebar-brand">
-                <a href="#/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a>
-            </li>
-            <li>
-                <a href="#/editor"><i class="fa fa-pencil-square-o"></i> New Contract</a>
-            </li>
-            <li>
-                <a href="#/usersetting"><i class="fa fa-user"></i> Settings</a>
-            </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-          <div class="container-fluid">
-              <h2>Click on icons to update your information.</h2>
-              
+  <div id="menustyle">
+       <div class="container-fluid">
+            <h2>Click on the icons to update your settings.</h2><br>
               <div class="row" id="settings">
-                  <div class="col-md-4">
-                          <i class="fa fa-smile-o fa-5x hvr-pulse-grow" data-toggle="modal" data-target="#emailmodal"></i> 
-                          <h5>Email: {{email}}</h5>
-                  </div>     
-                  <div class="col-md-4">
-                          <i class="fa fa-user fa-5x hvr-pulse-grow" data-toggle="modal" data-target="#namemodal"></i>
-                          <h5>Name: {{user}}</li></h5>
-                  </div>         
-                  <div class="col-md-4">
-                          <i class="fa fa-unlock-alt fa-5x hvr-pulse-grow" data-toggle="modal" data-target="#passwordmodal"></i>
-                          <h5>Password: xxxx</h5>
-                  </div>
+                    <div class="col-md-3">
+                      <a href="#/dashboard"><i class="fa fa-tachometer fa-5x hvr-pulse-grow"></i></a>
+                            <h5>Dashboard</h5>
+                    </div>
+                    <div class="col-md-3">
+                      <a href="" data-toggle="modal" data-target="#emailmodal"><i class="fa fa-smile-o fa-5x hvr-pulse-grow"></i></a>
+                            <h5>Email: {{email}}</h5>
+                    </div>     
+                    <div class="col-md-3">
+                      <a href="" data-toggle="modal" data-target="#namemodal"><i class="fa fa-user fa-5x hvr-pulse-grow"></i></a>
+                            <h5>Name: {{user}}</li></h5>
+                    </div>         
+                    <div class="col-md-3">
+                      <a href="" data-toggle="modal" data-target="#passwordmodal"><i class="fa fa-unlock-alt fa-5x hvr-pulse-grow"></i></a>
+                            <h5>Password: xxxx</h5>
+                    </div>
               </div>
-          </div>
-      </div><!-- /#page-content-wrapper -->
-</div>
-<!-- /#wrapper -->
+       </div>
+  </div>
+
+
 
 
 
