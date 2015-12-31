@@ -53,6 +53,9 @@ angular.module('app.dashboard', [])
     if (draft)
       $location.search('draft', true);
   };
+  $scope.handleClick2 = function(id) {
+    $location.path('/signed').search('id', contractId);
+  }
 
   // $scope.showDrafts = function() {
   //   $scope.showingDrafts = true;
