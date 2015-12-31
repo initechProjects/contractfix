@@ -51,7 +51,7 @@
                               <div class="panel-heading centered" id="heading0"><i class="fa fa-file-text"></i>  MY PERSONAL DRAFTS</div>
                               <div class="panel-body">
                                 <ul ng-if="!showingDrafts">
-                                  <li ng-repeat="contract in personal" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                                  <li ng-repeat="contract in drafts" ng-click="handleClick(contract.id, true)"><a href="">{{ (contract.drafts === true ? contract.title : contract.drafts) || 'Untitled' }}</a></li>
                                 </ul>
                               </div>
                             </div>

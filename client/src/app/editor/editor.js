@@ -146,7 +146,13 @@ angular.module('app.editor', [])
       },
       data: data
     }).then(function(res) {
-      console.log(res);
+      contractId = res.data.contractId;
+
+      $location.search('id', contractId);
+
+      if (personal)
+        $location.search('draft', true);
+
     }, function(res) {
       console.log(res);
     });
