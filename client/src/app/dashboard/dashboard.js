@@ -9,7 +9,6 @@ angular.module('app.dashboard', [])
   $scope.drafts = [];
 
   $scope.showingDrafts = $location.hash() === 'drafts';
-  console.log($scope.showingDrafts);
 
   $http({
     method: 'POST',
