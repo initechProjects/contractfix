@@ -71,7 +71,7 @@
                               <div class="panel-heading centered" id="heading2"><i class="fa fa-file-text-o"></i>  READY FOR SIGNATURE</div>
                               <div class="panel-body">
                                 <ul ng-if="!showingDrafts">
-                                  <li ng-repeat="contract in ready" ng-click="handleClick2(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                                  <li ng-repeat="contract in ready" ng-click="handleSignature(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
                                 </ul>
                               </div>
                             </div>
@@ -81,7 +81,7 @@
                               <div class="panel-heading centered" id="heading3"><i class="fa fa-file-archive-o"></i>  CLOSED AND SIGNED</div>
                               <div class="panel-body">
                                 <ul ng-if="!showingDrafts">
-                                  <li ng-repeat="contract in signed" ng-click="handleClick2(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                                  <li ng-repeat="contract in signed" ng-click="handleSignature(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
                                 </ul>
                               </div>
                             </div>
