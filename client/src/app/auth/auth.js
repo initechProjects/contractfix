@@ -13,25 +13,6 @@ angular.module('app.auth', [])
         $rootScope.authResult = authResult;
         token = authResult.token;
 
-        if(contractid){
-          $http({
-            method: 'POST',
-            url: '/opencontract',
-            headers: {
-              'Authorization': 'Bearer ' + token,
-              'Content-Type': 'application/json'
-            },
-            data: {
-              'contractId': contractid
-            }
-          })
-          .success(function(data){
-            $location.path('/editor').search({ 'id': data.contractid });
-          })
-          .catch(function(err){
-            console.log(err);
-          });
-        }
         if(authResult.token){
           if(authResult.fullname === undefined){
             $location.path('/signup2');

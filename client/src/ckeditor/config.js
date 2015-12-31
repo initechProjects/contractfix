@@ -7,6 +7,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here.
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
+	config.height = window.innerHeight / 1.5;
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.
 	config.toolbarGroups = [
@@ -23,7 +24,8 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
 		{ name: 'styles' },
 		{ name: 'colors' },
-		{ name: 'about' }
+		{ name: 'about' },
+		{ name: 'lite' },
 	];
 
 	// Remove some buttons provided by the standard plugins, which are
@@ -31,10 +33,25 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeButtons = 'Underline,Subscript,Superscript';
 
 	// Set the most common block elements.
-	config.format_tags = 'p;h1;h2;h3;pre';
+	// config.format_tags = 'p;h1;h2;h3;pre';
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
-	config.extraPlugins = 'menu,contextmenu';
+	config.extraPlugins = 'lite';
+
+	config.lite = config.lite || {};
+
+	config.lite.commands = [
+		LITE.Commands.TOGGLE_SHOW, 
+		LITE.Commands.ACCEPT_ALL, 
+		LITE.Commands.REJECT_ALL, 
+		LITE.Commands.ACCEPT_ONE,
+		LITE.Commands.REJECT_ONE
+	];
+
+	config.enterMode =  CKEDITOR.ENTER_BR;
+	config.autoParagraph = false;
+  // config.allowedContent = 'br strong ins del em s ul ol li';
+
 };
