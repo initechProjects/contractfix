@@ -1,7 +1,8 @@
 angular.module('app.signup2', [])
 
 .controller('signup2Controller', function ($scope, $rootScope, $window, $location, $http, $timeout) {
-  var token = $rootScope.authResult.token;
+   var url = $location.url();
+   var token = url.slice(url.indexOf("=")).slice(1);
    $scope.flag = false;
    
    $scope.enterName = function(fullname){
