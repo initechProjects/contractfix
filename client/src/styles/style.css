@@ -492,14 +492,9 @@ csmall2 {
     -------------------------------------------------- */
 #wrapper {
     height: 100%;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
 }
 
 #sidebar-wrapper {
-    z-index: 1000;
     position: absolute;
     left: 120px;
     width: 0;
@@ -507,10 +502,6 @@ csmall2 {
     margin-left: -120px;
     overflow-y: auto;
     background: #222;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
 }
 
 #page-content-wrapper {
@@ -828,5 +819,5 @@ csmall2 {
     :: Signature Section
     -------------------------------------------------- */
 #contractBody {
-    padding-top: 30px;
+    padding-top: 20px;
 }
