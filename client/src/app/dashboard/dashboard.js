@@ -3,8 +3,8 @@ angular.module('app.dashboard', [])
 
 .controller('DashboardController', function ($scope, $rootScope, $window, $location, Dashboard, $http) {
 
-  $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   var token = $rootScope.token || localStorage.getItem('token');
+  $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   $scope.contracts = [];
   $scope.drafts = [];
 
@@ -49,7 +49,7 @@ angular.module('app.dashboard', [])
   $scope.handleClick = function(id, draft) {
     $location.path('/editor').search('id', id);
     $location.hash('');
-    console.log(draft);
+
     if (draft)
       $location.search('draft', true);
   };
@@ -57,16 +57,6 @@ angular.module('app.dashboard', [])
   $scope.handleSignature = function(id) {
     $location.path('/signatures').search('id', id);
   };
-
-  // $scope.showDrafts = function() {
-  //   $scope.showingDrafts = true;
-  //   $location.hash('drafts');
-  // };
-
-  // $scope.showContracts = function() {
-  //   $scope.showingDrafts = false;
-  //   $location.hash('');
-  // };
 
   $scope.newContract = function() {
     $location.path('/editor');
