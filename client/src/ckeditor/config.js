@@ -8,8 +8,8 @@ CKEDITOR.editorConfig = function( config ) {
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 	config.height = window.innerHeight / 1.5;
-	config.enterMode =  CKEDITOR.ENTER_P;
-	config.autoParagraph = false;
+	// config.enterMode =  CKEDITOR.ENTER_P;
+	// config.autoParagraph = false;
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.
 	config.toolbarGroups = [
