@@ -59,10 +59,10 @@ angular.module('app.signature', [])
       }
     });
 
-    if (!$scope.user.party) {
-      console.error('you are not part in this contract');
-      return;
-    }
+    // if (!$scope.user.party) {
+    //   console.error('you are not part in this contract');
+    //   return;
+    // }
 
     $scope.signatures = res.data.parties;
     $scope.contract = res.data;
@@ -94,10 +94,10 @@ angular.module('app.signature', [])
         }
       });
 
-      if (!$scope.user.party) {
-        console.error('you are not part in this contract');
-        return;
-      }
+      // if (!$scope.user.party) {
+      //   console.error('you are not part in this contract');
+      //   return;
+      // }
 
       $scope.signatures = res.data.parties;
       $scope.contract = res.data;
