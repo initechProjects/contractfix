@@ -7,11 +7,11 @@ angular.module('app.signature', [])
   var ephemeralPublic;
   var ephemeralPrivate;
   var passphrase = chance.sentence();
+  var signaturePad;
+  var signature = {};
   $scope.contract = {};
   $scope.contractText;
   $scope.signed = false;
-  var signaturePad;
-  var signature = {};
   $scope.signature = {};
   $scope.user = {};
   $scope.user.username = $rootScope.username;

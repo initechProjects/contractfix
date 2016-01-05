@@ -77,7 +77,7 @@
           <button class = "add-comment" ng-click="ckEditor.addComment()"> Add Comment </button>
           <div class="comment-card well" ng-repeat="comment in comments">
             <pre ng-if="comment.selection">{{ comment.selection }}</pre>
-            <p>{{ comment.comment }}</p>
+            <p>{{ comment.text }}</p>
             <button class="delete-comment" ng-click="ckEditor.deleteComment(comment)"> Delete </button>
           </div>
         </div>

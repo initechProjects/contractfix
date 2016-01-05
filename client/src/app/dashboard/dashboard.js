@@ -18,28 +18,26 @@ angular.module('app.dashboard', [])
       'Authorization': 'Bearer ' + token
     }
   }).then(function(res) {
-    $scope.contracts = res.data.filter(function(contract) { return contract.versions; });
-    $scope.drafts = res.data.filter(function(contract) { return contract.drafts; });
-   
     var data = res.data;
     $scope.personal = [];
     $scope.shared = [];
     $scope.ready = [];
     $scope.signed = [];
 
-    for(var i = 0; i < data.length; i++){
-      if(data[i].status === "open" && data[i].drafts){
-        $scope.personal.push(data[i]);
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].status === "open"){
+        if (data[i].drafts) 
+          $scope.personal.push(data[i]);
+
+        if (data[i].versions)
+          $scope.shared.push(data[i]);
       }
-      if(data[i].status === "open" && data[i].versions){
-        $scope.shared.push(data[i]);
-      }
-      if(data[i].status === "ready"){
+
+      if (data[i].status === "ready")
         $scope.ready.push(data[i]);
-      }
-      if(data[i].status === "closed"){
+
+      if (data[i].status === "closed")
         $scope.signed.push(data[i]);
-      }
     }
     
   }, function(res) {

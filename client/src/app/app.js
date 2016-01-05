@@ -108,24 +108,3 @@ app.run(function ($rootScope, $location, Auth) {
   if (Auth.isAuth())
     Auth.refresh();
 });
-
-// app.run(function ($http, $scope, $rootScope, $location) {
-//     $http({
-//     method: 'POST',
-//     url: '/refreshtoken',
-//     headers: {
-//       'Authorization': token,
-//       'Content-Type': 'application/json'
-//     },
-//     data: {}
-//     })
-//    .success(function(data){
-
-//    })
-//    .catch(function(err){
-//     console.log(err);
-//    })
-
-
-
-// })

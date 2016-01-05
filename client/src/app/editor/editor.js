@@ -11,16 +11,17 @@ angular.module('app.editor', [])
   var user = $rootScope.username || localStorage.getItem('username');
   var token = $rootScope.token || localStorage.getItem('token');
   var original = '';
+  var showingChanges = false;
+  var editor = CKEDITOR.replace('contractEditor');
   var headers = {
     'Authorization': 'Bearer ' + token,
     'Content-Type': 'application/json'
   };
-  var showingChanges = false;
 
   $scope.ckEditor = {};
   $scope.selection = '';
   $scope.comments = $scope.comments || [];
-
+  $scope.contractUsers = [];
 
   if (contractId) {
     $http({
@@ -32,15 +33,10 @@ angular.module('app.editor', [])
       }
     }).then(function success(res) {
       original = isDraft ? res.data.personal.text : res.data.latest.text;
-      $scope.lite.toggleTracking(!!original);
       $scope.title = res.data.metadata.title || 'Untitled';
       $scope.comments = res.data.comments || [];
-      $scope.comments = $scope.comments.map(function(comment) {
-        return {
-          comment: comment.text,
-          selection: comment.selection
-        };
-      });
+
+      console.log(res.data.comments);
 
       editor.setData(original);
     }, function error(res) {
@@ -64,14 +60,11 @@ angular.module('app.editor', [])
     });
   }
 
-  // CKEDITOR.disableAutoInline = true;
-  var editor = CKEDITOR.replace('contractEditor');
-
   editor.on('instanceReady', function() {
     editor.addCommand('Comment', {
       exec: function() {
-        var selection = '';
-        if (selection = editor.getSelectedHtml(true)) {
+        var selection = editor.getSelectedHtml(true);
+        if (selection) {
           $scope.$apply(function() {
             var html = selection.replace(/&nbsp;/g, '');
             html = html.replace(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g, '');
@@ -105,6 +98,7 @@ angular.module('app.editor', [])
   editor.on('lite:init', function() {
     $scope.lite = editor.plugins.lite.findPlugin(editor);
     $scope.lite.setUserInfo({ name: user, id: user });
+    $scope.lite.toggleTracking(!!original);
   });
 
   $scope.ckEditor.saveFile = function() {
@@ -112,10 +106,6 @@ angular.module('app.editor', [])
     var source = editor.getData();
     pdf.fromHTML(source, 15, 15, { width: 180 });
     pdf.output('dataurlnewwindow');
-  };
-
-  $scope.ckEditor.sign = function (){
-
   };
 
   $scope.ckEditor.inviteEmail = function (collabEmail){
@@ -138,7 +128,7 @@ angular.module('app.editor', [])
 
   $scope.ckEditor.addComment = function() {
     if ($scope.comment) {
-      $scope.comments.push({ comment: $scope.comment, selection: $scope.selection });
+      $scope.comments.push({ text: $scope.comment, selection: $scope.selection });
       $scope.comment = '';
       $scope.selection = '';
     }
@@ -180,10 +170,6 @@ angular.module('app.editor', [])
       console.log(res);
     });
   };
-
-
-  // Preparation to sign
-  $scope.contractUsers = [];
 
   $scope.getDetails = function() {
     $http({
