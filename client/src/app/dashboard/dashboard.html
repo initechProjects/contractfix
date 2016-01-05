@@ -45,30 +45,27 @@
               
               <div class="row">
                 <div class="col-md-12">
-                      <div class="row">
-                         <div class="col-md-6">
-                            <div class="panel panel-default" id="personal">
-                              <div class="panel-heading centered" id="heading0"><i class="fa fa-file-text"></i>  MY PERSONAL DRAFTS</div>
-                              <div class="panel-body">
-                                <ul ng-if="!showingDrafts">
-                                  <li ng-repeat="contract in personal" ng-click="handleClick(contract.id, true)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                           <div class="panel panel-default"  id="open">
-                              <div class="panel-heading centered" id="heading1"><i class="fa fa-file-o"></i>  SHARED DRAFTS</div>
-                              <div class="panel-body">
-                                <ul ng-if="!showingDrafts">
-                                  <li ng-repeat="contract in shared" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
-                                </ul>
-                              </div>
-                            </div>
+                   <div class="col-md-6">
+                      <div class="panel panel-default" id="personal">
+                        <div class="panel-heading centered" id="heading0"><i class="fa fa-file-text"></i>  MY PERSONAL DRAFTS</div>
+                        <div class="panel-body">
+                          <ul ng-if="!showingDrafts">
+                            <li ng-repeat="contract in personal" ng-click="handleClick(contract.id, true)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                          </ul>
                         </div>
                       </div>
                   </div>
+                  <div class="col-md-6">
+                     <div class="panel panel-default"  id="open">
+                        <div class="panel-heading centered" id="heading1"><i class="fa fa-file-o"></i>  SHARED DRAFTS</div>
+                        <div class="panel-body">
+                          <ul ng-if="!showingDrafts">
+                            <li ng-repeat="contract in shared" ng-click="handleClick(contract.id)"><a href="">{{ contract.title || 'Untitled' }}</a></li>
+                          </ul>
+                        </div>
+                    </div>
                   </div>
+                </div>
 
                   <div class="col-md-12">
                   <div class="col-md-6">
