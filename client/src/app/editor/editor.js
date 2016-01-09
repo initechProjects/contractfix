@@ -36,8 +36,6 @@ angular.module('app.editor', [])
       $scope.title = res.data.metadata.title || 'Untitled';
       $scope.comments = res.data.comments || [];
 
-      console.log(res.data.comments);
-
       editor.setData(original);
     }, function error(res) {
       console.log(res);

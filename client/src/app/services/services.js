@@ -104,7 +104,6 @@ angular.module('app.services', [])
     $rootScope.expires = Date.now() + 900000; // now + 15 minutes
     $rootScope.username = data.username;
     $rootScope.fullname = data.fullname;
-    console.log(data);
     $rootScope.userId = data.userId;
     localStorage.setItem('token', data.token);
     localStorage.setItem('expires', Date.now() + 900000);
