@@ -1,10 +1,5 @@
 angular.module('app.editor', [])
 .controller('EditorController', function ($scope, $rootScope, $http, $location) {
-
-
-  // Lines 5 - 17 replace the textarea in editor.html
-  // with the ckEditor proper using the editor API.
-
   var contractId = $location.search().id;
   var templateId = $location.search().tempId;
   var isDraft = $location.search().draft;
