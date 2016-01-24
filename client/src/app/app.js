@@ -82,22 +82,12 @@ app.config(function($routeProvider, $httpProvider) {
         templateUrl: 'app/signature/signature.html',
         controller: 'SignatureController'
     })
-    // .when('/prepareSig', {
-    //     templateUrl: 'app/editor/prepareSig.html',
-    // })
 
 });
 
 
 
 app.run(function ($rootScope, $location, Auth) {
-//   // here inside the run phase of angular, our services and controllers
-//   // have just been registered and our app is ready
-//   // however, we want to make sure the user is authorized
-//   // we listen for when angular is trying to change routes
-//   // when it does change routes, we then look for the token in localstorage
-//   // and send that token to the server to see if it is a real user or hasn't expired
-//   // if it's not valid, we then redirect back to signin/signup
   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
     var isPublicRoute = ['/dashboard', '/editor'].indexOf(next.$$route.originalPath) === -1;
     if (next.$$route && !isPublicRoute && !Auth.isAuth()) {
