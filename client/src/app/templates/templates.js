@@ -1,10 +1,8 @@
 angular.module('app.templates', [])
 
-
 .controller('TemplatesController', function ($scope, $rootScope, $window, $location, Dashboard, $http) {
-
-  $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   var token = $rootScope.token || localStorage.getItem('token');
+  $scope.user = $rootScope.fullname || localStorage.getItem('fullname');
   $scope.templates = [];
   $scope.currentTemplate = '';
 
@@ -20,8 +18,6 @@ angular.module('app.templates', [])
     }
   }).then(function(res) {
     $scope.templates = res.data;
-  }, function(res) {
-    console.log(res);
   });
 
   $scope.showTemplates = function(group) {
@@ -39,8 +35,6 @@ angular.module('app.templates', [])
       }
     }).then(function(res) {
       $scope.templates = res.data;
-    }, function(res) {
-      console.log(res);
     });
   };
 
@@ -59,8 +53,6 @@ angular.module('app.templates', [])
       }).then(function success(res) {
          $('#templatetext').html(res.data.text);
          $scope.currentTemplate = templateId;
-      }, function error(res) {
-        console.log(res);
       });
     } else {
       $location.path('/editor').search('tempId', templateId);
@@ -72,8 +64,6 @@ angular.module('app.templates', [])
     html2canvas($('#templatetext'), { letterRendering: true, width: 630, height: 891,
       onrendered: function(canvas) {
         var img = canvas.toDataURL('base64');
-        // console.log(img);
-
         $http({
           method: 'POST',
           url: '/template/save',
@@ -85,15 +75,7 @@ angular.module('app.templates', [])
             templateid: $scope.currentTemplate,
             snapshot: img
           }
-        }).then(function(res) {
-          console.log('saved:', img);
-          // alert('saved');
-        }, function(res) {
-          console.log(res);
-        });
-
-        // console.log(img);
-        // window.open(img);
+        })
       }
     });
 
