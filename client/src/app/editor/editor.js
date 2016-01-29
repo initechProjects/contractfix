@@ -32,8 +32,6 @@ angular.module('app.editor', [])
       $scope.comments = res.data.comments || [];
 
       editor.setData(original);
-    }, function error(res) {
-      console.log(res);
     });
   } else if (templateId) {
     $http({
@@ -48,8 +46,6 @@ angular.module('app.editor', [])
       original = res.data.text;
       editor.setData(original);
       $scope.lite.toggleTracking(!!original);
-    }, function error(res) {
-      console.log(res);
     });
   }
 
@@ -159,8 +155,6 @@ angular.module('app.editor', [])
       if (personal)
         $location.search('draft', true);
 
-    }, function error(res) {
-      console.log(res);
     });
   };
 
@@ -174,8 +168,6 @@ angular.module('app.editor', [])
       }
     }).then(function success(res) {
       $scope.contractUsers = res.data.usersdetails;
-    }, function error(res) {
-      console.log(res);
     });
   };
 
@@ -209,10 +201,6 @@ angular.module('app.editor', [])
     }).then(function(res) {
       $('#prepareSignature').modal('hide');
       $location.path('/signatures').search('id', contractId);
-    }, function(res) {
-      console.log(res);
     });
-
   };
-
 });
