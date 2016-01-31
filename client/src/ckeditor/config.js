@@ -8,8 +8,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 	config.height = window.innerHeight / 1.5;
-	// config.enterMode =  CKEDITOR.ENTER_P;
-	// config.autoParagraph = false;
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.
 	config.toolbarGroups = [
@@ -34,9 +32,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// not needed in the Standard(s) toolbar.
 	config.removeButtons = 'Underline,Subscript,Superscript';
 
-	// Set the most common block elements.
-	// config.format_tags = 'p;h1;h2;h3;pre';
-
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
@@ -51,7 +46,4 @@ CKEDITOR.editorConfig = function( config ) {
 		LITE.Commands.ACCEPT_ONE,
 		LITE.Commands.REJECT_ONE
 	];
-
-  // config.allowedContent = 'br strong ins del em s ul ol li';
-
 };
