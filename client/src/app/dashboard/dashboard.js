@@ -50,6 +50,8 @@ angular.module('app.dashboard', [])
 
     if (draft)
       $location.search('draft', true);
+
+    $('#templateModal').modal('hide');
   };
 
   $scope.handleSignature = function(id) {
