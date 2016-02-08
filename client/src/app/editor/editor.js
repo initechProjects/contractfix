@@ -12,6 +12,8 @@ angular.module('app.editor', [])
     'Authorization': 'Bearer ' + token,
     'Content-Type': 'application/json'
   };
+  
+  document.body.className = '';
 
   $scope.ckEditor = {};
   $scope.selection = '';
