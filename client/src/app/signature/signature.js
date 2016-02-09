@@ -9,6 +9,9 @@ angular.module('app.signature', [])
   var passphrase = chance.sentence();
   var signaturePad;
   var signature = {};
+  
+  document.body.className = '';
+  
   $scope.contract = {};
   $scope.contractText;
   $scope.signed = false;
