@@ -161,14 +161,10 @@ angular.module('app.signature', [])
         data: agreement
       }).then(function(res) {
         $scope.signatures = res.data.parties;
-
-        console.log(res);
       }, function(res) {
-        console.log(res);
       });
     })
     .catch(function(error) {
-      console.log(error);
       $('#signatureModal').modal('hide');
     });
   };
@@ -186,9 +182,7 @@ angular.module('app.signature', [])
       }
     }).then(function(res) {
       $scope.contractUsers = res.data.usersdetails;
-      console.log(res.data.usersdetails);
     }, function(res) {
-      console.log(res);
     });
   };
 
@@ -205,10 +199,7 @@ angular.module('app.signature', [])
         parties: $scope.signatories
       }
     }).then(function(res) {
-
-      console.log(res);
     }, function(res) {
-      console.log(res);
     });
   };
 
