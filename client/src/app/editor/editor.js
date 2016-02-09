@@ -198,7 +198,7 @@ angular.module('app.editor', [])
     $http({
       method: 'POST',
       url: '/prepareforsignature',
-      headers: header,
+      headers: headers,
       data: payload
     }).then(function(res) {
       $('#prepareSignature').modal('hide');
