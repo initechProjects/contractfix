@@ -123,7 +123,6 @@ angular.module('app.signature', [])
     openpgp.config.show_comment = false;
 
     var privateKey = openpgp.key.readArmored(ephemeralPrivate).keys[0];
-    // console.log(privateKey.getPrimaryUser().user);
     privateKey.decrypt(passphrase);
 
     var message = $scope.contract.latest.text;
